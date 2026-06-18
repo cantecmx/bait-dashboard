@@ -1,0 +1,31 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs / temp
+*.log
+*.tmp
+*~
+
+# Local copies de datos no versionados
+*.local.*
+*-backup.*
+*.bak
+
+# Node (por si se agrega tooling despues)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Secrets (sanity check — la API key vive en localStorage, no aqui)
+.env
+.env.*
+*.key
+secrets.json

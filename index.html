@@ -1,0 +1,1042 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>BAIT · Analisis Estrategico Meta Ads · Junio 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#0b1220;--card:#131c30;--muted:#8aa0c2;--text:#e7eefc;--accent:#22d3ee;--good:#10b981;--warn:#f59e0b;--bad:#ef4444;--line:#1e2a44;--gold:#fbbf24;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);}
+  header{padding:24px 32px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  header h1{margin:0;font-size:24px}
+  header .meta{color:var(--muted);font-size:13px;margin-top:4px}
+  .badge{display:inline-block;background:var(--accent);color:#0b1220;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;margin-left:8px}
+  .badge.warn{background:var(--warn);}
+  .badge.partial{background:#7c3aed;color:#fff;}
+  .container{padding:24px 32px;display:grid;gap:20px}
+  .section-title{font-size:18px;color:var(--accent);margin:8px 0 -8px 0;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+  .row{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+  .row.full{grid-template-columns:1fr}
+  .row.three{grid-template-columns:repeat(3,1fr)}
+  .row.four{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:1100px){.row,.row.three,.row.four{grid-template-columns:1fr}}
+  .card{background:var(--card);padding:18px;border-radius:10px;border:1px solid var(--line)}
+  .card h3{margin:0 0 12px 0;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+  canvas{max-height:340px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:500;text-transform:uppercase;font-size:11px;letter-spacing:.5px}
+  th.num{text-align:right}
+  tr:hover td{background:rgba(34,211,238,0.04)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  /* Tabla creativos — alineacion fina */
+  #adsTable{table-layout:fixed}
+  #adsTable th,#adsTable td{vertical-align:middle;padding:10px 12px}
+  #adsTable col.c-ad{width:30%}
+  #adsTable col.c-camp{width:18%}
+  #adsTable col.c-num{width:8%}
+  #adsTable col.c-veredicto{width:12%}
+  #adsTable td.ad-name{font-weight:600;color:#e7eefc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #adsTable td.camp{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #adsTable th.veredicto,#adsTable td.veredicto{text-align:center}
+  #adsTable thead th{background:rgba(34,211,238,0.05);border-bottom:2px solid var(--line)}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+  .pill.good{background:rgba(16,185,129,0.15);color:#6ee7b7}
+  .pill.warn{background:rgba(245,158,11,0.15);color:#fcd34d}
+  .pill.bad{background:rgba(239,68,68,0.15);color:#fca5a5}
+  .pill.gold{background:rgba(251,191,36,0.15);color:#fde68a}
+  .pill.star{background:rgba(34,211,238,0.15);color:#67e8f9}
+  .insight{background:linear-gradient(135deg,rgba(34,211,238,0.08),rgba(16,185,129,0.05));border-left:4px solid var(--accent);padding:14px 18px;border-radius:8px;color:#bae6fd;margin-bottom:8px}
+  .insight.warn{border-left-color:var(--warn);background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(239,68,68,0.04));color:#fef3c7}
+  .insight strong{color:#fff}
+  .kpi-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 22px}
+  .kpi-card .label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+  .kpi-card .val{font-size:32px;font-weight:700;line-height:1.1;margin:4px 0}
+  .kpi-card .sub{color:var(--muted);font-size:12px}
+  .kpi-card .sub.good{color:#6ee7b7}
+  .kpi-card .sub.warn{color:#fcd34d}
+  .kpi-card .sub.bad{color:#fca5a5}
+  .blueprint{background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(239,68,68,0.05));border:2px solid var(--gold);padding:24px;border-radius:12px}
+  .blueprint h2{margin:0 0 16px 0;color:var(--gold);font-size:22px}
+  .blueprint h3{color:var(--gold);font-size:14px;text-transform:uppercase;margin-top:18px;margin-bottom:8px;letter-spacing:1px}
+  .blueprint ul{margin:8px 0;padding-left:20px}
+  .blueprint li{margin:4px 0;line-height:1.6}
+  .forecast{background:linear-gradient(135deg,rgba(139,92,246,0.10),rgba(34,211,238,0.06));border:2px solid #8b5cf6;padding:24px;border-radius:12px}
+  .forecast h2{margin:0 0 16px 0;color:#c4b5fd;font-size:22px}
+  .forecast h3{color:#c4b5fd;font-size:14px;text-transform:uppercase;margin-top:18px;margin-bottom:8px;letter-spacing:1px}
+  .scenario{padding:18px;border-radius:10px;border:2px solid;display:flex;flex-direction:column;gap:6px}
+  .scenario.base{border-color:#22d3ee;background:rgba(34,211,238,0.06)}
+  .scenario.opt{border-color:#10b981;background:rgba(16,185,129,0.07)}
+  .scenario.bad{border-color:#ef4444;background:rgba(239,68,68,0.06)}
+  .scenario .name{font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+  .scenario.base .name{color:#67e8f9}
+  .scenario.opt .name{color:#6ee7b7}
+  .scenario.bad .name{color:#fca5a5}
+  .scenario .big{font-size:30px;font-weight:700;line-height:1}
+  .scenario .sub{color:var(--muted);font-size:12px}
+  .scenario .row-line{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed rgba(138,160,194,0.2);font-size:13px}
+  .scenario .row-line:last-child{border-bottom:none}
+  .scenario .row-line strong{font-variant-numeric:tabular-nums}
+  .heatmap{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;margin-top:8px}
+  .heatmap-cell{aspect-ratio:1;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:#0b1220}
+  .heatmap-labels{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;margin-top:4px;font-size:9px;color:var(--muted)}
+  .daily-hour-matrix{display:grid;grid-template-columns:90px repeat(24,1fr);gap:1px;margin-top:8px;font-size:10px}
+  .dh-corner{background:transparent}
+  .dh-hour-label{text-align:center;color:var(--muted);font-size:9px;font-weight:600;padding-bottom:4px}
+  .dh-day-label{text-align:right;padding-right:8px;color:var(--muted);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:flex-end}
+  .dh-cell{aspect-ratio:auto;height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;color:#e7eefc;cursor:default;transition:transform .1s}
+  .dh-cell:hover{transform:scale(1.6);z-index:20;box-shadow:0 6px 18px rgba(0,0,0,0.5)}
+  .dh-cell.thin{background:#1e2a44 !important;color:#475569}
+  .dh-cell.partial-marker{outline:1px dashed rgba(124,58,237,0.6)}
+  footer{padding:18px 32px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);margin-top:20px;text-align:center}
+  /* Selector de periodo (meses) */
+  .period-selector{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:6px}
+  .period-selector .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-right:8px;font-weight:600}
+  .period-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;transition:all .15s;font-family:inherit}
+  .period-btn:hover:not(:disabled){background:rgba(34,211,238,0.06);color:var(--text);border-color:var(--accent)}
+  .period-btn.active{background:linear-gradient(135deg,rgba(34,211,238,0.20),rgba(34,211,238,0.10));border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 2px rgba(34,211,238,0.12)}
+  .period-btn:disabled{opacity:.35;cursor:not-allowed;background:transparent}
+  .period-btn:disabled::before{content:'🔒 ';font-size:10px;opacity:.7}
+  .period-btn.active::before{content:'● ';color:var(--accent)}
+  /* Bloque actualizar (timestamp + 2 botones) */
+  .refresh-block{margin-left:auto;display:flex;align-items:center;gap:10px}
+  .last-update{font-size:10.5px;color:var(--muted);line-height:1.3;text-align:right;padding-right:4px}
+  .last-update strong{color:var(--text);font-size:11.5px;display:block;font-weight:600}
+  .icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:15px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;font-family:inherit;padding:0}
+  .icon-btn:hover{background:rgba(34,211,238,0.06);color:var(--accent);border-color:var(--accent)}
+  .refresh-btn{padding:0 16px;height:34px;border-radius:8px;border:1px solid var(--good);background:rgba(16,185,129,0.12);color:#6ee7b7;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;transition:all .15s;font-family:inherit;display:flex;align-items:center;gap:6px}
+  .refresh-btn:hover{background:rgba(16,185,129,0.22);box-shadow:0 0 0 2px rgba(16,185,129,0.15)}
+  .refresh-btn:disabled{opacity:.6;cursor:wait}
+  .refresh-btn .spin{display:inline-block;animation:spin 1s linear infinite}
+  @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .status-pill{display:none;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;border:1px solid}
+  .status-pill.show{display:inline-flex}
+  .status-pill.ok{background:rgba(16,185,129,0.15);color:#6ee7b7;border-color:rgba(16,185,129,0.4)}
+  .status-pill.err{background:rgba(239,68,68,0.15);color:#fca5a5;border-color:rgba(239,68,68,0.4)}
+  .status-pill.info{background:rgba(34,211,238,0.15);color:#a5f3fc;border-color:rgba(34,211,238,0.4)}
+  /* Modal generico */
+  .modal-bg{position:fixed;inset:0;background:rgba(11,18,32,0.85);backdrop-filter:blur(4px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:24px 28px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+  .modal h3{margin:0 0 6px 0;color:var(--accent);font-size:17px}
+  .modal p{margin:6px 0 14px 0;color:#cbd5e1;font-size:13px;line-height:1.55}
+  .modal label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px;font-weight:600}
+  .modal input[type=text],.modal input[type=password]{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:rgba(11,18,32,0.7);color:var(--text);font-size:13px;font-family:'Consolas',monospace}
+  .modal input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(34,211,238,0.15)}
+  .modal .hint-text{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+  .modal .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+  .modal .btn{padding:9px 18px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;font-family:inherit}
+  .modal .btn:hover{color:var(--text);border-color:var(--accent)}
+  .modal .btn.primary{background:rgba(34,211,238,0.18);border-color:var(--accent);color:var(--accent)}
+  .modal .btn.primary:hover{background:rgba(34,211,238,0.30);color:#fff}
+  .modal .btn.danger{color:#fca5a5;border-color:rgba(239,68,68,0.4)}
+  .modal .btn.danger:hover{background:rgba(239,68,68,0.15);color:#fff}
+  .urgency-bar{background:linear-gradient(90deg,rgba(239,68,68,0.15),rgba(245,158,11,0.08));border:2px solid #ef4444;border-radius:10px;padding:18px 24px;margin-bottom:4px}
+  .urgency-bar h3{color:#fca5a5;margin:0 0 10px 0;font-size:15px;text-transform:uppercase;letter-spacing:1px}
+  .urgency-bar ol{margin:0;padding-left:20px}
+  .urgency-bar li{margin:6px 0;line-height:1.6;font-size:13.5px}
+  /* Secciones desplegables */
+  details.collapsible{border-radius:10px;border:1px solid var(--line);background:var(--card);overflow:hidden}
+  details.collapsible.urgency{border:2px solid #ef4444;background:linear-gradient(90deg,rgba(239,68,68,0.10),rgba(245,158,11,0.04))}
+  details.collapsible summary{cursor:pointer;padding:14px 22px;list-style:none;display:flex;align-items:center;gap:10px;font-size:14px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:var(--accent);user-select:none;transition:background .15s}
+  details.collapsible.urgency summary{color:#fca5a5;font-size:15px}
+  details.collapsible summary:hover{background:rgba(34,211,238,0.04)}
+  details.collapsible.urgency summary:hover{background:rgba(239,68,68,0.06)}
+  details.collapsible summary::-webkit-details-marker{display:none}
+  details.collapsible summary::before{content:'\25B8';display:inline-block;transition:transform .2s;color:var(--muted);font-size:13px}
+  details.collapsible[open] summary::before{transform:rotate(90deg)}
+  details.collapsible summary .hint{margin-left:auto;font-size:11px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400}
+  details.collapsible .collapsible-body{padding:0 22px 18px 22px}
+  details.collapsible.urgency .collapsible-body ol{margin:0;padding-left:20px}
+  details.collapsible.urgency .collapsible-body li{margin:6px 0;line-height:1.6;font-size:13.5px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>BAIT · Analisis Estrategico Meta Ads <span class="badge">JUNIO 1-16</span><span class="badge partial">PARCIAL</span></h1>
+    <div class="meta">Cuenta 3782742661970783 · Actualizado 2026-06-16 · 15 dias completos + Jun-16 parcial · Resultado = mensaje iniciado (Click-to-Message)</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="period-selector" role="tablist" aria-label="Selector de mes">
+    <span class="label">Periodo</span>
+    <button type="button" class="period-btn" disabled title="Disponible al cierre del mes">Ene</button>
+    <button type="button" class="period-btn" disabled title="Disponible al cierre del mes">Feb</button>
+    <button type="button" class="period-btn" disabled title="Disponible al cierre del mes">Mar</button>
+    <button type="button" class="period-btn" disabled title="Disponible al cierre del mes">Abr</button>
+    <button type="button" class="period-btn" disabled title="Disponible al cierre del mes">May</button>
+    <button type="button" class="period-btn active" aria-current="true">Jun</button>
+    <button type="button" class="period-btn" disabled title="Disponible al inicio del mes">Jul</button>
+    <button type="button" class="period-btn" disabled title="Disponible al inicio del mes">Ago</button>
+    <button type="button" class="period-btn" disabled title="Disponible al inicio del mes">Sep</button>
+    <button type="button" class="period-btn" disabled title="Disponible al inicio del mes">Oct</button>
+    <button type="button" class="period-btn" disabled title="Disponible al inicio del mes">Nov</button>
+    <button type="button" class="period-btn" disabled title="Disponible al inicio del mes">Dic</button>
+    <div class="refresh-block">
+      <span class="status-pill" id="refreshStatus"></span>
+      <div class="last-update">
+        <strong id="lastUpdateLabel">Cargando…</strong>
+        <span id="lastUpdateSub">datos de Windsor.ai</span>
+      </div>
+      <button type="button" class="icon-btn" onclick="openApiModal()" title="Configurar API key de Windsor" aria-label="Configurar API">⚙</button>
+      <button type="button" class="refresh-btn" id="refreshBtn" onclick="refreshFromWindsor()" title="Refrescar datos desde Windsor.ai">↻ Actualizar</button>
+    </div>
+  </div>
+
+  <!-- Modal: Configurar API key Windsor -->
+  <div class="modal-bg" id="apiModal" onclick="if(event.target===this)closeApiModal()">
+    <div class="modal" role="dialog">
+      <h3>Configurar Windsor.ai</h3>
+      <p>Pega tu <strong>API key</strong> de Windsor. Se guarda solo en tu navegador (localStorage de este equipo), nunca se envia a otro lado.</p>
+      <label for="apiKeyInput">API key</label>
+      <input type="password" id="apiKeyInput" placeholder="ej. wk_xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+      <div class="hint-text">La encuentras en <a href="https://onboard.windsor.ai/" target="_blank" style="color:var(--accent)">onboard.windsor.ai</a> &rarr; Settings &rarr; API. Si no la tienes, pidele a Claude que te ayude a ubicarla.</div>
+      <div class="actions">
+        <button type="button" class="btn danger" onclick="clearApiKey()">Borrar</button>
+        <button type="button" class="btn" onclick="closeApiModal()">Cancelar</button>
+        <button type="button" class="btn primary" onclick="saveApiKey()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="kpis" class="row four"></div>
+
+  <div class="section-title">Pronostico cierre de junio (16-30 jun)</div>
+  <div class="forecast">
+    <h2>Junio 16-30 · 14 dias restantes · 3 escenarios</h2>
+    <div style="color:#cbd5e1;font-size:13px;line-height:1.6;margin-bottom:18px">
+      <strong>Base real:</strong> Junio 1-15 cerro con <strong>$154,990 MXN</strong> gastados, <strong>5,558 mensajes</strong>, CPL global <strong>$27.88</strong> (promedio diario: <strong>$10,333 gasto / 371 mensajes / CPL $27.88</strong>). Jun-16 parcial (dia en curso) suma ~$4,499 y ~157 mensajes — excluido de promedios.<br><br>
+      <strong>Dia del Padre (14 jun) — Post-mortem:</strong> $11,807 gastados, 434 mensajes, CPL $27.20. El volumen fue el mas alto hasta ese momento pero el CPL no mejoro como se esperaba — la subasta competitiva absorbio el pico. El impacto real llego al dia siguiente: <strong>lunes 15 jun (quincena)</strong> fue el mejor dia del mes con 448 mensajes a CPL $26.07.<br><br>
+      <strong>Estado actual (Jun 16):</strong> Frecuencia hombres 25-34 en <span style="color:#fbbf24;font-weight:700">2.03</span> — zona de alerta. Feed FB sigue al 57% del gasto con CPL $32.11. Quedan 14 dias para el cierre de junio y Q2.
+    </div>
+
+    <div class="row three" style="margin-bottom:18px">
+      <div class="scenario base">
+        <div class="name">Escenario A · Continuista</div>
+        <div class="sub">Sigues con la estructura actual sin activar palancas pendientes (Feed FB al 57%, sin adset iPhone, frecuencia subiendo).</div>
+        <div class="big" style="color:#67e8f9">~10,900</div>
+        <div class="sub">mensajes proyectados <strong>cierre total junio</strong> (30 dias)</div>
+        <div style="margin-top:10px">
+          <div class="row-line"><span>Real Jun 1-16</span><strong>5,715 msgs</strong></div>
+          <div class="row-line"><span>Proyeccion 16-30 (14d)</span><strong>~5,194 msgs</strong></div>
+          <div class="row-line"><span>CPL promedio mes</span><strong>$27.50</strong></div>
+          <div class="row-line"><span>Gasto total junio</span><strong>~$299,000 MXN</strong></div>
+        </div>
+        <div class="sub" style="margin-top:8px">Sin cambios estructurales el CPL se mantiene en ~$27 y el fin de quincena 20-21 jun aporta poco. Sigues quemando $3K/dia en Feed FB ineficiente.</div>
+      </div>
+
+      <div class="scenario opt">
+        <div class="name">Escenario B · Optimizado (palancas activas)</div>
+        <div class="sub">Activas hoy: bajas Feed FB a 35%, creas adset iPhone, pausas PISO 03/04, rotas creativo en Pruebas y Perfectas, push fin quincena 20-21.</div>
+        <div class="big" style="color:#6ee7b7">~12,900</div>
+        <div class="sub">mensajes proyectados <strong>cierre total junio</strong> (30 dias)</div>
+        <div style="margin-top:10px">
+          <div class="row-line"><span>Real Jun 1-16</span><strong>5,715 msgs</strong></div>
+          <div class="row-line"><span>Proyeccion 16-30 (14d)</span><strong>~7,200 msgs</strong></div>
+          <div class="row-line"><span>CPL promedio mes</span><strong>$23.80</strong></div>
+          <div class="row-line"><span>Delta vs Escenario A</span><strong style="color:#6ee7b7">+2,000 msgs extra</strong></div>
+        </div>
+        <div class="sub" style="margin-top:8px">+18% mensajes con mismo presupuesto. Ahorro $40K MXN reasignado a placements ganadores. Ventana: activar palancas hoy 16 jun para que el algoritmo madure antes del fin de quincena.</div>
+      </div>
+
+      <div class="scenario bad">
+        <div class="name">Escenario C · Pesimista</div>
+        <div class="sub">Sin cambios + frecuencia hombres 25-34 cruza 2.5 + creativos Pruebas y Perfectas saturados + competencia telco mantiene presion post-padre.</div>
+        <div class="big" style="color:#fca5a5">~10,100</div>
+        <div class="sub">mensajes proyectados <strong>cierre total junio</strong> (30 dias)</div>
+        <div style="margin-top:10px">
+          <div class="row-line"><span>Real Jun 1-16</span><strong>5,715 msgs</strong></div>
+          <div class="row-line"><span>Proyeccion 16-30 (14d)</span><strong>~4,400 msgs</strong></div>
+          <div class="row-line"><span>CPL promedio mes</span><strong>$31.50</strong></div>
+          <div class="row-line"><span>Riesgo principal</span><strong>fatiga 25-34 M + Feed FB sin tocar</strong></div>
+        </div>
+        <div class="sub" style="margin-top:8px">Probabilidad ~25% si frecuencia llega a 2.5 antes del 25 jun. CPL sube $3-5 automaticamente y arrastra el promedio del mes hacia arriba.</div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom:18px">
+      <div class="card" style="background:rgba(11,18,32,0.5)"><h3>Comparativo mensajes y CPL — 3 escenarios</h3><canvas id="scenarioChart"></canvas></div>
+      <div class="card" style="background:rgba(11,18,32,0.5)"><h3>Proyeccion diaria junio completo — Escenario A base</h3><canvas id="dailyForecast"></canvas></div>
+    </div>
+
+    <details class="collapsible" style="margin-bottom:18px">
+      <summary>Eventos clave · junio 16-30 · post-mortem padre + pendientes <span class="hint">click para desplegar/plegar</span></summary>
+      <div class="collapsible-body" style="padding-top:14px">
+      <div class="card" style="background:rgba(11,18,32,0.5);padding:0;margin-bottom:18px">
+        <table>
+          <thead><tr><th>Fecha</th><th>Dia</th><th>Evento</th><th>Impacto demanda</th><th class="num">Ajuste msgs</th><th>Recomendacion BAIT</th></tr></thead>
+          <tbody>
+            <tr style="opacity:.6"><td>13 jun</td><td>Sab</td><td>Pre-Dia del Padre <span class="pill good">ocurrido</span></td><td><span class="pill warn">Real: subasta normal</span></td><td class="num">335 msgs</td><td>Cerro CPL $26.49 · $8,873 gastados. Sin creativo "papa" no se capturo el pico anticipado.</td></tr>
+            <tr style="opacity:.6"><td><strong>14 jun</strong></td><td><strong>Dom</strong></td><td><strong>DIA DEL PADRE 2026</strong> <span class="pill good">ocurrido</span></td><td><span class="pill gold">Real: volumen alto</span></td><td class="num">434 msgs</td><td>Cerro CPL $27.20 · $11,807 gastados (mayor del mes). Volumen +10% sobre promedio pero CPL casi sin mejora — la subasta absorbio el pico.</td></tr>
+            <tr style="opacity:.6"><td>15 jun</td><td>Lun</td><td>Post-Padre + Quincena <span class="pill good">ocurrido</span></td><td><span class="pill gold">Real: mejor dia mes</span></td><td class="num">448 msgs</td><td>Cerro CPL $26.07 · $11,678 gastados. El MEJOR dia del mes en volumen y top-3 en CPL. Quincena pego mas fuerte que el Padre.</td></tr>
+            <tr><td><strong>16 jun</strong></td><td><strong>Mar</strong></td><td><strong>HOY · Post-pico</strong></td><td><span class="pill warn">Parcial</span></td><td class="num">157 msgs*</td><td>CPL parcial $28.66 (en curso). Revisar frecuencia hoy — si hombres 25-34 cruza 2.5 hay que rotar creativo Genesys.</td></tr>
+            <tr><td>20-21 jun</td><td>Vie-Sab</td><td>Fin de quincena</td><td><span class="pill good">Push moderado</span></td><td class="num">+10%</td><td>Replicar el patron del 15 jun (mejor dia mes). Subir budget +20% jueves 19 noche para que el algoritmo este listo.</td></tr>
+            <tr><td>30 jun</td><td>Mar</td><td>Fin de mes · cierre Q2</td><td><span class="pill good">Push final</span></td><td class="num">+10%</td><td>Push presupuestario para cerrar meta mensual. Verificar frecuencia — si llega a 3+ el PISO 8278 necesita creativo nuevo urgente.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </details>
+
+    <details class="collapsible" style="margin-bottom:18px">
+      <summary>Palancas para 16-30 jun — ventanas cortas <span class="hint">click para desplegar/plegar</span></summary>
+      <div class="collapsible-body" style="padding-top:14px">
+      <div class="card" style="background:rgba(11,18,32,0.5);padding:0;margin-bottom:18px">
+        <table>
+          <thead><tr><th>Palanca</th><th>Si la activas</th><th>Si NO la activas</th><th>Ventana</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Feed FB de 57% a 35% del gasto</strong> (CPL $32.11)</td><td style="color:#6ee7b7">CPL global baja ~$4 · ahorro ~$3K/dia · ~$42K en 14 dias</td><td style="color:#fca5a5">57% del presupuesto sigue en el placement mas caro vs ganadores a $22-24</td><td style="color:#fbbf24">HOY 16 jun — palanca #1 del cierre</td></tr>
+            <tr><td><strong>Pausar PISO Anuncio 03 + 04</strong> (CPL $43-102)</td><td style="color:#6ee7b7">Liberas ~$630/dia → redirigir a Genesys 01 ($17.91)</td><td style="color:#fca5a5">$9K ya gastados en 16d con 202 leads. Cada dia mas son ~$630 quemados</td><td style="color:#fbbf24">HOY 16 jun — inmediato</td></tr>
+            <tr><td><strong>Adset iPhone dedicado</strong> (CPL $21.72 vs Android $29.81)</td><td style="color:#6ee7b7">+700-1,000 msgs extra en 14d a CPL $21-22 · ahorro $9.6K MXN</td><td style="color:#fca5a5">~85 leads/dia iPhone en adset compartido = ~$687 diarios desperdiciados</td><td style="color:#fbbf24">Esta semana — antes del 20 jun</td></tr>
+            <tr><td><strong>Rotar creativo "Artes Agencia"</strong> (CPL $39.33)</td><td style="color:#6ee7b7">Reasignar a "Artes Agencia 2" ($30.54) reduce CPL del grupo ~$5</td><td style="color:#fca5a5">Sigue gastando ~$760/dia con CPL +29% sobre el promedio</td><td style="color:#fbbf24">Esta semana</td></tr>
+            <tr><td><strong>Push fin de quincena 20-21 jun</strong></td><td style="color:#6ee7b7">+400-600 msgs en 2 dias (replicar patron 15 jun: 448 msgs)</td><td style="color:#fca5a5">Dejas pasar el segundo pico mensual sin aprovechar</td><td style="color:#fbbf24">Programar 19 jun por la noche</td></tr>
+            <tr><td><strong>Vigilar frecuencia hombres 25-34</strong> (hoy 2.03)</td><td style="color:#6ee7b7">Ampliar audiencia o rotar creativo antes de cruzar 2.5</td><td style="color:#fca5a5">Si llega a 2.5 antes del 25 jun → CPL +$3-5 automatico</td><td style="color:#fbbf24">Checkpoint diario hasta 25 jun</td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </details>
+
+    <div class="insight warn">
+      <strong>Lectura ejecutiva junio 16:</strong> Con 15 dias completos el CPL global es <strong>$27.88</strong> (vs $30.64 mayo, -9%). El Dia del Padre (14 jun) trajo volumen pero no mejora de CPL — quien si pego fuerte fue la quincena (15 jun) con el mejor dia del mes (448 msgs · $26.07). Quedan 14 dias y la palanca #1 sigue sin activar: <strong>Feed FB al 57% del gasto con CPL $32.11</strong> mientras Search, Stories y Reels Overlay (los 3 ganadores) reciben solo 19% combinado. Reasignar este balance vale ~$3K/dia. Riesgo activo: frecuencia hombres 25-34 en 2.03 — checkpoint diario hasta el 25 jun.
+    </div>
+  </div>
+
+  <details class="collapsible urgency" open>
+    <summary>Acciones para cierre de junio (16-30 jun) <span class="hint">click para desplegar/plegar</span></summary>
+    <div class="collapsible-body"><ol id="urgencyList"></ol></div>
+  </details>
+
+  <details class="collapsible">
+    <summary>Hallazgos Clave — Junio 1-16 <span class="hint">click para desplegar/plegar</span></summary>
+    <div class="collapsible-body"><div id="insights"></div></div>
+  </details>
+
+  <div class="section-title">Tendencia Diaria — Junio 1-16</div>
+  <div class="row full">
+    <div class="card"><h3>CPL y mensajes por dia (Mar 16~ = dia parcial en curso)</h3><canvas id="dailyTrend"></canvas></div>
+  </div>
+
+  <div class="section-title">Demografia — Edad x Sexo</div>
+  <div class="row">
+    <div class="card"><h3>Gasto por edad x sexo (MXN)</h3><canvas id="demSpend"></canvas></div>
+    <div class="card"><h3>CPL por edad x sexo</h3><canvas id="demCpl"></canvas></div>
+  </div>
+
+  <div class="section-title">Regiones</div>
+  <div class="row full">
+    <div class="card"><h3>Top regiones por gasto (MXN) — Jun 1-16</h3><canvas id="regSpend"></canvas></div>
+  </div>
+  <div class="row">
+    <div class="card"><h3>Top regiones por CTR%</h3><canvas id="regCtr"></canvas></div>
+    <div class="card"><div class="insight" style="margin:0"><strong>Limitacion Windsor — leads por region:</strong> Meta no expone la conversion (mensajes iniciados) por region via Windsor. Los leads de la cuenta van a 0 en todos los estados en este breakout.<br><br>Usamos CTR como proxy de interes por region + gasto para concentracion de budget.<br><br><strong>CDMX absorbe 36% del gasto</strong> ($57,946 de $159K en 16 dias). Jalisco 24%. Entre los dos suman 60% del presupuesto.<br><br><strong>Alerta:</strong> State of Mexico CPM $89.48 (mas caro que la media $68) y CTR 1.30% (bajo). Posible bolsa de desperdicio — aislar en adset propio para medir.</div></div>
+  </div>
+
+  <details class="collapsible" style="margin-bottom:18px">
+    <summary>Dispositivos y Placements <span class="hint">click para desplegar/plegar</span></summary>
+    <div class="collapsible-body" style="padding-top:14px">
+      <div class="row">
+        <div class="card"><h3>Dispositivos — Gasto vs CPL</h3><canvas id="devChart"></canvas></div>
+        <div class="card"><h3>Placements — Ranking (CPL · Mensajes · Gasto)</h3><canvas id="placeCpl" style="max-height:500px"></canvas></div>
+      </div>
+    </div>
+  </details>
+
+  <div class="section-title">Heatmap diario · Mensajes por hora (Junio 1-16)</div>
+  <div class="row full">
+    <div class="card">
+      <h3>Cada celda = 1 dia x 1 hora · color por VOLUMEN estimado de mensajes · * = dia parcial</h3>
+      <div id="dailyHourMatrix" class="daily-hour-matrix"></div>
+      <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);flex-wrap:wrap;gap:12px">
+        <div><span style="display:inline-block;width:14px;height:14px;background:#1e293b;border-radius:3px;vertical-align:middle"></span> Pocos mensajes</div>
+        <div><span style="display:inline-block;width:14px;height:14px;background:#155e75;border-radius:3px;vertical-align:middle"></span> Bajo</div>
+        <div><span style="display:inline-block;width:14px;height:14px;background:#0891b2;border-radius:3px;vertical-align:middle"></span> Medio</div>
+        <div><span style="display:inline-block;width:14px;height:14px;background:#06b6d4;border-radius:3px;vertical-align:middle"></span> Alto</div>
+        <div><span style="display:inline-block;width:14px;height:14px;background:#fbbf24;border-radius:3px;vertical-align:middle"></span> Pico</div>
+        <div><span style="display:inline-block;width:14px;height:14px;background:#7c3aed;border-radius:3px;vertical-align:middle"></span> Dia parcial (Jun-16)</div>
+      </div>
+      <div style="margin-top:8px;font-size:11px;color:var(--muted)">Pasa el cursor sobre cualquier celda para ver leads estimados. Distribucion horaria basada en patrones reales del mes.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Hora del dia (agregado junio 1-16)</div>
+  <div class="row full">
+    <div class="card"><h3>CPL por hora (verde=barato, rojo=caro)</h3><div id="hourHeatmap" class="heatmap"></div><div class="heatmap-labels" id="hourLabels"></div></div>
+  </div>
+  <div class="row">
+    <div class="card"><h3>Mensajes y CPL por hora</h3><canvas id="hourChart"></canvas></div>
+    <div class="card"><h3>Dia de la semana — CPL</h3><canvas id="weekdayChart"></canvas></div>
+  </div>
+
+  <details class="collapsible">
+    <summary>Creativos (ad-level) — Junio 1-16 <span class="hint">click para desplegar/plegar</span></summary>
+    <div class="collapsible-body">
+  <div class="row">
+    <div class="card"><h3>Gasto por creativo</h3><canvas id="adsSpend"></canvas></div>
+    <div class="card"><h3>CPL por creativo (ordenado)</h3><canvas id="adsCpl"></canvas></div>
+  </div>
+  <div class="card"><h3>Tabla creativos (ordenado por CPL ascendente)</h3>
+    <table id="adsTable">
+      <colgroup>
+        <col class="c-ad">
+        <col class="c-camp">
+        <col class="c-num">
+        <col class="c-num">
+        <col class="c-num">
+        <col class="c-num">
+        <col class="c-num">
+        <col class="c-veredicto">
+      </colgroup>
+      <thead><tr><th>Creativo</th><th>Campana</th><th class="num">Gasto</th><th class="num">Mensajes</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">Frec.</th><th class="veredicto">Veredicto</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+    </div>
+  </details>
+
+
+</div>
+
+<footer>Datos reales junio 1-16 2026 via Windsor.ai · Actualizado 2026-06-16 · Jun-16 parcial · Base pronostico: 15 dias completos (Jun 1-15) · Generado por agente estratega-meta-ads</footer>
+
+<script src="bait-strategic-data.js"></script>
+<script>
+// === Override D con cache de localStorage si existe ===
+const LS_KEY_DATA = 'BAIT_DASHBOARD_DATA_V1';
+const LS_KEY_API  = 'BAIT_WINDSOR_API_KEY';
+try {
+  const cached = localStorage.getItem(LS_KEY_DATA);
+  if(cached){ window.BAIT_STRATEGIC = JSON.parse(cached); }
+} catch(e){ console.warn('No se pudo leer cache:',e); }
+
+const D = window.BAIT_STRATEGIC;
+Chart.defaults.color = '#8aa0c2';
+Chart.defaults.borderColor = '#1e2a44';
+
+// === Timestamp visible ===
+function renderLastUpdate(){
+  const meta = (window.BAIT_STRATEGIC && window.BAIT_STRATEGIC.meta) || {};
+  const lbl = document.getElementById('lastUpdateLabel');
+  const sub = document.getElementById('lastUpdateSub');
+  if(lbl) lbl.textContent = 'Actualizado: ' + (meta.updatedAt || '—');
+  if(sub) sub.textContent = 'Periodo: ' + (meta.dateRange || '—');
+}
+renderLastUpdate();
+
+// === API key modal ===
+window.openApiModal = function(){
+  const inp = document.getElementById('apiKeyInput');
+  if(inp) inp.value = localStorage.getItem(LS_KEY_API) || '';
+  document.getElementById('apiModal').classList.add('show');
+};
+window.closeApiModal = function(){
+  document.getElementById('apiModal').classList.remove('show');
+};
+window.saveApiKey = function(){
+  const v = (document.getElementById('apiKeyInput').value || '').trim();
+  if(!v){ showStatus('API key vacia','err'); return; }
+  localStorage.setItem(LS_KEY_API, v);
+  closeApiModal();
+  showStatus('API key guardada','ok');
+};
+window.clearApiKey = function(){
+  localStorage.removeItem(LS_KEY_API);
+  const inp = document.getElementById('apiKeyInput'); if(inp) inp.value='';
+  showStatus('API key borrada','info');
+};
+
+function showStatus(msg,kind){
+  const el = document.getElementById('refreshStatus');
+  if(!el) return;
+  el.className = 'status-pill show ' + (kind||'info');
+  el.textContent = msg;
+  if(kind==='ok' || kind==='err'){
+    setTimeout(()=>{ el.classList.remove('show'); }, 6000);
+  }
+}
+
+// === REFRESH desde Windsor.ai REST API ===
+// Estructura: usa endpoint https://connectors.windsor.ai/all?api_key=...&connector=facebook
+// Lo llamamos varias veces con distintos breakdowns; reconstruimos el shape de D.
+window.refreshFromWindsor = async function(){
+  const apiKey = localStorage.getItem(LS_KEY_API);
+  if(!apiKey){
+    showStatus('Configura tu API key primero','err');
+    openApiModal();
+    return;
+  }
+  const btn = document.getElementById('refreshBtn');
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin">↻</span> Actualizando…';
+  showStatus('Llamando a Windsor.ai…','info');
+
+  // Rango: del 1 del mes actual hasta hoy
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  const dateFrom = `${yyyy}-${mm}-01`;
+  const dateTo   = `${yyyy}-${mm}-${dd}`;
+
+  const ACCOUNT = '3782742661970783';
+  const CONNECTOR = 'facebook';
+  // Nombre real en Windsor (verificado get_fields):
+  const LEAD_FIELD = 'actions_onsite_conversion_messaging_conversation_started_7d';
+
+  const base = 'https://connectors.windsor.ai/all';
+  // URL minima: api_key + date_from + date_to + fields. Filtramos por account_id en JS post-fetch.
+  const common = `api_key=${encodeURIComponent(apiKey)}&date_from=${dateFrom}&date_to=${dateTo}`;
+
+  // Queries — los breakdowns se infieren de los fields (no se manda parametro "breakdowns")
+  // account_id incluido en cada query para poder filtrar BAIT solamente
+  const queries = {
+    daily:     `${base}?${common}&fields=account_id,date,spend,impressions,clicks,${LEAD_FIELD}`,
+    demos:     `${base}?${common}&fields=account_id,age,gender,spend,impressions,clicks,frequency,${LEAD_FIELD}`,
+    regions:   `${base}?${common}&fields=account_id,region,spend,impressions,clicks`,
+    devices:   `${base}?${common}&fields=account_id,device_platform,publisher_platform,spend,impressions,clicks,${LEAD_FIELD}`,
+    placements:`${base}?${common}&fields=account_id,publisher_platform,platform_position,spend,impressions,clicks,${LEAD_FIELD}`,
+    hours:     `${base}?${common}&fields=account_id,hourly_stats_aggregated_by_advertiser_time_zone,spend,impressions,clicks,${LEAD_FIELD}`,
+    ads:       `${base}?${common}&fields=account_id,ad_name,campaign,spend,impressions,clicks,frequency,${LEAD_FIELD}`
+  };
+
+  try {
+    // Fetch con timeout (AbortController) — si CORS bloquea silenciosamente, esto avisa
+    async function fetchWithTimeout(url, label, ms=25000){
+      const ctrl = new AbortController();
+      const t = setTimeout(()=>ctrl.abort(), ms);
+      console.log('[Windsor] ->', label, url.substring(0, 100)+'...');
+      try {
+        const res = await fetch(url, {method:'GET', signal:ctrl.signal});
+        clearTimeout(t);
+        console.log('[Windsor] <-', label, 'status', res.status);
+        if(!res.ok){
+          const body = await res.text();
+          throw new Error(`${label} ${res.status} ${res.statusText} · ${body.substring(0,200)}`);
+        }
+        return await res.json();
+      } catch(e){
+        clearTimeout(t);
+        if(e.name === 'AbortError') throw new Error(`${label} TIMEOUT despues de ${ms/1000}s — probable CORS bloqueado`);
+        throw e;
+      }
+    }
+
+    // Queries en paralelo (Promise.all) — mas rapido y permite ver cual falla
+    const entries = Object.entries(queries);
+    const counter = {done:0, total:entries.length};
+    const tick = (label, ok)=>{
+      counter.done++;
+      showStatus(`${counter.done}/${counter.total} ${ok?'✓':'✗'} ${label}…`, 'info');
+    };
+    const promises = entries.map(([k,url]) =>
+      fetchWithTimeout(url, k).then(j=>{tick(k,true); return [k,j];}).catch(e=>{tick(k,false); throw e;})
+    );
+    const settled = await Promise.allSettled(promises);
+
+    // Procesar resultados; si una query fallo registramos el error pero seguimos con las que si
+    const results = {};
+    const errors = [];
+    settled.forEach((s,i)=>{
+      const k = entries[i][0];
+      if(s.status === 'fulfilled'){
+        const [, json] = s.value;
+        let rows = Array.isArray(json) ? json : (json.data || json.rows || []);
+        rows = rows.filter(r => String(r.account_id||'') === ACCOUNT);
+        results[k] = rows;
+        console.log('[Windsor]', k, 'rows post-filtro BAIT:', rows.length);
+      } else {
+        errors.push(s.reason.message || String(s.reason));
+        console.error('[Windsor] FAIL', k, s.reason);
+      }
+    });
+    if(errors.length){
+      throw new Error(errors.join(' | '));
+    }
+
+    // === Transformar a shape D ===
+    const newD = { ...window.BAIT_STRATEGIC };
+
+    // Daily
+    if(results.daily && results.daily.length){
+      newD.daily = results.daily.map(r=>{
+        const leads = +(r[LEAD_FIELD]||0);
+        const spend = +(r.spend||0);
+        const clicks = +(r.clicks||0);
+        const impr = +(r.impressions||0);
+        const dt = new Date(r.date+'T00:00:00');
+        const dayNames = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
+        const label = `${dayNames[dt.getDay()]} ${String(dt.getDate()).padStart(2,'0')}`;
+        return {
+          date:r.date, label, spend, impressions:impr, clicks,
+          ctr: impr?clicks/impr:0,
+          cpm: impr?spend/impr*1000:0,
+          leads, cpl: leads?spend/leads:0,
+          partial: r.date === dateTo
+        };
+      }).sort((a,b)=>a.date.localeCompare(b.date));
+    }
+
+    // Demographics
+    if(results.demos && results.demos.length){
+      newD.demographics = results.demos.map(r=>{
+        const leads=+(r[LEAD_FIELD]||0), spend=+(r.spend||0), impr=+(r.impressions||0), clicks=+(r.clicks||0);
+        return {
+          age:r.age, gender:r.gender, spend, impressions:impr, clicks,
+          ctr: impr?clicks/impr:0,
+          cpm: impr?spend/impr*1000:0,
+          frequency: +(r.frequency||0),
+          leads, cpl: leads?spend/leads:0
+        };
+      });
+    }
+
+    // Regions
+    if(results.regions && results.regions.length){
+      newD.regions = results.regions.map(r=>{
+        const spend=+(r.spend||0), impr=+(r.impressions||0), clicks=+(r.clicks||0);
+        return {
+          region:r.region, spend, impressions:impr, clicks,
+          ctr: impr?clicks/impr:0,
+          cpm: impr?spend/impr*1000:0
+        };
+      });
+    }
+
+    // Placements
+    if(results.placements && results.placements.length){
+      newD.placements = results.placements.map(r=>{
+        const leads=+(r[LEAD_FIELD]||0), spend=+(r.spend||0), impr=+(r.impressions||0), clicks=+(r.clicks||0);
+        return {
+          platform:r.publisher_platform, position:r.platform_position,
+          spend, impressions:impr, clicks,
+          ctr: impr?clicks/impr:0,
+          cpm: impr?spend/impr*1000:0,
+          leads, cpl: leads?spend/leads:0
+        };
+      }).filter(p=>p.leads>0 || p.spend>50);
+    }
+
+    // Hours
+    if(results.hours && results.hours.length){
+      newD.hours = results.hours.map(r=>{
+        const hourStr = r.hourly_stats_aggregated_by_advertiser_time_zone || '00:00:00';
+        const hour = parseInt(hourStr.split(':')[0],10);
+        const leads=+(r[LEAD_FIELD]||0), spend=+(r.spend||0), impr=+(r.impressions||0), clicks=+(r.clicks||0);
+        return {
+          hour, label: String(hour).padStart(2,'0')+'h',
+          spend, impressions:impr, clicks, leads,
+          cpl: leads?spend/leads:0
+        };
+      }).sort((a,b)=>a.hour-b.hour);
+    }
+
+    // Ads
+    if(results.ads && results.ads.length){
+      newD.ads = results.ads.map(r=>{
+        const leads=+(r[LEAD_FIELD]||0), spend=+(r.spend||0), impr=+(r.impressions||0), clicks=+(r.clicks||0);
+        return {
+          ad: r.ad_name, campaign: r.campaign,
+          spend, impressions:impr,
+          ctr: impr?clicks/impr:0,
+          frequency: +(r.frequency||0),
+          leads, cpl: leads?spend/leads:0
+        };
+      }).filter(a=>a.leads>0).sort((a,b)=>a.cpl-b.cpl);
+    }
+
+    // Devices (Meta no expone CPL por device limpio — calculamos del breakdown)
+    if(results.devices && results.devices.length){
+      newD.devices = results.devices.map(r=>{
+        const leads=+(r[LEAD_FIELD]||0), spend=+(r.spend||0), impr=+(r.impressions||0), clicks=+(r.clicks||0);
+        const dev = r.device_platform || 'unknown';
+        return {
+          device: dev + (r.publisher_platform?` (${r.publisher_platform.toUpperCase().slice(0,2)})`:''),
+          platform: r.publisher_platform,
+          spend, impressions:impr, clicks,
+          ctr: impr?clicks/impr:0,
+          cpm: impr?spend/impr*1000:0,
+          leads, cpl: leads?spend/leads:0
+        };
+      });
+    }
+
+    // Weekday agregado desde daily
+    if(newD.daily && newD.daily.length){
+      const dayNames = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
+      const agg = dayNames.map((n,i)=>({day:n,dayNum:i,spend:0,impressions:0,clicks:0,leads:0}));
+      newD.daily.forEach(d=>{
+        const dow = new Date(d.date+'T00:00:00').getDay();
+        agg[dow].spend += d.spend;
+        agg[dow].impressions += d.impressions;
+        agg[dow].clicks += d.clicks;
+        agg[dow].leads += d.leads;
+      });
+      newD.weekdays = agg.map(a=>({
+        ...a,
+        ctr: a.impressions?a.clicks/a.impressions:0,
+        cpm: a.impressions?a.spend/a.impressions*1000:0,
+        cpl: a.leads?a.spend/a.leads:0
+      }));
+    }
+
+    // Meta
+    const complete = (newD.daily||[]).filter(d=>!d.partial).length;
+    newD.meta = {
+      dateRange: `${dateFrom} a ${dateTo}`,
+      daysReal: (newD.daily||[]).length,
+      daysComplete: complete,
+      updatedAt: `${dateTo} ${String(today.getHours()).padStart(2,'0')}:${String(today.getMinutes()).padStart(2,'0')}`,
+      account: ACCOUNT,
+      note: 'Datos traidos directamente de Windsor REST API · ' + dateTo + ' parcial'
+    };
+
+    // Guardar y recargar
+    localStorage.setItem(LS_KEY_DATA, JSON.stringify(newD));
+    showStatus('Actualizado · recargando…','ok');
+    setTimeout(()=>location.reload(), 900);
+  } catch(err){
+    console.error(err);
+    btn.disabled = false;
+    btn.innerHTML = orig;
+    let msg = err.message || String(err);
+    if(msg.includes('Failed to fetch') || msg.includes('NetworkError')){
+      msg = 'Windsor bloqueo el llamado (CORS desde file://). Hay que abrir el HTML desde un servidor local o pedirle a Claude.';
+    }
+    showStatus('Error: ' + msg, 'err');
+  }
+};
+
+// Boton extra: limpiar cache (para debugging) — Shift+click en Actualizar
+document.getElementById('refreshBtn').addEventListener('click', function(e){
+  if(e.shiftKey){
+    e.preventDefault();
+    if(confirm('Borrar cache de datos? Volveras a los datos del archivo .js')){
+      localStorage.removeItem(LS_KEY_DATA);
+      location.reload();
+    }
+  }
+}, true);
+
+const fmtMXN = n => '$'+Math.round(n||0).toLocaleString('es-MX');
+const fmtMXNd = n => '$'+(n||0).toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtPct = n => ((n||0)*100).toFixed(2)+'%';
+
+// === TOTALES (excluye Jun-16 parcial para promedio) ===
+const completeDaily = D.daily.filter(d=>!d.partial);
+const totSpendFull = completeDaily.reduce((s,r)=>s+r.spend,0);
+const totLeadsFull = completeDaily.reduce((s,r)=>s+(r.leads||0),0);
+const daysComplete = completeDaily.length; // 15
+const avgDailySpend = totSpendFull / daysComplete;
+const avgDailyLeads = totLeadsFull / daysComplete;
+const cplGlobal = totSpendFull / totLeadsFull;
+
+// Totals including partial day
+const totSpendAll = D.daily.reduce((s,r)=>s+r.spend,0);
+const totLeadsAll = D.daily.reduce((s,r)=>s+(r.leads||0),0);
+const totImpr = D.demographics.reduce((s,r)=>s+r.impressions,0);
+const totClicks = D.demographics.reduce((s,r)=>s+r.clicks,0);
+
+// Projection (linear, 14 days remaining using 15-day average)
+const projLeads14 = Math.round(avgDailyLeads * 14);
+const projLeadsTotal = totLeadsAll + projLeads14;
+
+// === KPIs ===
+const kpiEl = document.getElementById('kpis');
+const kpis = [
+  { label:"Gasto Jun 1-16", val: fmtMXN(totSpendAll), sub: fmtMXN(avgDailySpend)+"/dia prom (15d)", subClass:"" },
+  { label:"Mensajes iniciados", val: totLeadsAll.toLocaleString(), sub: Math.round(avgDailyLeads)+"/dia prom (15d completos) · Jun-16 parcial", subClass:"" },
+  { label:"CPL Global (15d)", val: fmtMXNd(cplGlobal), sub: cplGlobal < 28 ? "Bueno — tendencia bajista" : cplGlobal < 32 ? "Aceptable" : "Caro — actuar", subClass: cplGlobal < 28 ? "good" : cplGlobal < 32 ? "warn" : "bad" },
+  { label:"Proyeccion Jun completo", val: "~"+projLeadsTotal.toLocaleString(), sub: "Lineal base 14d restantes · Escenario A", subClass:"warn" }
+];
+kpiEl.innerHTML = kpis.map(k=>`<div class="kpi-card"><div class="label">${k.label}</div><div class="val">${k.val}</div><div class="sub ${k.subClass}">${k.sub}</div></div>`).join('');
+
+// === URGENCY LIST ===
+document.getElementById('urgencyList').innerHTML = `
+  <li><strong>HOY 16 jun — Reducir Feed FB de 57% a maximo 35% del gasto:</strong> Con 16 dias de data, Feed FB tiene CPL $32.11 vs Search $22.00 y Stories $23.23. Cada dia sin mover esto cuesta ~$3,000 MXN extra. Reasignar a FB Reels y Stories.</li>
+  <li><strong>HOY 16 jun — Pausar PISO Anuncio 03 + 04:</strong> CPL $101.83 y $42.75 respectivamente. Gastan ~$630/dia combinados. Liberar ese budget a Genesys Anuncio 01 (CPL $17.91).</li>
+  <li><strong>Esta semana — Crear adset iPhone dedicado:</strong> CPL $21.72 (FB) y $22.27 (IG) vs Android $29.81. Costo de no tenerlo separado: ~$600/dia. Adset exclusivo iOS con creativo Genesys 01.</li>
+  <li><strong>Esta semana — Rotar/refrescar creativo "Pruebas y Perfectas":</strong> "Anuncio Artes Agencia" CPL $39.33 es el peor del grupo. Pausar y reasignar a "Artes Agencia 2" ($30.54) mientras subes uno nuevo.</li>
+  <li><strong>20-21 jun — Preparar push fin de quincena:</strong> Patron del 15 jun (mejor dia del mes: 448 msgs · CPL $26.07) puede repetirse. Subir budget +20% jueves 19 noche para que el algoritmo este listo.</li>
+`;
+
+// === INSIGHTS ===
+const insightsEl = document.getElementById('insights');
+insightsEl.innerHTML = [
+  `<div class="insight"><strong>CPL $27.88 en 15 dias completos — mejor que mayo ($30.64) con tendencia bajista:</strong> La segunda semana (8-12 jun) promedio CPL $26.77 y la tercera semana (13-15 jun) cerro en $26.59. El CPL esta bajando sistematicamente y el volumen tambien sube: la quincena del 15 jun fue el mejor dia del mes con 448 mensajes a CPL $26.07.</div>`,
+  `<div class="insight"><strong>Post-mortem Dia del Padre (14 jun): impacto moderado, quincena lo supero:</strong> 14 jun entrego 434 msgs a CPL $27.20 — mas volumen que el promedio pero CPL sin la mejora esperada (la subasta competitiva absorbio el pico). El dia 15 (quincena) fue mejor: 448 msgs a $26.07. Ensenanza: la quincena tiene mas impacto que el Dia del Padre para esta audiencia de portabilidad.</div>`,
+  `<div class="insight warn"><strong>ALERTA frecuencia: hombres 25-34 ya en 2.03 — umbral critico en ~5 dias:</strong> Con 16 dias y frecuencia 2.03, el segmento que genera 1,792 mensajes (el mayor de la cuenta) esta a 0.47 puntos de la zona de fatiga. Si llega a 2.5 antes del 30 jun, el CPL sube $3-5. Accion: ampliar audiencia o rotar creativo en el CBO principal.</div>`,
+  `<div class="insight"><strong>iPhone CPL $21.72 vs Android $29.81 — brecha de $8.09/lead con 1,341 leads en 16 dias:</strong> El adset iPhone dedicado sigue sin crearse. Con ~85 leads/dia iPhone en adset compartido, el costo de oportunidad es ~$687 diarios. En 14 dias restantes eso es ~$9,600 MXN de CPL evitable.</div>`,
+  `<div class="insight warn"><strong>Feed FB absorbe 57% del gasto ($87K de $160K) con CPL $32.11 — peor del top:</strong> Los 4 placements ganadores (Search $22.00, Stories $23.23, Reels Overlay $23.41, FB Reels $24.65) solo reciben 35% combinado. Invertir este ratio es la palanca de CPL mas rapida sin crear nuevos creativos ni audiencias.</div>`,
+].join('');
+
+// === TENDENCIA DIARIA ===
+(function(){
+  const ctx = document.getElementById('dailyTrend').getContext('2d');
+  const labels = D.daily.map(d=>d.label);
+  const leads = D.daily.map(d=>d.leads);
+  const cpls = D.daily.map(d=>d.cpl);
+  new Chart(ctx,{
+    data:{
+      labels,
+      datasets:[
+        {type:'bar',label:'Mensajes',data:leads,backgroundColor:D.daily.map(d=>d.partial?'rgba(124,58,237,0.5)':'rgba(34,211,238,0.4)'),borderColor:D.daily.map(d=>d.partial?'#7c3aed':'#22d3ee'),borderWidth:1,yAxisID:'y'},
+        {type:'line',label:'CPL ($MXN)',data:cpls,borderColor:'#fbbf24',backgroundColor:'rgba(251,191,36,0.1)',tension:0.3,pointRadius:5,pointBackgroundColor:cpls.map(c=>c<26?'#10b981':c<30?'#fbbf24':'#ef4444'),yAxisID:'y1'}
+      ]
+    },
+    options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'},tooltip:{callbacks:{label:ctx2=>{if(ctx2.dataset.label==='CPL ($MXN)') return 'CPL: '+fmtMXNd(ctx2.raw); return 'Mensajes: '+ctx2.raw;}}}},scales:{y:{beginAtZero:true,grid:{color:'#1e2a44'},title:{display:true,text:'Mensajes'}},y1:{position:'right',beginAtZero:false,min:18,grid:{display:false},title:{display:true,text:'CPL ($MXN)'}}}}
+  });
+})();
+
+// === DEMOGRAFIA GASTO ===
+(function(){
+  const males = D.demographics.filter(r=>r.gender==='male' && r.leads>5);
+  const females = D.demographics.filter(r=>r.gender==='female' && r.leads>5);
+  const ages = ['18-24','25-34','35-44','45-54','55-64','65+'];
+  const mSpend = ages.map(a=>{ const r=males.find(m=>m.age===a); return r?r.spend:0; });
+  const fSpend = ages.map(a=>{ const r=females.find(m=>m.age===a); return r?r.spend:0; });
+  new Chart(document.getElementById('demSpend').getContext('2d'),{type:'bar',data:{labels:ages,datasets:[
+    {label:'Hombres',data:mSpend,backgroundColor:'rgba(34,211,238,0.55)',borderColor:'#22d3ee',borderWidth:1},
+    {label:'Mujeres',data:fSpend,backgroundColor:'rgba(251,191,36,0.5)',borderColor:'#fbbf24',borderWidth:1}
+  ]},options:{responsive:true,plugins:{legend:{position:'top'}},scales:{x:{stacked:true,grid:{color:'#1e2a44'}},y:{stacked:true,grid:{color:'#1e2a44'},ticks:{callback:v=>'$'+Math.round(v/1000)+'K'}}}}});
+})();
+
+// === DEMOGRAFIA CPL ===
+(function(){
+  const males = D.demographics.filter(r=>r.gender==='male' && r.leads>5);
+  const females = D.demographics.filter(r=>r.gender==='female' && r.leads>5);
+  const ages = ['18-24','25-34','35-44','45-54','55-64','65+'];
+  const mCpl = ages.map(a=>{ const r=males.find(m=>m.age===a); return r?r.cpl:null; });
+  const fCpl = ages.map(a=>{ const r=females.find(m=>m.age===a); return r?r.cpl:null; });
+  new Chart(document.getElementById('demCpl').getContext('2d'),{type:'bar',data:{labels:ages,datasets:[
+    {label:'Hombres',data:mCpl,backgroundColor:mCpl.map(c=>c===null?'transparent':c<26?'rgba(16,185,129,0.6)':c<30?'rgba(245,158,11,0.6)':'rgba(239,68,68,0.6)'),borderColor:mCpl.map(c=>c===null?'transparent':c<26?'#10b981':c<30?'#f59e0b':'#ef4444'),borderWidth:1},
+    {label:'Mujeres',data:fCpl,backgroundColor:fCpl.map(c=>c===null?'transparent':c<26?'rgba(16,185,129,0.4)':c<30?'rgba(245,158,11,0.4)':'rgba(239,68,68,0.4)'),borderColor:fCpl.map(c=>c===null?'transparent':c<26?'#10b981':c<30?'#f59e0b':'#ef4444'),borderWidth:1}
+  ]},options:{responsive:true,plugins:{legend:{position:'top'},tooltip:{callbacks:{label:ctx2=>ctx2.dataset.label+' CPL: '+fmtMXNd(ctx2.raw)}}},scales:{x:{grid:{color:'#1e2a44'}},y:{grid:{color:'#1e2a44'},ticks:{callback:v=>'$'+v},min:15,max:40}}}});
+})();
+
+
+// === REGION GASTO ===
+(function(){
+  const top = [...D.regions].sort((a,b)=>b.spend-a.spend).slice(0,12);
+  new Chart(document.getElementById('regSpend').getContext('2d'),{type:'bar',data:{labels:top.map(r=>r.region),datasets:[{label:'Gasto MXN',data:top.map(r=>r.spend),backgroundColor:'rgba(34,211,238,0.5)',borderColor:'#22d3ee',borderWidth:1}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#1e2a44'},ticks:{callback:v=>'$'+Math.round(v/1000)+'K'}},y:{grid:{color:'#1e2a44'}}}}});
+})();
+
+// === REGION CTR ===
+(function(){
+  const top = [...D.regions].sort((a,b)=>b.ctr-a.ctr).slice(0,12);
+  new Chart(document.getElementById('regCtr').getContext('2d'),{type:'bar',data:{labels:top.map(r=>r.region),datasets:[{label:'CTR%',data:top.map(r=>+(r.ctr*100).toFixed(2)),backgroundColor:top.map(r=>r.ctr>0.02?'rgba(16,185,129,0.6)':r.ctr>0.015?'rgba(245,158,11,0.5)':'rgba(239,68,68,0.4)'),borderColor:top.map(r=>r.ctr>0.02?'#10b981':r.ctr>0.015?'#f59e0b':'#ef4444'),borderWidth:1}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#1e2a44'},ticks:{callback:v=>v+'%'}},y:{grid:{color:'#1e2a44'}}}}});
+})();
+
+// === DEVICE CHART ===
+(function(){
+  const devs = D.devices.filter(d=>d.leads>0);
+  new Chart(document.getElementById('devChart').getContext('2d'),{type:'bar',data:{labels:devs.map(d=>d.device),datasets:[
+    {label:'CPL ($MXN)',data:devs.map(d=>d.cpl),backgroundColor:devs.map(d=>d.cpl<24?'rgba(16,185,129,0.7)':d.cpl<30?'rgba(245,158,11,0.7)':'rgba(239,68,68,0.7)'),borderColor:devs.map(d=>d.cpl<24?'#10b981':d.cpl<30?'#f59e0b':'#ef4444'),borderWidth:1}
+  ]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx2=>'CPL: '+fmtMXNd(ctx2.raw)}}},scales:{x:{grid:{color:'#1e2a44'}},y:{grid:{color:'#1e2a44'},ticks:{callback:v=>'$'+v},min:15}}}});
+})();
+
+// === PLACEMENT RANKING (CPL · Mensajes · Gasto) ===
+(function(){
+  const places = [...D.placements].filter(p=>p.leads>0).sort((a,b)=>a.cpl-b.cpl);
+  new Chart(document.getElementById('placeCpl').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:places.map(p=>p.platform+' · '+p.position.replace('facebook_','').replace('instagram_','')),
+      datasets:[
+        {label:'CPL ($)',data:places.map(p=>p.cpl),backgroundColor:places.map(p=>p.cpl<24?'rgba(16,185,129,0.75)':p.cpl<28?'rgba(245,158,11,0.75)':'rgba(239,68,68,0.75)'),borderColor:places.map(p=>p.cpl<24?'#10b981':p.cpl<28?'#f59e0b':'#ef4444'),borderWidth:1,xAxisID:'x'},
+        {label:'Mensajes',data:places.map(p=>p.leads),backgroundColor:'rgba(34,211,238,0.55)',borderColor:'#22d3ee',borderWidth:1,xAxisID:'x2'},
+        {label:'Gasto ($K)',data:places.map(p=>+(p.spend/1000).toFixed(1)),backgroundColor:'rgba(139,92,246,0.55)',borderColor:'#8b5cf6',borderWidth:1,xAxisID:'x'}
+      ]
+    },
+    options:{
+      indexAxis:'y',
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{display:true,position:'top',labels:{usePointStyle:true,padding:12,font:{size:11}}},
+        tooltip:{callbacks:{label:ctx=>{
+          if(ctx.datasetIndex===0) return 'CPL: '+fmtMXNd(ctx.raw);
+          if(ctx.datasetIndex===1) return 'Mensajes: '+ctx.raw.toLocaleString('es-MX');
+          if(ctx.datasetIndex===2) return 'Gasto: $'+(ctx.raw).toFixed(1)+'K MXN';
+        }}}
+      },
+      scales:{
+        x:{position:'top',grid:{color:'#1e2a44'},ticks:{callback:v=>'$'+v},title:{display:true,text:'CPL · Gasto ($K MXN)',color:'#8aa0c2',font:{size:11}}},
+        x2:{position:'bottom',grid:{display:false},ticks:{callback:v=>v.toLocaleString('es-MX')},title:{display:true,text:'Mensajes (volumen)',color:'#22d3ee',font:{size:11}}},
+        y:{grid:{color:'#1e2a44'},ticks:{font:{size:11}}}
+      }
+    }
+  });
+})();
+
+
+// === HEATMAP HORA ===
+(function(){
+  const hm = document.getElementById('hourHeatmap');
+  const hl = document.getElementById('hourLabels');
+  const minCpl = Math.min(...D.hours.map(h=>h.cpl));
+  const maxCpl = Math.max(...D.hours.map(h=>h.cpl));
+  D.hours.forEach(h=>{
+    const t = (h.cpl - minCpl)/(maxCpl - minCpl);
+    const r = Math.round(16 + t*(239-16));
+    const g = Math.round(185 - t*(185-68));
+    const b = Math.round(129 - t*(129-68));
+    const cell = document.createElement('div');
+    cell.className = 'heatmap-cell';
+    cell.style.background = `rgb(${r},${g},${b})`;
+    cell.style.color = t>0.5?'#fff':'#0b1220';
+    cell.title = h.label+': CPL '+fmtMXNd(h.cpl)+' · '+h.leads+' msgs';
+    cell.textContent = '$'+Math.round(h.cpl);
+    hm.appendChild(cell);
+    const lbl = document.createElement('div');
+    lbl.textContent = h.hour;
+    lbl.style.textAlign='center';
+    hl.appendChild(lbl);
+  });
+})();
+
+// === HORA CHART ===
+(function(){
+  new Chart(document.getElementById('hourChart').getContext('2d'),{data:{labels:D.hours.map(h=>h.label),datasets:[
+    {type:'bar',label:'Mensajes',data:D.hours.map(h=>h.leads),backgroundColor:'rgba(34,211,238,0.35)',borderColor:'#22d3ee',borderWidth:1,yAxisID:'y'},
+    {type:'line',label:'CPL ($MXN)',data:D.hours.map(h=>h.cpl),borderColor:'#fbbf24',backgroundColor:'rgba(251,191,36,0.08)',tension:0.3,pointRadius:3,yAxisID:'y1'}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'}},scales:{y:{grid:{color:'#1e2a44'},title:{display:true,text:'Mensajes'},beginAtZero:true},y1:{position:'right',grid:{display:false},min:18,title:{display:true,text:'CPL ($MXN)'}}}}});
+})();
+
+// === WEEKDAY CHART ===
+(function(){
+  const order = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
+  const wd = order.map(d=>D.weekdays.find(w=>w.day===d)||{day:d,cpl:0,leads:0});
+  new Chart(document.getElementById('weekdayChart').getContext('2d'),{type:'bar',data:{labels:wd.map(w=>w.day),datasets:[
+    {label:'CPL',data:wd.map(w=>w.cpl),backgroundColor:wd.map(w=>w.cpl<26?'rgba(16,185,129,0.7)':w.cpl<30?'rgba(245,158,11,0.7)':'rgba(239,68,68,0.7)'),borderColor:wd.map(w=>w.cpl<26?'#10b981':w.cpl<30?'#f59e0b':'#ef4444'),borderWidth:1}
+  ]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx2=>'CPL: '+fmtMXNd(ctx2.raw)+' · '+wd[ctx2.dataIndex].leads+' msgs'}}},scales:{x:{grid:{color:'#1e2a44'}},y:{grid:{color:'#1e2a44'},min:20,ticks:{callback:v=>'$'+v}}}}});
+})();
+
+// === DAILY HOUR MATRIX ===
+(function(){
+  const matrix = document.getElementById('dailyHourMatrix');
+  const dates = D.daily.map(d=>({label:d.label, leads:d.leads, partial:d.partial}));
+  const hourlyLeads = [138,86,59,38,39,59,103,132,168,185,264,301,260,249,232,243,196,215,213,239,226,193,187,133];
+  const totalHL = hourlyLeads.reduce((a,b)=>a+b,0);
+  const hourWeights = hourlyLeads.map(h=>h/totalHL);
+
+  // header row
+  const corner = document.createElement('div');
+  corner.className='dh-corner';
+  matrix.appendChild(corner);
+  for(let h=0;h<24;h++){
+    const lbl=document.createElement('div');
+    lbl.className='dh-hour-label';
+    lbl.textContent=h;
+    matrix.appendChild(lbl);
+  }
+
+  // data rows
+  dates.forEach(day=>{
+    const dlbl=document.createElement('div');
+    dlbl.className='dh-day-label';
+    dlbl.textContent=day.label;
+    if(day.partial) dlbl.style.color='#a78bfa';
+    matrix.appendChild(dlbl);
+
+    const rowLeads = hourWeights.map(w=>Math.max(0,Math.round(day.leads*w)));
+    const maxInRow = Math.max(...rowLeads);
+
+    for(let h=0;h<24;h++){
+      const val=rowLeads[h];
+      const cell=document.createElement('div');
+      cell.className='dh-cell';
+      if(day.partial) cell.classList.add('partial-marker');
+
+      if(val===0){
+        cell.classList.add('thin');
+        cell.style.background='#1e2a44';
+      } else {
+        const t=val/Math.max(maxInRow,1);
+        if(t<0.2){ cell.style.background='#1e293b'; }
+        else if(t<0.4){ cell.style.background='#155e75'; }
+        else if(t<0.6){ cell.style.background='#0891b2'; }
+        else if(t<0.8){ cell.style.background='#06b6d4'; }
+        else { cell.style.background='#fbbf24'; cell.style.color='#0b1220'; }
+        cell.textContent=val;
+      }
+      cell.title=day.label+' '+h+'h · ~'+val+' msgs estimados'+(day.partial?' (dia parcial)':'');
+      matrix.appendChild(cell);
+    }
+  });
+})();
+
+// === ADS SPEND ===
+(function(){
+  const top = [...D.ads].sort((a,b)=>b.spend-a.spend).slice(0,10);
+  new Chart(document.getElementById('adsSpend').getContext('2d'),{type:'bar',data:{labels:top.map(a=>a.ad.length>28?a.ad.substr(0,28)+'…':a.ad),datasets:[{label:'Gasto MXN',data:top.map(a=>a.spend),backgroundColor:'rgba(34,211,238,0.45)',borderColor:'#22d3ee',borderWidth:1}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#1e2a44'},ticks:{callback:v=>'$'+Math.round(v/1000)+'K'}},y:{grid:{color:'#1e2a44'}}}}});
+})();
+
+// === ADS CPL ===
+(function(){
+  const sorted = [...D.ads].filter(a=>a.leads>5).sort((a,b)=>a.cpl-b.cpl);
+  new Chart(document.getElementById('adsCpl').getContext('2d'),{type:'bar',data:{labels:sorted.map(a=>a.ad.length>25?a.ad.substr(0,25)+'…':a.ad),datasets:[{label:'CPL',data:sorted.map(a=>a.cpl),backgroundColor:sorted.map(a=>a.cpl<25?'rgba(16,185,129,0.7)':a.cpl<30?'rgba(245,158,11,0.7)':a.cpl<40?'rgba(239,68,68,0.6)':'rgba(239,68,68,0.3)'),borderColor:sorted.map(a=>a.cpl<25?'#10b981':a.cpl<30?'#f59e0b':'#ef4444'),borderWidth:1}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#1e2a44'},ticks:{callback:v=>'$'+v},min:10},y:{grid:{color:'#1e2a44'}}}}});
+})();
+
+// === TABLA ADS ===
+(function(){
+  const tb = document.querySelector('#adsTable tbody');
+  const rows = [...D.ads].filter(a=>a.leads>0).sort((a,b)=>a.cpl-b.cpl);
+  rows.forEach(r=>{
+    const v = r.cpl<22?'<span class="pill star">Escalar max</span>':r.cpl<27?'<span class="pill good">Escalar</span>':r.cpl<32?'<span class="pill good">Mantener</span>':r.cpl<40?'<span class="pill warn">Reducir</span>':'<span class="pill bad">Pausar</span>';
+    tb.innerHTML+=`<tr><td class="ad-name" title="${r.ad}">${r.ad}</td><td class="camp" title="${r.campaign}">${r.campaign}</td><td class="num">${fmtMXN(r.spend)}</td><td class="num">${r.leads}</td><td class="num">${fmtMXNd(r.cpl)}</td><td class="num">${fmtPct(r.ctr)}</td><td class="num">${r.frequency.toFixed(2)}</td><td class="veredicto">${v}</td></tr>`;
+  });
+})();
+
+// === SCENARIO CHART ===
+(function(){
+  new Chart(document.getElementById('scenarioChart').getContext('2d'),{type:'bar',data:{labels:['A · Continuista','B · Optimizado','C · Pesimista'],datasets:[
+    {label:'Mensajes cierre total junio',data:[10900,12900,10100],backgroundColor:['rgba(34,211,238,0.5)','rgba(16,185,129,0.5)','rgba(239,68,68,0.4)'],borderColor:['#22d3ee','#10b981','#ef4444'],borderWidth:2,yAxisID:'y'},
+    {label:'CPL promedio mes',data:[27.50,23.80,31.50],backgroundColor:['rgba(34,211,238,0.2)','rgba(16,185,129,0.2)','rgba(239,68,68,0.2)'],borderColor:['#22d3ee','#10b981','#ef4444'],borderWidth:2,yAxisID:'y1'}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'}},scales:{y:{grid:{color:'#1e2a44'},title:{display:true,text:'Mensajes'},beginAtZero:true},y1:{position:'right',grid:{display:false},title:{display:true,text:'CPL ($MXN)'},min:15}}}});
+})();
+
+// === DAILY FORECAST ===
+(function(){
+  const realLabels = D.daily.map(d=>d.label);
+  const realLeads  = D.daily.map(d=>d.partial ? null : d.leads);
+  const realCpls   = D.daily.map(d=>d.partial ? null : d.cpl);
+  const avgLeads   = 371; // avg 15 complete days (Jun 1-15)
+  const avgCpl     = 27.88;
+
+  // Projected days 17-30 (14 dias restantes; 1-16 son reales)
+  const projLabels=[]; const projLeads=[]; const projCpls=[];
+  for(let d=17;d<=30;d++){
+    const dow=(new Date(2026,5,d)).getDay(); // 0=sun
+    let leads=avgLeads, cpl=avgCpl;
+    // Fin de quincena 20-21 jun (vie-sab)
+    if(d===20){leads=Math.round(avgLeads*1.15);cpl=26.5;}
+    else if(d===21){leads=Math.round(avgLeads*1.10);cpl=26.8;}
+    // Fin de mes / cierre Q2
+    else if(d===30){leads=Math.round(avgLeads*1.10);cpl=27.0;}
+    // Fines de semana normales
+    else if(dow===0){leads=Math.round(avgLeads*0.90);cpl=28.5;}
+    else if(dow===6){leads=Math.round(avgLeads*0.95);cpl=28.0;}
+    projLabels.push(''+d);
+    projLeads.push(leads);
+    projCpls.push(cpl);
+  }
+
+  const allLabels=[...realLabels,...projLabels];
+  const allLeads=[...D.daily.map(d=>d.leads),...projLeads];
+  const allCpls=[...D.daily.map(d=>d.partial?null:d.cpl),...projCpls];
+  // Highlight events: indices 3=20jun, 4=21jun (fin quincena), 13=30jun (cierre Q2)
+  const colors=[...D.daily.map(d=>d.partial?'rgba(124,58,237,0.4)':'rgba(34,211,238,0.4)'),...projLeads.map((_,i)=>i===3?'rgba(251,191,36,0.7)':i===4?'rgba(251,191,36,0.55)':i===13?'rgba(251,191,36,0.55)':'rgba(139,92,246,0.35)')];
+
+  new Chart(document.getElementById('dailyForecast').getContext('2d'),{data:{labels:allLabels,datasets:[
+    {type:'bar',label:'Mensajes (real+proyectado)',data:allLeads,backgroundColor:colors,borderColor:colors.map(c=>c.replace('0.4','0.9').replace('0.7','1').replace('0.5','0.9').replace('0.35','0.8')),borderWidth:1,yAxisID:'y'},
+    {type:'line',label:'CPL',data:allCpls,borderColor:'#fbbf24',backgroundColor:'transparent',tension:0.3,pointRadius:3,spanGaps:true,yAxisID:'y1',borderDash:[0,0]}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'},annotation:{annotations:{}}},scales:{y:{grid:{color:'#1e2a44'},beginAtZero:true,title:{display:true,text:'Mensajes'}},y1:{position:'right',grid:{display:false},min:18,title:{display:true,text:'CPL ($MXN)'}}}}});
+})();
+</script>
+</body>
+</html>
