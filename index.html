@@ -205,9 +205,9 @@
 
   <div id="kpis" class="row four"></div>
 
-  <div class="section-title">Pronostico cierre de junio (19-30 jun)</div>
+  <div class="section-title">Pronostico cierre de junio (proyeccion mensual 1-30 jun)</div>
   <div class="forecast">
-    <h2>Junio 19-30 · 11 dias restantes · 3 escenarios</h2>
+    <h2>Cierre total junio · 30 dias · 3 escenarios (real 1-18 + proyeccion 19-30)</h2>
     <div style="color:#cbd5e1;font-size:13px;line-height:1.6;margin-bottom:18px">
       <strong>Base real:</strong> Junio 1-18 cerro con <strong>$183,796 MXN</strong> gastados, <strong>6,579 mensajes</strong>, CPL global <strong>$27.94</strong> (promedio diario: <strong>$10,211 gasto / 366 mensajes / CPL $27.94</strong>). Jun-19 parcial (dia en curso) suma ~$3,404 y ~129 mensajes — excluido de promedios base.<br><br>
       <strong>Post-mortem 16-18 jun:</strong> Mar-16 (352 msgs · $28.79), Mie-17 (346 msgs · $29.32), Jue-18 (323 msgs · $26.33). El jueves 18 fue el mejor dia de la semana post-pico con CPL bajando a $26.33 — el mismo patron que el 5 jun (vie). Jun-19 va en camino a ~350 msgs a CPL ~$26 (dato parcial hasta ~14h).<br><br>
@@ -1003,44 +1003,86 @@ insightsEl.innerHTML = [
   ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'}},scales:{y:{grid:{color:'#1e2a44'},title:{display:true,text:'Mensajes'},beginAtZero:true},y1:{position:'right',grid:{display:false},title:{display:true,text:'CPL ($MXN)'},min:15}}}});
 })();
 
-// === DAILY FORECAST ===
+// === DAILY FORECAST · Jun 1-30 (real 1-18 + proyeccion 19-30 incluyendo dia parcial) ===
 (function(){
-  const realLabels = D.daily.map(d=>d.label);
-  const realLeads  = D.daily.map(d=>d.partial ? null : d.leads);
-  const realCpls   = D.daily.map(d=>d.partial ? null : d.cpl);
+  // Solo dias COMPLETOS son "reales" — el parcial pasa a la proyeccion para no romper la grafica
+  const realDays  = D.daily.filter(d=>!d.partial);
+  const realLabels = realDays.map(d=>d.label);
+  const realLeads  = realDays.map(d=>d.leads);
+  const realCpls   = realDays.map(d=>d.cpl);
   const avgLeads   = 366; // avg 18 complete days (Jun 1-18)
   const avgCpl     = 27.94;
 
-  // Projected days 20-30 (11 dias restantes; 1-19 son reales o parcial)
+  // Proyeccion 19-30 (12 dias). Jun-19 se proyecta a dia completo desde el parcial actual.
   const projLabels=[]; const projLeads=[]; const projCpls=[];
-  for(let d=20;d<=30;d++){
-    const dow=(new Date(2026,5,d)).getDay(); // 0=sun
+  const dayNames = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
+  for(let d=19;d<=30;d++){
+    const dow = (new Date(2026,5,d)).getDay(); // 0=sun
     let leads=avgLeads, cpl=avgCpl;
-    // Fin de quincena 20-21 jun (sab-dom)
-    if(d===20){leads=Math.round(avgLeads*1.15);cpl=26.2;}
-    else if(d===21){leads=Math.round(avgLeads*1.08);cpl=26.8;}
-    // Fin de mes / cierre Q2
-    else if(d===30){leads=Math.round(avgLeads*1.12);cpl=26.8;}
+    // Jun-19 (hoy, viernes) — extrapola desde dato parcial real (~350 al cierre proyectado)
+    if(d===19){ leads=350; cpl=26.40; }
+    // Sab 20 jun = fin de quincena (pico)
+    else if(d===20){ leads=Math.round(avgLeads*1.15); cpl=26.2; }
+    // Dom 21 jun = fin de quincena (cola)
+    else if(d===21){ leads=Math.round(avgLeads*1.08); cpl=26.8; }
+    // Mar 30 jun = cierre Q2
+    else if(d===30){ leads=Math.round(avgLeads*1.12); cpl=26.8; }
     // Fines de semana normales
-    else if(dow===0){leads=Math.round(avgLeads*0.88);cpl=28.8;}
-    else if(dow===6){leads=Math.round(avgLeads*0.93);cpl=28.2;}
-    // Miercoles/jueves tienden a CPL alto
-    else if(dow===3||dow===4){leads=Math.round(avgLeads*0.97);cpl=29.2;}
-    projLabels.push(''+d);
+    else if(dow===0){ leads=Math.round(avgLeads*0.88); cpl=28.8; }
+    else if(dow===6){ leads=Math.round(avgLeads*0.93); cpl=28.2; }
+    // Mie/Jue tienden a CPL alto
+    else if(dow===3||dow===4){ leads=Math.round(avgLeads*0.97); cpl=29.2; }
+    projLabels.push(`${d} ${dayNames[dow]}`);
     projLeads.push(leads);
     projCpls.push(cpl);
   }
 
-  const allLabels=[...realLabels,...projLabels];
-  const allLeads=[...D.daily.map(d=>d.leads),...projLeads];
-  const allCpls=[...D.daily.map(d=>d.partial?null:d.cpl),...projCpls];
-  // Highlight events: 20-21 jun (fin quincena idx 0-1), 30 jun (idx 10)
-  const colors=[...D.daily.map(d=>d.partial?'rgba(124,58,237,0.4)':'rgba(34,211,238,0.4)'),...projLeads.map((_,i)=>i===0?'rgba(251,191,36,0.7)':i===1?'rgba(251,191,36,0.55)':i===10?'rgba(251,191,36,0.55)':'rgba(139,92,246,0.35)')];
+  const allLabels = [...realLabels, ...projLabels];
+  const allLeads  = [...realLeads,  ...projLeads];
+  const allCpls   = [...realCpls,   ...projCpls];
 
-  new Chart(document.getElementById('dailyForecast').getContext('2d'),{data:{labels:allLabels,datasets:[
-    {type:'bar',label:'Mensajes (real+proyectado)',data:allLeads,backgroundColor:colors,borderColor:colors.map(c=>c.replace('0.4','0.9').replace('0.7','1').replace('0.5','0.9').replace('0.35','0.8')),borderWidth:1,yAxisID:'y'},
-    {type:'line',label:'CPL',data:allCpls,borderColor:'#fbbf24',backgroundColor:'transparent',tension:0.3,pointRadius:3,spanGaps:true,yAxisID:'y1',borderDash:[0,0]}
-  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'},annotation:{annotations:{}}},scales:{y:{grid:{color:'#1e2a44'},beginAtZero:true,title:{display:true,text:'Mensajes'}},y1:{position:'right',grid:{display:false},min:18,title:{display:true,text:'CPL ($MXN)'}}}}});
+  // Colores: real = cyan; proyeccion = morado; eventos destacados = dorado
+  // Indices proyeccion: 0=Jun19(hoy), 1=Jun20(fin quincena), 2=Jun21(cola quincena), 11=Jun30(cierre Q2)
+  const colors = [
+    ...realLeads.map(()=>'rgba(34,211,238,0.45)'),
+    ...projLeads.map((_,i)=>{
+      if(i===0) return 'rgba(124,58,237,0.55)';  // hoy parcial proyectado
+      if(i===1) return 'rgba(251,191,36,0.75)';  // sab 20 pico quincena
+      if(i===2) return 'rgba(251,191,36,0.55)';  // dom 21 cola
+      if(i===11) return 'rgba(251,191,36,0.60)'; // mar 30 cierre Q2
+      return 'rgba(139,92,246,0.35)';            // resto proyectado
+    })
+  ];
+
+  new Chart(document.getElementById('dailyForecast').getContext('2d'),{
+    data:{
+      labels: allLabels,
+      datasets:[
+        {type:'bar', label:'Mensajes (real Jun 1-18 + proyeccion 19-30)', data:allLeads, backgroundColor:colors, borderColor:colors.map(c=>c.replace(/0\.\d+\)/,'0.95)')), borderWidth:1, yAxisID:'y'},
+        {type:'line', label:'CPL ($MXN)', data:allCpls, borderColor:'#fbbf24', backgroundColor:'transparent', tension:0.3, pointRadius:3, spanGaps:true, yAxisID:'y1'}
+      ]
+    },
+    options:{
+      responsive:true,
+      interaction:{mode:'index', intersect:false},
+      plugins:{
+        legend:{position:'top'},
+        tooltip:{callbacks:{
+          afterLabel:(ctx)=>{
+            const i = ctx.dataIndex;
+            const realCount = realLeads.length;
+            if(i < realCount) return '(dato real)';
+            if(i === realCount) return '(proyectado · hoy parcial)';
+            return '(proyectado)';
+          }
+        }}
+      },
+      scales:{
+        y:{grid:{color:'#1e2a44'}, beginAtZero:true, title:{display:true, text:'Mensajes'}},
+        y1:{position:'right', grid:{display:false}, min:18, title:{display:true, text:'CPL ($MXN)'}}
+      }
+    }
+  });
 })();
 </script>
 </body>
