@@ -1,0 +1,40 @@
+name: Refresh BAIT dashboard from Windsor.ai
+
+on:
+  schedule:
+    # 6:00 AM Ciudad de Mexico = 12:00 UTC (CDMX es UTC-6 todo el ano sin DST)
+    - cron: '0 12 * * *'
+  workflow_dispatch:  # permite correrlo manualmente desde la pestana Actions
+
+permissions:
+  contents: write  # para poder commit + push
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch Windsor data and rebuild data file
+        env:
+          WINDSOR_API_KEY: ${{ secrets.WINDSOR_API_KEY }}
+        run: node scripts/refresh-windsor.mjs
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet bait-strategic-data.js; then
+            git add bait-strategic-data.js
+            git commit -m "auto: refresh datos Windsor $(date -u +%Y-%m-%d)"
+            git push
+            echo "Datos actualizados y pusheados."
+          else
+            echo "Sin cambios — el archivo de datos esta identico."
+          fi
