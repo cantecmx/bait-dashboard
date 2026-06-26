@@ -132,6 +132,10 @@
   .modal .btn.primary:hover{background:rgba(34,211,238,0.30);color:#fff}
   .modal .btn.danger{color:#fca5a5;border-color:rgba(239,68,68,0.4)}
   .modal .btn.danger:hover{background:rgba(239,68,68,0.15);color:#fff}
+  /* Botones selector de presupuesto TikTok */
+  .ttk-budget-btn{padding:8px 16px;border-radius:8px;border:1px solid rgba(236,72,153,0.4);background:transparent;color:#f9a8d4;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;transition:all .15s;font-family:inherit}
+  .ttk-budget-btn:hover{background:rgba(236,72,153,0.10);border-color:#ec4899}
+  .ttk-budget-btn.active{background:linear-gradient(135deg,rgba(236,72,153,0.30),rgba(236,72,153,0.15));border-color:#ec4899;color:#fff;box-shadow:0 0 0 2px rgba(236,72,153,0.20)}
   .urgency-bar{background:linear-gradient(90deg,rgba(239,68,68,0.15),rgba(245,158,11,0.08));border:2px solid #ef4444;border-radius:10px;padding:18px 24px;margin-bottom:4px}
   .urgency-bar h3{color:#fca5a5;margin:0 0 10px 0;font-size:15px;text-transform:uppercase;letter-spacing:1px}
   .urgency-bar ol{margin:0;padding-left:20px}
@@ -306,48 +310,56 @@
 
   </div>
 
-  <div class="section-title">Pronostico TikTok Julio 2026 (si se activa el canal)</div>
+  <div class="section-title">Pronostico TikTok Julio 2026 (presentacion a directivos)</div>
   <div class="forecast" style="border-color:#ec4899;background:linear-gradient(135deg,rgba(236,72,153,0.10),rgba(34,211,238,0.06))">
-    <h2 style="color:#f9a8d4">TikTok Ads · Julio 1-31 · presupuesto $200/dia · CPL ramp $32 a $20</h2>
+    <h2 style="color:#f9a8d4">TikTok Ads · Julio 1-31 · CPL esperado $20-$30 · variacion semanal segun heatmap Meta</h2>
     <div style="color:#cbd5e1;font-size:13px;line-height:1.6;margin-bottom:18px">
-      <strong>Hipotesis:</strong> activar TikTok Ads como canal complementario en julio con presupuesto fijo de <strong>$200 MXN/dia</strong> ($6,200 total). CPL arranca alto durante el aprendizaje del algoritmo y baja gradualmente. Asume creativos similares al Genesys 01 adaptados a TikTok y audiencia portabilidad 18-44 nacional.
+      <strong>Hipotesis:</strong> activar TikTok Ads como canal complementario en julio. CPL esperado entre <strong>$20 (lunes/viernes optimizados)</strong> y <strong>$30 (sabados / aprendizaje)</strong>. El presupuesto diario varia segun el patron semanal heredado de Meta donde los <strong>lunes son pico</strong> y sabados/jueves los mas debiles. La curva de aprendizaje (semana 1) suma sobreprecio del 30% al CPL base.
+      <br><br>
+      <strong>Para directivos:</strong> abajo selecciona el presupuesto promedio diario para ver volumen de leads esperado, CPL y retorno comparativo vs Meta actual.
+    </div>
+
+    <!-- Selector de presupuesto -->
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 18px;background:rgba(11,18,32,0.5);border:1px solid rgba(236,72,153,0.3);border-radius:10px;margin-bottom:18px">
+      <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-right:8px;font-weight:600">Presupuesto promedio diario</span>
+      <button type="button" class="ttk-budget-btn" data-budget="200">$200/dia · conservador</button>
+      <button type="button" class="ttk-budget-btn active" data-budget="350">$350/dia · medio (recomendado)</button>
+      <button type="button" class="ttk-budget-btn" data-budget="500">$500/dia · agresivo</button>
     </div>
 
     <div class="row three" style="margin-bottom:18px">
       <div class="scenario base" style="border-color:#ec4899;background:rgba(236,72,153,0.06)">
-        <div class="name" style="color:#f9a8d4">Mensajes totales julio</div>
-        <div class="sub">Suma de leads esperados con curva de aprendizaje</div>
+        <div class="name" style="color:#f9a8d4">Leads totales julio</div>
+        <div class="sub">Suma con curva de aprendizaje + variacion semanal</div>
         <div class="big" id="ttkTotalLeads" style="color:#f9a8d4">—</div>
-        <div class="sub">leads en 31 dias</div>
+        <div class="sub">mensajes iniciados en 31 dias</div>
       </div>
       <div class="scenario base" style="border-color:#ec4899;background:rgba(236,72,153,0.06)">
         <div class="name" style="color:#f9a8d4">CPL promedio mes</div>
-        <div class="sub">Gasto total / leads totales</div>
+        <div class="sub">Variacion diaria entre $20-$30</div>
         <div class="big" id="ttkAvgCpl" style="color:#f9a8d4">—</div>
         <div class="sub">por mensaje iniciado</div>
       </div>
       <div class="scenario base" style="border-color:#ec4899;background:rgba(236,72,153,0.06)">
         <div class="name" style="color:#f9a8d4">Inversion total</div>
-        <div class="sub">$200/dia x 31 dias</div>
+        <div class="sub" id="ttkBudgetSub">Variable segun dia</div>
         <div class="big" id="ttkTotalSpend" style="color:#f9a8d4">—</div>
         <div class="sub">MXN comprometidos</div>
       </div>
     </div>
 
     <div class="row" style="margin-bottom:18px">
-      <div class="card" style="background:rgba(11,18,32,0.5)"><h3>Proyeccion diaria julio · leads y CPL</h3><canvas id="ttkChart"></canvas></div>
+      <div class="card" style="background:rgba(11,18,32,0.5)"><h3 id="ttkChartH3">Proyeccion diaria julio · leads y CPL</h3><canvas id="ttkChart" style="max-height:340px"></canvas></div>
       <div class="card" style="background:rgba(11,18,32,0.5)">
-        <h3>Resumen por fase</h3>
-        <table style="font-size:13px;width:100%">
-          <thead><tr><th>Fase</th><th>Dias</th><th class="num">CPL</th><th class="num">Leads/dia</th></tr></thead>
-          <tbody>
-            <tr><td>Aprendizaje</td><td>1-3</td><td class="num">$30-32</td><td class="num">6-7</td></tr>
-            <tr><td>Optimizacion</td><td>4-7</td><td class="num">$25-28</td><td class="num">7-8</td></tr>
-            <tr><td>Ramp up</td><td>8-14</td><td class="num">$23-24</td><td class="num">8-9</td></tr>
-            <tr><td>Steady</td><td>15-21</td><td class="num">$21-22</td><td class="num">9-10</td></tr>
-            <tr><td>Optimizado</td><td>22-31</td><td class="num">$20</td><td class="num">10</td></tr>
-          </tbody>
+        <h3>Comparativo: 3 escenarios de presupuesto</h3>
+        <table style="font-size:13px;width:100%" id="ttkScenarioTable">
+          <thead><tr><th>Presupuesto/dia</th><th class="num">Gasto mes</th><th class="num">Leads mes</th><th class="num">CPL avg</th></tr></thead>
+          <tbody></tbody>
         </table>
+        <div style="margin-top:14px;font-size:12px;color:var(--muted);line-height:1.5">
+          <strong style="color:#f9a8d4">Multiplicadores semanales</strong> (heredados del patron Meta BAIT):<br>
+          Lun <strong style="color:#fbbf24">1.40x</strong> · Mar 1.05x · Mie 0.95x · Jue 0.85x · Vie 1.10x · Sab 0.75x · Dom 0.90x
+        </div>
       </div>
     </div>
 
@@ -356,7 +368,7 @@
       <div class="collapsible-body" style="padding-top:14px">
         <div class="card" style="background:rgba(11,18,32,0.5);padding:0">
           <table id="ttkTable" style="font-size:12.5px">
-            <thead><tr><th>Dia</th><th class="num">CPL ($)</th><th class="num">Leads</th><th class="num">Gasto ($)</th><th class="num">Acumulado leads</th></tr></thead>
+            <thead><tr><th>Dia</th><th>Sem</th><th class="num">Presupuesto</th><th class="num">CPL ($)</th><th class="num">Leads</th><th class="num">Acumulado</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -364,7 +376,7 @@
     </details>
 
     <div class="insight" style="border-left-color:#ec4899">
-      <strong>Lectura:</strong> con $6,200 MXN de inversion en TikTok Julio, esperamos cerrar con <strong id="ttkInline">~XX leads</strong> a un CPL promedio razonable. Comparado con el CPL actual de BAIT en Meta ($28 promedio), TikTok puede ser <strong>competitivo a partir de la semana 2</strong>. La decision de activarlo depende de si la audiencia portabilidad responde al formato vertical/video corto — el primer test con $6,200 valida la hipotesis sin comprometer el presupuesto principal de Meta.
+      <strong>Lectura ejecutiva:</strong> Con el presupuesto seleccionado se esperan <strong id="ttkInline">~XX leads</strong>. El CPL promedio se compara con <strong>~$28 actual en Meta BAIT</strong>. TikTok es competitivo a partir de la semana 2-3 cuando el algoritmo madura. <strong>Recomendacion para fase 1:</strong> $350/dia (escenario medio) — suficiente volumen para que el algoritmo aprenda rapido pero limita el riesgo si el formato no resuena con la audiencia portabilidad.
     </div>
   </div>
 
@@ -1129,66 +1141,142 @@ const FORECAST = (function(){
   ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'}},scales:{y:{grid:{color:'#1e2a44'},title:{display:true,text:'Mensajes'},beginAtZero:true},y1:{position:'right',grid:{display:false},title:{display:true,text:'CPL ($MXN)'},min:15}}}});
 })();
 
-// === TIKTOK JULIO 2026 PROYECCION (hipotetica) ===
+// === TIKTOK JULIO 2026 — proyeccion dinamica con variacion semanal Meta ===
 (function(){
-  const DAILY_BUDGET = 200;
   const DAYS = 31;
-  // Curva de CPL: ramp del aprendizaje a steady state
-  function dayCpl(d){
-    if(d<=3)  return 32 - (d-1)*1.5;       // 32, 30.5, 29
-    if(d<=7)  return 28 - (d-4)*1.0;       // 28, 27, 26, 25
-    if(d<=14) return 23;                    // semana 2: $23
-    if(d<=21) return 21;                    // semana 3: $21
-    return 20;                              // semana 4+: $20
+  const dayNames = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
+  // Multiplicadores de actividad por dia de la semana, heredados del patron Meta BAIT
+  // Lun=pico, Sab=bajo (mismo orden que dayNames: dom..sab)
+  const WEEK_MULT = [0.90, 1.40, 1.05, 0.95, 0.85, 1.10, 0.75]; // dom, lun, mar, mie, jue, vie, sab
+
+  // CPL base por dia del mes (curva de aprendizaje del algoritmo)
+  function baseCpl(d){
+    if(d<=3)  return 30;     // aprendizaje fuerte
+    if(d<=7)  return 27;     // optimizacion
+    if(d<=14) return 24;     // ramp up
+    if(d<=21) return 22;     // steady
+    return 21;                // optimizado
   }
-  const rows = [];
-  let cumLeads = 0;
-  let cumSpend = 0;
-  for(let d=1; d<=DAYS; d++){
-    const cpl = dayCpl(d);
-    const leads = Math.round(DAILY_BUDGET / cpl);
-    const spend = DAILY_BUDGET;
-    cumLeads += leads;
-    cumSpend += spend;
-    rows.push({d, cpl, leads, spend, cumLeads});
-  }
-  const totalLeads = rows.reduce((s,r)=>s+r.leads, 0);
-  const totalSpend = DAILY_BUDGET * DAYS;
-  const avgCpl = totalSpend / totalLeads;
 
-  // KPIs top
-  const fmtN = n => Math.round(n).toLocaleString('es-MX');
-  document.getElementById('ttkTotalLeads').textContent = '~' + fmtN(totalLeads);
-  document.getElementById('ttkAvgCpl').textContent = '$' + avgCpl.toFixed(2);
-  document.getElementById('ttkTotalSpend').textContent = '$' + fmtN(totalSpend);
-  document.getElementById('ttkInline').textContent = '~' + fmtN(totalLeads) + ' leads (CPL $' + avgCpl.toFixed(2) + ')';
+  // Multiplicador de CPL por dia de la semana — mejores dias = CPL menor
+  // dom..sab
+  const WEEK_CPL_MULT = [1.05, 0.92, 1.05, 1.00, 1.08, 0.95, 1.10];
 
-  // Tabla diaria
-  const tb = document.querySelector('#ttkTable tbody');
-  rows.forEach(r=>{
-    tb.innerHTML += `<tr><td>Jul ${String(r.d).padStart(2,'0')}</td><td class="num">$${r.cpl.toFixed(2)}</td><td class="num">${r.leads}</td><td class="num">$${r.spend}</td><td class="num">${r.cumLeads}</td></tr>`;
-  });
-  tb.innerHTML += `<tr style="font-weight:700;background:rgba(236,72,153,0.10)"><td>TOTAL</td><td class="num">$${avgCpl.toFixed(2)} avg</td><td class="num">${totalLeads}</td><td class="num">$${totalSpend}</td><td class="num">${totalLeads}</td></tr>`;
-
-  // Chart
-  new Chart(document.getElementById('ttkChart').getContext('2d'),{
-    data:{
-      labels: rows.map(r=>'Jul ' + String(r.d).padStart(2,'0')),
-      datasets:[
-        {type:'bar', label:'Leads/dia', data:rows.map(r=>r.leads), backgroundColor:'rgba(236,72,153,0.45)', borderColor:'#ec4899', borderWidth:1, yAxisID:'y'},
-        {type:'line', label:'CPL ($MXN)', data:rows.map(r=>r.cpl), borderColor:'#fbbf24', backgroundColor:'transparent', tension:0.3, pointRadius:3, yAxisID:'y1'}
-      ]
-    },
-    options:{
-      responsive:true,
-      interaction:{mode:'index', intersect:false},
-      plugins:{legend:{position:'top'}},
-      scales:{
-        y:{grid:{color:'#1e2a44'}, beginAtZero:true, title:{display:true, text:'Leads/dia'}},
-        y1:{position:'right', grid:{display:false}, min:18, title:{display:true, text:'CPL ($MXN)'}}
-      }
+  // Genera proyeccion completa para un presupuesto promedio dado
+  function simulate(avgBudget){
+    // El presupuesto se redistribuye por dia segun el multiplicador semanal
+    // pero conservando el AVG diario solicitado
+    const julyStartDow = 3; // 1 jul 2026 cae miercoles (verificable con new Date(2026,6,1).getDay())
+    const rows = [];
+    // Pre-calcular suma de multiplicadores para los 31 dias
+    let multSum = 0;
+    for(let d=1; d<=DAYS; d++){
+      const dow = (julyStartDow + (d-1)) % 7;
+      multSum += WEEK_MULT[dow];
     }
+    const totalBudget = avgBudget * DAYS;
+    let cumLeads = 0;
+    for(let d=1; d<=DAYS; d++){
+      const dow = (julyStartDow + (d-1)) % 7;
+      const dayBudget = Math.round((totalBudget * WEEK_MULT[dow]) / multSum);
+      let cpl = baseCpl(d) * WEEK_CPL_MULT[dow];
+      // Clip a rango $20-$30
+      cpl = Math.max(20, Math.min(30, cpl));
+      const leads = Math.round(dayBudget / cpl);
+      cumLeads += leads;
+      rows.push({d, dow, dayName: dayNames[dow], cpl: +cpl.toFixed(2), leads, spend: dayBudget, cumLeads});
+    }
+    const totalLeads = rows.reduce((s,r)=>s+r.leads, 0);
+    const totalSpend = rows.reduce((s,r)=>s+r.spend, 0);
+    return { rows, totalLeads, totalSpend, avgCpl: totalSpend / totalLeads };
+  }
+
+  // Pre-calcular los 3 escenarios para la tabla comparativa
+  const SCN = {
+    200: simulate(200),
+    350: simulate(350),
+    500: simulate(500)
+  };
+
+  // Render tabla comparativa de 3 escenarios
+  const fmtN = n => Math.round(n).toLocaleString('es-MX');
+  const scnTb = document.querySelector('#ttkScenarioTable tbody');
+  Object.entries(SCN).forEach(([budget, scn])=>{
+    const active = (budget === '350') ? ' style="background:rgba(236,72,153,0.10);font-weight:700"' : '';
+    scnTb.innerHTML += `<tr${active}><td>$${budget}/dia</td><td class="num">$${fmtN(scn.totalSpend)}</td><td class="num">${fmtN(scn.totalLeads)}</td><td class="num">$${scn.avgCpl.toFixed(2)}</td></tr>`;
   });
+
+  // Chart placeholder + funcion de render
+  let ttkChart = null;
+  function renderScenario(avgBudget){
+    const scn = SCN[avgBudget];
+    if(!scn) return;
+
+    // KPIs top
+    document.getElementById('ttkTotalLeads').textContent = '~' + fmtN(scn.totalLeads);
+    document.getElementById('ttkAvgCpl').textContent = '$' + scn.avgCpl.toFixed(2);
+    document.getElementById('ttkTotalSpend').textContent = '$' + fmtN(scn.totalSpend);
+    document.getElementById('ttkBudgetSub').textContent = `$${avgBudget}/dia x 31 dias (variable)`;
+    document.getElementById('ttkInline').textContent = `~${fmtN(scn.totalLeads)} leads con $${fmtN(scn.totalSpend)} de inversion (CPL $${scn.avgCpl.toFixed(2)})`;
+    document.getElementById('ttkChartH3').textContent = `Proyeccion diaria julio · leads y CPL · presupuesto avg $${avgBudget}/dia`;
+
+    // Tabla diaria
+    const tb = document.querySelector('#ttkTable tbody');
+    tb.innerHTML = '';
+    scn.rows.forEach(r=>{
+      tb.innerHTML += `<tr><td>Jul ${String(r.d).padStart(2,'0')}</td><td>${r.dayName}</td><td class="num">$${r.spend}</td><td class="num">$${r.cpl.toFixed(2)}</td><td class="num">${r.leads}</td><td class="num">${r.cumLeads}</td></tr>`;
+    });
+    tb.innerHTML += `<tr style="font-weight:700;background:rgba(236,72,153,0.10)"><td colspan="2">TOTAL JULIO</td><td class="num">$${fmtN(scn.totalSpend)}</td><td class="num">$${scn.avgCpl.toFixed(2)} avg</td><td class="num">${fmtN(scn.totalLeads)}</td><td class="num">${fmtN(scn.totalLeads)}</td></tr>`;
+
+    // Colores por dia de la semana — Lun en dorado (pico), Sab/Dom en morado claro
+    const colors = scn.rows.map(r=>{
+      if(r.dow === 1) return 'rgba(251,191,36,0.65)';   // Lun pico = dorado
+      if(r.dow === 5) return 'rgba(34,211,238,0.55)';   // Vie buen dia = cian
+      if(r.dow === 6) return 'rgba(139,92,246,0.35)';   // Sab debil
+      return 'rgba(236,72,153,0.45)';                    // resto rosa
+    });
+
+    if(ttkChart) ttkChart.destroy();
+    ttkChart = new Chart(document.getElementById('ttkChart').getContext('2d'),{
+      data:{
+        labels: scn.rows.map(r=>`${String(r.d).padStart(2,'0')} ${r.dayName}`),
+        datasets:[
+          {type:'bar', label:'Leads/dia', data:scn.rows.map(r=>r.leads), backgroundColor:colors, borderColor:colors.map(c=>c.replace(/0\.\d+\)/, '0.95)')), borderWidth:1, yAxisID:'y'},
+          {type:'line', label:'CPL ($MXN)', data:scn.rows.map(r=>r.cpl), borderColor:'#fbbf24', backgroundColor:'transparent', tension:0.3, pointRadius:3, yAxisID:'y1'}
+        ]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        interaction:{mode:'index', intersect:false},
+        plugins:{
+          legend:{position:'top'},
+          tooltip:{callbacks:{
+            afterLabel:(ctx)=>{
+              const r = scn.rows[ctx.dataIndex];
+              return `${r.dayName} · presupuesto $${r.spend}`;
+            }
+          }}
+        },
+        scales:{
+          y:{grid:{color:'#1e2a44'}, beginAtZero:true, title:{display:true, text:'Leads/dia'}},
+          y1:{position:'right', grid:{display:false}, min:18, max:32, title:{display:true, text:'CPL ($MXN)'}}
+        }
+      }
+    });
+  }
+
+  // Wire up selector
+  document.querySelectorAll('.ttk-budget-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.ttk-budget-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderScenario(parseInt(btn.dataset.budget, 10));
+    });
+  });
+
+  // Render inicial: escenario medio $350
+  renderScenario(350);
 })();
 
 // === DAILY FORECAST · Junio completo (real dinamico + proyeccion del resto) ===
