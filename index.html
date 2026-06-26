@@ -207,7 +207,7 @@
 
   <div class="section-title">Pronostico cierre de junio (proyeccion mensual 1-30 jun)</div>
   <div class="forecast">
-    <h2>Cierre total junio · 30 dias · 3 escenarios (real 1-18 + proyeccion 19-30)</h2>
+    <h2 id="forecastH2">Cierre total junio · 30 dias · 3 escenarios (real + proyeccion)</h2>
     <div style="color:#cbd5e1;font-size:13px;line-height:1.6;margin-bottom:18px">
       <strong>Base real:</strong> Junio 1-18 cerro con <strong>$183,796 MXN</strong> gastados, <strong>6,579 mensajes</strong>, CPL global <strong>$27.94</strong> (promedio diario: <strong>$10,211 gasto / 366 mensajes / CPL $27.94</strong>). Jun-19 parcial (dia en curso) suma ~$3,404 y ~129 mensajes — excluido de promedios base.<br><br>
       <strong>Post-mortem 16-18 jun:</strong> Mar-16 (352 msgs · $28.79), Mie-17 (346 msgs · $29.32), Jue-18 (323 msgs · $26.33). El jueves 18 fue el mejor dia de la semana post-pico con CPL bajando a $26.33 — el mismo patron que el 5 jun (vie). Jun-19 va en camino a ~350 msgs a CPL ~$26 (dato parcial hasta ~14h).<br><br>
@@ -217,49 +217,49 @@
     <div class="row three" style="margin-bottom:18px">
       <div class="scenario base">
         <div class="name">Escenario A · Continuista</div>
-        <div class="sub">Sigues con la estructura actual sin activar palancas pendientes (Feed FB al 54%, sin adset iPhone, frecuencia 25-34M en 2.16 y subiendo).</div>
-        <div class="big" style="color:#67e8f9">~10,728</div>
+        <div class="sub">Sigues con la estructura actual sin activar palancas pendientes (Feed FB al ~54%, sin adset iPhone, frecuencia 25-34M subiendo).</div>
+        <div class="big" id="scnA_total" style="color:#67e8f9">—</div>
         <div class="sub">mensajes proyectados <strong>cierre total junio</strong> (30 dias)</div>
         <div style="margin-top:10px">
-          <div class="row-line"><span>Real Jun 1-19 (parcial)</span><strong>6,708 msgs</strong></div>
-          <div class="row-line"><span>Proyeccion 20-30 (11d)</span><strong>~4,021 msgs</strong></div>
-          <div class="row-line"><span>CPL promedio mes</span><strong>$27.94</strong></div>
-          <div class="row-line"><span>Gasto total junio</span><strong>~$307,000 MXN</strong></div>
+          <div class="row-line"><span id="scnA_realLbl">Real Jun 1-X</span><strong id="scnA_real">—</strong></div>
+          <div class="row-line"><span id="scnA_projLbl">Proyeccion X+1 a 30</span><strong id="scnA_proj">—</strong></div>
+          <div class="row-line"><span>CPL promedio mes</span><strong id="scnA_cpl">—</strong></div>
+          <div class="row-line"><span>Gasto total junio</span><strong id="scnA_spend">—</strong></div>
         </div>
-        <div class="sub" style="margin-top:8px">Sin cambios estructurales el CPL se mantiene en ~$28. La quincena 20-21 jun ayuda marginalmente. Frecuencia 25-34M cruza 2.5 antes del 28 jun.</div>
+        <div class="sub" style="margin-top:8px">Sin cambios estructurales el CPL se mantiene en el nivel actual. Cierre lineal en base al promedio de dias completos.</div>
       </div>
 
       <div class="scenario opt">
         <div class="name">Escenario B · Optimizado (palancas activas)</div>
-        <div class="sub">Activas HOY: bajas Feed FB a 35%, pausas PISO 04, rotas Artes Agencia, push fin quincena 20-21 jun esta noche.</div>
-        <div class="big" style="color:#6ee7b7">~11,452</div>
+        <div class="sub">Activas las palancas pendientes: Feed FB a 35%, pausar creativos caros, rotar Artes Agencia, push fin de mes.</div>
+        <div class="big" id="scnB_total" style="color:#6ee7b7">—</div>
         <div class="sub">mensajes proyectados <strong>cierre total junio</strong> (30 dias)</div>
         <div style="margin-top:10px">
-          <div class="row-line"><span>Real Jun 1-19 (parcial)</span><strong>6,708 msgs</strong></div>
-          <div class="row-line"><span>Proyeccion 20-30 (11d)</span><strong>~4,744 msgs</strong></div>
-          <div class="row-line"><span>CPL promedio mes</span><strong>$24.31</strong></div>
-          <div class="row-line"><span>Delta vs Escenario A</span><strong style="color:#6ee7b7">+724 msgs extra</strong></div>
+          <div class="row-line"><span id="scnB_realLbl">Real Jun 1-X</span><strong id="scnB_real">—</strong></div>
+          <div class="row-line"><span id="scnB_projLbl">Proyeccion X+1 a 30</span><strong id="scnB_proj">—</strong></div>
+          <div class="row-line"><span>CPL promedio mes</span><strong id="scnB_cpl">—</strong></div>
+          <div class="row-line"><span>Delta vs Escenario A</span><strong id="scnB_delta" style="color:#6ee7b7">—</strong></div>
         </div>
-        <div class="sub" style="margin-top:8px">+18% mensajes con mismo presupuesto. Ahorro ~$30K MXN reasignado a placements ganadores. Ventana critica: activar palancas esta noche 19 jun antes del sabado.</div>
+        <div class="sub" style="margin-top:8px">CPL proyectado 15% mejor que el promedio actual aplicando palancas. Mismo presupuesto, mas mensajes.</div>
       </div>
 
       <div class="scenario bad">
         <div class="name">Escenario C · Pesimista</div>
-        <div class="sub">Sin cambios + frecuencia hombres 25-34 cruza 2.5 esta semana + Artes Agencia sin rotar + competencia telco fin de mes.</div>
-        <div class="big" style="color:#fca5a5">~10,206</div>
+        <div class="sub">Fatiga creativa, frecuencia 25-34M cruza 2.5, sin activar palancas, competencia telco fin de mes.</div>
+        <div class="big" id="scnC_total" style="color:#fca5a5">—</div>
         <div class="sub">mensajes proyectados <strong>cierre total junio</strong> (30 dias)</div>
         <div style="margin-top:10px">
-          <div class="row-line"><span>Real Jun 1-19 (parcial)</span><strong>6,708 msgs</strong></div>
-          <div class="row-line"><span>Proyeccion 20-30 (11d)</span><strong>~3,498 msgs</strong></div>
-          <div class="row-line"><span>CPL promedio mes</span><strong>$31.29</strong></div>
-          <div class="row-line"><span>Riesgo principal</span><strong>fatiga 25-34M + Feed FB sin tocar</strong></div>
+          <div class="row-line"><span id="scnC_realLbl">Real Jun 1-X</span><strong id="scnC_real">—</strong></div>
+          <div class="row-line"><span id="scnC_projLbl">Proyeccion X+1 a 30</span><strong id="scnC_proj">—</strong></div>
+          <div class="row-line"><span>CPL promedio mes</span><strong id="scnC_cpl">—</strong></div>
+          <div class="row-line"><span>Riesgo principal</span><strong>fatiga + palancas dormidas</strong></div>
         </div>
-        <div class="sub" style="margin-top:8px">Probabilidad ~30% si no se actua hoy — la frecuencia 2.16 esta mas cerca del umbral critico que hace 3 dias. CPL sube $3-4 automaticamente si se llega a 2.5.</div>
+        <div class="sub" style="margin-top:8px">CPL proyectado 15% peor por degradacion natural sin intervencion. Probabilidad ~25% si no se actua esta semana.</div>
       </div>
     </div>
 
     <div class="row" style="margin-bottom:18px">
-      <div class="card" style="background:rgba(11,18,32,0.5)"><h3>Comparativo mensajes y CPL — 3 escenarios (base Jun 1-19)</h3><canvas id="scenarioChart"></canvas></div>
+      <div class="card" style="background:rgba(11,18,32,0.5)"><h3 id="scenarioChartH3">Comparativo mensajes y CPL — 3 escenarios</h3><canvas id="scenarioChart"></canvas></div>
       <div class="card" style="background:rgba(11,18,32,0.5)"><h3>Proyeccion diaria junio completo — Escenario A base</h3><canvas id="dailyForecast"></canvas></div>
     </div>
 
@@ -304,6 +304,68 @@
       </div>
     </details>
 
+  </div>
+
+  <div class="section-title">Pronostico TikTok Julio 2026 (si se activa el canal)</div>
+  <div class="forecast" style="border-color:#ec4899;background:linear-gradient(135deg,rgba(236,72,153,0.10),rgba(34,211,238,0.06))">
+    <h2 style="color:#f9a8d4">TikTok Ads · Julio 1-31 · presupuesto $200/dia · CPL ramp $32 a $20</h2>
+    <div style="color:#cbd5e1;font-size:13px;line-height:1.6;margin-bottom:18px">
+      <strong>Hipotesis:</strong> activar TikTok Ads como canal complementario en julio con presupuesto fijo de <strong>$200 MXN/dia</strong> ($6,200 total). CPL arranca alto durante el aprendizaje del algoritmo y baja gradualmente. Asume creativos similares al Genesys 01 adaptados a TikTok y audiencia portabilidad 18-44 nacional.
+    </div>
+
+    <div class="row three" style="margin-bottom:18px">
+      <div class="scenario base" style="border-color:#ec4899;background:rgba(236,72,153,0.06)">
+        <div class="name" style="color:#f9a8d4">Mensajes totales julio</div>
+        <div class="sub">Suma de leads esperados con curva de aprendizaje</div>
+        <div class="big" id="ttkTotalLeads" style="color:#f9a8d4">—</div>
+        <div class="sub">leads en 31 dias</div>
+      </div>
+      <div class="scenario base" style="border-color:#ec4899;background:rgba(236,72,153,0.06)">
+        <div class="name" style="color:#f9a8d4">CPL promedio mes</div>
+        <div class="sub">Gasto total / leads totales</div>
+        <div class="big" id="ttkAvgCpl" style="color:#f9a8d4">—</div>
+        <div class="sub">por mensaje iniciado</div>
+      </div>
+      <div class="scenario base" style="border-color:#ec4899;background:rgba(236,72,153,0.06)">
+        <div class="name" style="color:#f9a8d4">Inversion total</div>
+        <div class="sub">$200/dia x 31 dias</div>
+        <div class="big" id="ttkTotalSpend" style="color:#f9a8d4">—</div>
+        <div class="sub">MXN comprometidos</div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom:18px">
+      <div class="card" style="background:rgba(11,18,32,0.5)"><h3>Proyeccion diaria julio · leads y CPL</h3><canvas id="ttkChart"></canvas></div>
+      <div class="card" style="background:rgba(11,18,32,0.5)">
+        <h3>Resumen por fase</h3>
+        <table style="font-size:13px;width:100%">
+          <thead><tr><th>Fase</th><th>Dias</th><th class="num">CPL</th><th class="num">Leads/dia</th></tr></thead>
+          <tbody>
+            <tr><td>Aprendizaje</td><td>1-3</td><td class="num">$30-32</td><td class="num">6-7</td></tr>
+            <tr><td>Optimizacion</td><td>4-7</td><td class="num">$25-28</td><td class="num">7-8</td></tr>
+            <tr><td>Ramp up</td><td>8-14</td><td class="num">$23-24</td><td class="num">8-9</td></tr>
+            <tr><td>Steady</td><td>15-21</td><td class="num">$21-22</td><td class="num">9-10</td></tr>
+            <tr><td>Optimizado</td><td>22-31</td><td class="num">$20</td><td class="num">10</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <details class="collapsible" style="margin-bottom:18px">
+      <summary>Desglose diario julio (los 31 dias) <span class="hint">click para desplegar/plegar</span></summary>
+      <div class="collapsible-body" style="padding-top:14px">
+        <div class="card" style="background:rgba(11,18,32,0.5);padding:0">
+          <table id="ttkTable" style="font-size:12.5px">
+            <thead><tr><th>Dia</th><th class="num">CPL ($)</th><th class="num">Leads</th><th class="num">Gasto ($)</th><th class="num">Acumulado leads</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <div class="insight" style="border-left-color:#ec4899">
+      <strong>Lectura:</strong> con $6,200 MXN de inversion en TikTok Julio, esperamos cerrar con <strong id="ttkInline">~XX leads</strong> a un CPL promedio razonable. Comparado con el CPL actual de BAIT en Meta ($28 promedio), TikTok puede ser <strong>competitivo a partir de la semana 2</strong>. La decision de activarlo depende de si la audiencia portabilidad responde al formato vertical/video corto — el primer test con $6,200 valida la hipotesis sin comprometer el presupuesto principal de Meta.
+    </div>
   </div>
 
   <details class="collapsible">
@@ -979,12 +1041,154 @@ insightsEl.innerHTML = [
   });
 })();
 
+// === SCENARIOS DINAMICOS · Cierre junio (real + proyeccion) ===
+const FORECAST = (function(){
+  const complete = D.daily.filter(d=>!d.partial).slice().sort((a,b)=>a.date.localeCompare(b.date));
+  if(!complete.length) return null;
+
+  const firstDate = complete[0].date;
+  const lastDate  = complete[complete.length-1].date;
+  const lastDay   = parseInt(lastDate.substring(8,10),10);
+  const [yy, mm]  = firstDate.substring(0,7).split('-').map(n=>parseInt(n,10));
+  const daysInMonth = new Date(yy, mm, 0).getDate();
+  const remaining = daysInMonth - lastDay;
+
+  const realLeads = complete.reduce((s,d)=>s+d.leads, 0);
+  const realSpend = complete.reduce((s,d)=>s+d.spend, 0);
+  const avgLeadsDay = realLeads / complete.length;
+  const avgSpendDay = realSpend / complete.length;
+  const avgCpl = realSpend / realLeads;
+
+  // Escenario A: continuista (mismo CPL)
+  const projSpendA = avgSpendDay * remaining;
+  const projLeadsA = Math.round(projSpendA / avgCpl);
+  const totalLeadsA = realLeads + projLeadsA;
+  const totalSpendA = realSpend + projSpendA;
+  const cplA = totalSpendA / totalLeadsA;
+
+  // Escenario B: optimizado (CPL -15%)
+  const cplBfactor = 0.85;
+  const projCplB = avgCpl * cplBfactor;
+  const projLeadsB = Math.round(projSpendA / projCplB);
+  const totalLeadsB = realLeads + projLeadsB;
+  const cplB = (realSpend + projSpendA) / totalLeadsB;
+
+  // Escenario C: pesimista (CPL +15%)
+  const projCplC = avgCpl * 1.15;
+  const projLeadsC = Math.round(projSpendA / projCplC);
+  const totalLeadsC = realLeads + projLeadsC;
+  const cplC = (realSpend + projSpendA) / totalLeadsC;
+
+  const monthNames = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const monthName = monthNames[mm-1];
+  const realRange = `${monthName} 1-${lastDay}`;
+  const projRange = `${lastDay+1}-${daysInMonth} (${remaining}d)`;
+
+  const setText = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  const fmtN = n => Math.round(n).toLocaleString('es-MX');
+
+  // H2 dinamico
+  setText('forecastH2', `Cierre total ${monthName.toLowerCase()} · ${daysInMonth} dias · 3 escenarios (real ${monthName} 1-${lastDay} + proyeccion ${lastDay+1}-${daysInMonth})`);
+  setText('scenarioChartH3', `Comparativo mensajes y CPL — 3 escenarios (base ${monthName} 1-${lastDay})`);
+
+  // Escenario A
+  setText('scnA_total', '~' + fmtN(totalLeadsA));
+  setText('scnA_realLbl', `Real ${realRange}`);
+  setText('scnA_projLbl', `Proyeccion ${projRange}`);
+  setText('scnA_real', fmtN(realLeads) + ' msgs');
+  setText('scnA_proj', '~' + fmtN(projLeadsA) + ' msgs');
+  setText('scnA_cpl', '$' + cplA.toFixed(2));
+  setText('scnA_spend', '~$' + Math.round(totalSpendA/1000) + 'K MXN');
+
+  // Escenario B
+  setText('scnB_total', '~' + fmtN(totalLeadsB));
+  setText('scnB_realLbl', `Real ${realRange}`);
+  setText('scnB_projLbl', `Proyeccion ${projRange}`);
+  setText('scnB_real', fmtN(realLeads) + ' msgs');
+  setText('scnB_proj', '~' + fmtN(projLeadsB) + ' msgs');
+  setText('scnB_cpl', '$' + cplB.toFixed(2));
+  setText('scnB_delta', '+' + fmtN(totalLeadsB - totalLeadsA) + ' msgs');
+
+  // Escenario C
+  setText('scnC_total', '~' + fmtN(totalLeadsC));
+  setText('scnC_realLbl', `Real ${realRange}`);
+  setText('scnC_projLbl', `Proyeccion ${projRange}`);
+  setText('scnC_real', fmtN(realLeads) + ' msgs');
+  setText('scnC_proj', '~' + fmtN(projLeadsC) + ' msgs');
+  setText('scnC_cpl', '$' + cplC.toFixed(2));
+
+  return { totalLeadsA, totalLeadsB, totalLeadsC, cplA, cplB, cplC };
+})();
+
 // === SCENARIO CHART ===
 (function(){
+  if(!FORECAST) return;
   new Chart(document.getElementById('scenarioChart').getContext('2d'),{type:'bar',data:{labels:['A · Continuista','B · Optimizado','C · Pesimista'],datasets:[
-    {label:'Mensajes cierre total junio',data:[10728,11452,10206],backgroundColor:['rgba(34,211,238,0.5)','rgba(16,185,129,0.5)','rgba(239,68,68,0.4)'],borderColor:['#22d3ee','#10b981','#ef4444'],borderWidth:2,yAxisID:'y'},
-    {label:'CPL promedio mes',data:[27.94,24.31,31.29],backgroundColor:['rgba(34,211,238,0.2)','rgba(16,185,129,0.2)','rgba(239,68,68,0.2)'],borderColor:['#22d3ee','#10b981','#ef4444'],borderWidth:2,yAxisID:'y1'}
+    {label:'Mensajes cierre total junio',data:[Math.round(FORECAST.totalLeadsA), Math.round(FORECAST.totalLeadsB), Math.round(FORECAST.totalLeadsC)],backgroundColor:['rgba(34,211,238,0.5)','rgba(16,185,129,0.5)','rgba(239,68,68,0.4)'],borderColor:['#22d3ee','#10b981','#ef4444'],borderWidth:2,yAxisID:'y'},
+    {label:'CPL promedio mes',data:[+FORECAST.cplA.toFixed(2), +FORECAST.cplB.toFixed(2), +FORECAST.cplC.toFixed(2)],backgroundColor:['rgba(34,211,238,0.2)','rgba(16,185,129,0.2)','rgba(239,68,68,0.2)'],borderColor:['#22d3ee','#10b981','#ef4444'],borderWidth:2,yAxisID:'y1'}
   ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'}},scales:{y:{grid:{color:'#1e2a44'},title:{display:true,text:'Mensajes'},beginAtZero:true},y1:{position:'right',grid:{display:false},title:{display:true,text:'CPL ($MXN)'},min:15}}}});
+})();
+
+// === TIKTOK JULIO 2026 PROYECCION (hipotetica) ===
+(function(){
+  const DAILY_BUDGET = 200;
+  const DAYS = 31;
+  // Curva de CPL: ramp del aprendizaje a steady state
+  function dayCpl(d){
+    if(d<=3)  return 32 - (d-1)*1.5;       // 32, 30.5, 29
+    if(d<=7)  return 28 - (d-4)*1.0;       // 28, 27, 26, 25
+    if(d<=14) return 23;                    // semana 2: $23
+    if(d<=21) return 21;                    // semana 3: $21
+    return 20;                              // semana 4+: $20
+  }
+  const rows = [];
+  let cumLeads = 0;
+  let cumSpend = 0;
+  for(let d=1; d<=DAYS; d++){
+    const cpl = dayCpl(d);
+    const leads = Math.round(DAILY_BUDGET / cpl);
+    const spend = DAILY_BUDGET;
+    cumLeads += leads;
+    cumSpend += spend;
+    rows.push({d, cpl, leads, spend, cumLeads});
+  }
+  const totalLeads = rows.reduce((s,r)=>s+r.leads, 0);
+  const totalSpend = DAILY_BUDGET * DAYS;
+  const avgCpl = totalSpend / totalLeads;
+
+  // KPIs top
+  const fmtN = n => Math.round(n).toLocaleString('es-MX');
+  document.getElementById('ttkTotalLeads').textContent = '~' + fmtN(totalLeads);
+  document.getElementById('ttkAvgCpl').textContent = '$' + avgCpl.toFixed(2);
+  document.getElementById('ttkTotalSpend').textContent = '$' + fmtN(totalSpend);
+  document.getElementById('ttkInline').textContent = '~' + fmtN(totalLeads) + ' leads (CPL $' + avgCpl.toFixed(2) + ')';
+
+  // Tabla diaria
+  const tb = document.querySelector('#ttkTable tbody');
+  rows.forEach(r=>{
+    tb.innerHTML += `<tr><td>Jul ${String(r.d).padStart(2,'0')}</td><td class="num">$${r.cpl.toFixed(2)}</td><td class="num">${r.leads}</td><td class="num">$${r.spend}</td><td class="num">${r.cumLeads}</td></tr>`;
+  });
+  tb.innerHTML += `<tr style="font-weight:700;background:rgba(236,72,153,0.10)"><td>TOTAL</td><td class="num">$${avgCpl.toFixed(2)} avg</td><td class="num">${totalLeads}</td><td class="num">$${totalSpend}</td><td class="num">${totalLeads}</td></tr>`;
+
+  // Chart
+  new Chart(document.getElementById('ttkChart').getContext('2d'),{
+    data:{
+      labels: rows.map(r=>'Jul ' + String(r.d).padStart(2,'0')),
+      datasets:[
+        {type:'bar', label:'Leads/dia', data:rows.map(r=>r.leads), backgroundColor:'rgba(236,72,153,0.45)', borderColor:'#ec4899', borderWidth:1, yAxisID:'y'},
+        {type:'line', label:'CPL ($MXN)', data:rows.map(r=>r.cpl), borderColor:'#fbbf24', backgroundColor:'transparent', tension:0.3, pointRadius:3, yAxisID:'y1'}
+      ]
+    },
+    options:{
+      responsive:true,
+      interaction:{mode:'index', intersect:false},
+      plugins:{legend:{position:'top'}},
+      scales:{
+        y:{grid:{color:'#1e2a44'}, beginAtZero:true, title:{display:true, text:'Leads/dia'}},
+        y1:{position:'right', grid:{display:false}, min:18, title:{display:true, text:'CPL ($MXN)'}}
+      }
+    }
+  });
 })();
 
 // === DAILY FORECAST · Junio completo (real dinamico + proyeccion del resto) ===
