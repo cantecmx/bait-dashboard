@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 'lts/*'  # ultima version LTS (24 en 2026); evita warnings de deprecacion
 
       - name: Fetch Windsor data and rebuild data file
         env:

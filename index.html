@@ -304,15 +304,7 @@
       </div>
     </details>
 
-    <div class="insight warn">
-      <strong>Lectura ejecutiva junio 19:</strong> Con 18 dias completos el CPL global es <strong>$27.94</strong> (vs $27.89 a 15 dias — practica sin cambio, +$0.05). El mes esta en linea pero la palanca #1 sigue sin activar: <strong>Feed FB al 54% del gasto con CPL $32.00</strong> mientras Search ($22.02), Stories ($23.98) y Reels Overlay ($23.29) reciben solo 21% combinado. Manana sabado 20 jun es fin de quincena — activar push ESTA NOCHE. Riesgo activo urgente: frecuencia hombres 25-34 en <strong>2.16</strong> (sube de 2.03 hace 3 dias). A este ritmo cruza 2.5 antes del 25 jun.
-    </div>
   </div>
-
-  <details class="collapsible urgency" open>
-    <summary>Acciones para cierre de junio (19-30 jun) <span class="hint">click para desplegar/plegar</span></summary>
-    <div class="collapsible-body"><ol id="urgencyList"></ol></div>
-  </details>
 
   <details class="collapsible">
     <summary>Hallazgos Clave — Junio 1-19 <span class="hint">click para desplegar/plegar</span></summary>
@@ -758,14 +750,6 @@ const kpis = [
 ];
 kpiEl.innerHTML = kpis.map(k=>`<div class="kpi-card"><div class="label">${k.label}</div><div class="val">${k.val}</div><div class="sub ${k.subClass}">${k.sub}</div></div>`).join('');
 
-// === URGENCY LIST ===
-document.getElementById('urgencyList').innerHTML = `
-  <li><strong>HOY 19 jun NOCHE — Push fin de quincena 20-21 jun:</strong> Manana sabado es fin de quincena. Subir budget +20% en los adsets ganadores esta noche (23:00h) para que el algoritmo tenga 6-8h de calentamiento. Replicar el patron del 15 jun (mejor dia del mes: 448 msgs · CPL $26.11).</li>
-  <li><strong>HOY 19 jun — Reducir Feed FB de 54% a maximo 35% del gasto:</strong> Con 19 dias de data, Feed FB tiene CPL $32.00 vs Search $22.02 y Stories $23.98. Cada dia sin mover esto cuesta ~$2,500 MXN extra. En 11 dias restantes = ~$27,500 MXN de CPL evitable.</li>
-  <li><strong>HOY 19 jun — Pausar PISO Anuncio 03 (CPL $101.83) y Anuncio 04 (CPL $42.75):</strong> 19 dias gastando ~$630/dia combinados con CPL 2-5x el promedio. Liberar ese budget a Genesys Anuncio 01 (CPL $17.91).</li>
-  <li><strong>Esta semana — Rotar creativo "Artes Agencia" (CPL $38.42):</strong> El peor creativo activo del grupo Pruebas y Perfectas. Pausar y reasignar gasto a "Artes Agencia 2" ($30.16). El diferencial vale ~$8/lead · ~$800/dia.</li>
-  <li><strong>URGENTE — Frecuencia hombres 25-34 en 2.16 (zona roja):</strong> Sube de 2.03 hace solo 3 dias. A este ritmo cruza 2.5 antes del 25 jun. Accion inmediata: ampliar audiencia lookalike 3-5% o crear variante de creativo Genesys 01 para el CBO principal.</li>
-`;
 
 // === INSIGHTS ===
 const insightsEl = document.getElementById('insights');
@@ -1003,35 +987,44 @@ insightsEl.innerHTML = [
   ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'}},scales:{y:{grid:{color:'#1e2a44'},title:{display:true,text:'Mensajes'},beginAtZero:true},y1:{position:'right',grid:{display:false},title:{display:true,text:'CPL ($MXN)'},min:15}}}});
 })();
 
-// === DAILY FORECAST · Jun 1-30 (real 1-18 + proyeccion 19-30 incluyendo dia parcial) ===
+// === DAILY FORECAST · Junio completo (real dinamico + proyeccion del resto) ===
 (function(){
-  // Solo dias COMPLETOS son "reales" — el parcial pasa a la proyeccion para no romper la grafica
-  const realDays  = D.daily.filter(d=>!d.partial);
+  const dayNames = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
+
+  // 1) Reales: solo dias COMPLETOS (no parciales). Se calcula el ultimo dia real para arrancar la proyeccion ahi.
+  const realDays = D.daily.filter(d=>!d.partial).slice().sort((a,b)=>a.date.localeCompare(b.date));
   const realLabels = realDays.map(d=>d.label);
   const realLeads  = realDays.map(d=>d.leads);
   const realCpls   = realDays.map(d=>d.cpl);
-  const avgLeads   = 366; // avg 18 complete days (Jun 1-18)
-  const avgCpl     = 27.94;
 
-  // Proyeccion 19-30 (12 dias). Jun-19 se proyecta a dia completo desde el parcial actual.
-  const projLabels=[]; const projLeads=[]; const projCpls=[];
-  const dayNames = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
-  for(let d=19;d<=30;d++){
-    const dow = (new Date(2026,5,d)).getDay(); // 0=sun
+  // 2) Averages dinamicos sobre los dias completos
+  const sumSpend = realDays.reduce((s,d)=>s+d.spend,0);
+  const sumLeads = realDays.reduce((s,d)=>s+d.leads,0);
+  const avgLeads = realDays.length ? Math.round(sumLeads/realDays.length) : 350;
+  const avgCpl   = sumLeads ? +(sumSpend/sumLeads).toFixed(2) : 28;
+
+  // 3) Determinar el dia siguiente al ultimo real (UTC para evitar shifts de TZ)
+  const lastReal = realDays.length ? realDays[realDays.length-1].date : null;
+  const monthYear = lastReal ? lastReal.substring(0,7) : '2026-06';  // ej "2026-06"
+  const [yy, mm] = monthYear.split('-').map(n=>parseInt(n,10));
+  const daysInMonth = new Date(yy, mm, 0).getDate(); // 30 para junio, 31 para julio, etc.
+  const startDay = lastReal ? parseInt(lastReal.substring(8,10),10)+1 : 1;
+
+  // 4) Proyectar del dia siguiente al ultimo real hasta fin de mes
+  const projLabels=[], projLeads=[], projCpls=[];
+  for(let d=startDay; d<=daysInMonth; d++){
+    const dt = new Date(yy, mm-1, d);
+    const dow = dt.getDay(); // 0=dom, 6=sab
     let leads=avgLeads, cpl=avgCpl;
-    // Jun-19 (hoy, viernes) — extrapola desde dato parcial real (~350 al cierre proyectado)
-    if(d===19){ leads=350; cpl=26.40; }
-    // Sab 20 jun = fin de quincena (pico)
-    else if(d===20){ leads=Math.round(avgLeads*1.15); cpl=26.2; }
-    // Dom 21 jun = fin de quincena (cola)
-    else if(d===21){ leads=Math.round(avgLeads*1.08); cpl=26.8; }
-    // Mar 30 jun = cierre Q2
-    else if(d===30){ leads=Math.round(avgLeads*1.12); cpl=26.8; }
-    // Fines de semana normales
-    else if(dow===0){ leads=Math.round(avgLeads*0.88); cpl=28.8; }
-    else if(dow===6){ leads=Math.round(avgLeads*0.93); cpl=28.2; }
+    // Quincenas: 15 y fin de mes tienden a tener mejor CPL/volumen
+    if(d===15){ leads=Math.round(avgLeads*1.10); cpl=+(avgCpl*0.94).toFixed(2); }
+    else if(d===daysInMonth){ leads=Math.round(avgLeads*1.10); cpl=+(avgCpl*0.95).toFixed(2); }
+    // Fines de semana: viernes/sabado mejor, domingo peor
+    else if(dow===5){ leads=Math.round(avgLeads*1.03); cpl=+(avgCpl*0.97).toFixed(2); }
+    else if(dow===6){ leads=Math.round(avgLeads*0.95); cpl=+(avgCpl*1.01).toFixed(2); }
+    else if(dow===0){ leads=Math.round(avgLeads*0.88); cpl=+(avgCpl*1.04).toFixed(2); }
     // Mie/Jue tienden a CPL alto
-    else if(dow===3||dow===4){ leads=Math.round(avgLeads*0.97); cpl=29.2; }
+    else if(dow===3 || dow===4){ leads=Math.round(avgLeads*0.97); cpl=+(avgCpl*1.05).toFixed(2); }
     projLabels.push(`${d} ${dayNames[dow]}`);
     projLeads.push(leads);
     projCpls.push(cpl);
@@ -1041,24 +1034,25 @@ insightsEl.innerHTML = [
   const allLeads  = [...realLeads,  ...projLeads];
   const allCpls   = [...realCpls,   ...projCpls];
 
-  // Colores: real = cyan; proyeccion = morado; eventos destacados = dorado
-  // Indices proyeccion: 0=Jun19(hoy), 1=Jun20(fin quincena), 2=Jun21(cola quincena), 11=Jun30(cierre Q2)
+  // 5) Colores: real=cyan, proyeccion=morado, dias clave (15, fin de mes) en dorado
   const colors = [
     ...realLeads.map(()=>'rgba(34,211,238,0.45)'),
     ...projLeads.map((_,i)=>{
-      if(i===0) return 'rgba(124,58,237,0.55)';  // hoy parcial proyectado
-      if(i===1) return 'rgba(251,191,36,0.75)';  // sab 20 pico quincena
-      if(i===2) return 'rgba(251,191,36,0.55)';  // dom 21 cola
-      if(i===11) return 'rgba(251,191,36,0.60)'; // mar 30 cierre Q2
-      return 'rgba(139,92,246,0.35)';            // resto proyectado
+      const dayNum = startDay + i;
+      if(dayNum===daysInMonth) return 'rgba(251,191,36,0.65)';  // cierre de mes
+      if(dayNum===15) return 'rgba(251,191,36,0.65)';           // quincena
+      return 'rgba(139,92,246,0.35)';                            // resto proyectado
     })
   ];
+
+  const realCount = realLabels.length;
+  const monthName = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][mm-1];
 
   new Chart(document.getElementById('dailyForecast').getContext('2d'),{
     data:{
       labels: allLabels,
       datasets:[
-        {type:'bar', label:'Mensajes (real Jun 1-18 + proyeccion 19-30)', data:allLeads, backgroundColor:colors, borderColor:colors.map(c=>c.replace(/0\.\d+\)/,'0.95)')), borderWidth:1, yAxisID:'y'},
+        {type:'bar', label:`Mensajes (real ${monthName} 1-${realCount} + proyeccion ${startDay}-${daysInMonth})`, data:allLeads, backgroundColor:colors, borderColor:colors.map(c=>c.replace(/0\.\d+\)/,'0.95)')), borderWidth:1, yAxisID:'y'},
         {type:'line', label:'CPL ($MXN)', data:allCpls, borderColor:'#fbbf24', backgroundColor:'transparent', tension:0.3, pointRadius:3, spanGaps:true, yAxisID:'y1'}
       ]
     },
@@ -1070,9 +1064,7 @@ insightsEl.innerHTML = [
         tooltip:{callbacks:{
           afterLabel:(ctx)=>{
             const i = ctx.dataIndex;
-            const realCount = realLeads.length;
             if(i < realCount) return '(dato real)';
-            if(i === realCount) return '(proyectado · hoy parcial)';
             return '(proyectado)';
           }
         }}
