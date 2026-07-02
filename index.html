@@ -438,12 +438,110 @@
       <!-- ============================ OTROS TABS (placeholders) ============================ -->
       <div class="tab-panel" id="tab-marketing">
         <div class="breadcrumb">CANTEC · ÁREA DE MARKETING · <span>MARKETING</span></div>
-        <h1>Marketing <span class="accent">Julio</span></h1>
-        <div class="subtitle">Análisis detallado de campañas activas · Meta + TikTok · demográficos, placements, creativos</div>
-        <div class="placeholder-tab">
-          <div class="icon">📊</div>
-          <h3>Sección disponible al inicio de Julio</h3>
-          <p>Cuando arranquen las campañas, esta sección se auto-poblará con datos Windsor en vivo.<br>Mientras, consulta el análisis detallado de <a href="junio-2026.html" style="color:var(--brand-dark);font-weight:700">Junio 2026 →</a></p>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px">
+          <h1>Marketing <span class="accent">Julio</span></h1>
+          <div style="text-align:right">
+            <div class="live-badge" id="mktLiveBadge">Live · Windsor</div>
+            <div style="font-size:22px;font-weight:700;color:var(--text);margin-top:4px" id="mktPeriodo">Julio 2026</div>
+          </div>
+        </div>
+        <div class="subtitle">Meta Ads BAIT · Mensajes iniciados (Click-to-Message) · datos en vivo Windsor.ai</div>
+
+        <div class="section-title">KPIs del mes</div>
+        <div class="grid-3">
+          <div class="card with-top-border top-brand">
+            <div class="label">Mensajes iniciados</div>
+            <div class="value-lg" id="mktKpiLeads">—</div>
+            <div class="value-sub" id="mktKpiLeadsSub">—</div>
+          </div>
+          <div class="card with-top-border top-blue">
+            <div class="label">CPL global</div>
+            <div class="value-lg" id="mktKpiCpl">—</div>
+            <div class="value-sub" id="mktKpiCplSub">vs Junio $27.94</div>
+            <div class="value-delta" id="mktKpiCplDelta">—</div>
+          </div>
+          <div class="card with-top-border top-yellow">
+            <div class="label">Gasto Meta</div>
+            <div class="value-lg" id="mktKpiSpend">—</div>
+            <div class="value-sub" id="mktKpiSpendSub">de $500,000 presupuestados</div>
+            <div class="footer">
+              <div class="status" id="mktSpendPct">—</div>
+              <div class="progress"><div class="progress-bar" id="mktSpendBar" style="width:0%"></div></div>
+              <div class="status" id="mktSpendRest" style="margin-left:14px">restante</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:16px">
+          <div class="card">
+            <div class="label">Impresiones</div>
+            <div class="value-lg" id="mktKpiImp">—</div>
+            <div class="value-sub" id="mktKpiImpSub">alcance total</div>
+          </div>
+          <div class="card">
+            <div class="label">CTR promedio</div>
+            <div class="value-lg" id="mktKpiCtr">—</div>
+            <div class="value-sub">click-through rate</div>
+          </div>
+          <div class="card">
+            <div class="label">CPM promedio</div>
+            <div class="value-lg" id="mktKpiCpm">—</div>
+            <div class="value-sub">costo por mil impresiones</div>
+          </div>
+        </div>
+
+        <div class="section-title">Tendencia diaria</div>
+        <div class="chart-card">
+          <h3>Leads y CPL por día · Julio 2026</h3>
+          <canvas id="mktDailyChart" style="max-height:300px"></canvas>
+        </div>
+
+        <div class="section-title">Placements ganadores y CPL</div>
+        <div class="grid-2">
+          <div class="chart-card">
+            <h3>Top 8 placements por CPL</h3>
+            <canvas id="mktPlacementChart" style="max-height:320px"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Distribución de gasto por placement</h3>
+            <canvas id="mktPlacementSpendChart" style="max-height:320px"></canvas>
+          </div>
+        </div>
+
+        <div class="section-title">Demografía · edad × sexo</div>
+        <div class="grid-2">
+          <div class="chart-card">
+            <h3>CPL por segmento (top 8 con volumen)</h3>
+            <canvas id="mktDemChart" style="max-height:320px"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Distribución de leads por edad</h3>
+            <canvas id="mktAgeChart" style="max-height:320px"></canvas>
+          </div>
+        </div>
+
+        <div class="section-title">Top 10 estados por gasto</div>
+        <div class="chart-card">
+          <h3>Distribución regional</h3>
+          <canvas id="mktRegionChart" style="max-height:280px"></canvas>
+        </div>
+
+        <div class="section-title">Top creativos por rendimiento</div>
+        <div class="chart-card">
+          <h3>Ranking de anuncios · CPL ascendente (top 10)</h3>
+          <div style="overflow-x:auto">
+            <table class="table" id="mktAdsTable">
+              <thead><tr><th>#</th><th>Creativo</th><th>Campaña</th><th class="num">Gasto</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">Frec.</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="section-title">Comparativa vs Junio 2026</div>
+        <div class="chart-card">
+          <h3>Deltas de las métricas clave</h3>
+          <canvas id="mktCompareChart" style="max-height:260px"></canvas>
+          <div style="margin-top:14px;font-size:11.5px;color:var(--muted);text-align:center">Ambos períodos comparados como promedio diario para ser justos</div>
         </div>
       </div>
 
@@ -762,6 +860,240 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
 
   // Render inicial: escenario base $26
   renderDailyChart(26);
+})();
+
+// === TAB MARKETING · datos en vivo Windsor.ai ===
+(function(){
+  const D = window.BAIT_STRATEGIC || {};
+  if(!D.daily || !D.daily.length) return;
+
+  const fmtN = n => Math.round(n).toLocaleString('es-MX');
+  const fmtMXN = n => '$' + fmtN(n);
+  const fmtMXNd = n => '$' + (Number(n)||0).toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const fmtPct = n => ((Number(n)||0)*100).toFixed(2)+'%';
+  const setText = (id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+
+  // === Totales ===
+  const totLeads = D.demographics.reduce((s,r)=>s+(r.leads||0),0);
+  const totSpend = D.demographics.reduce((s,r)=>s+(r.spend||0),0);
+  const totImp = D.demographics.reduce((s,r)=>s+(r.impressions||0),0);
+  const totClicks = D.demographics.reduce((s,r)=>s+(r.clicks||0),0);
+  const globalCpl = totLeads ? totSpend/totLeads : 0;
+  const globalCtr = totImp ? totClicks/totImp : 0;
+  const globalCpm = totImp ? (totSpend/totImp)*1000 : 0;
+  const daysComplete = (D.meta && D.meta.daysComplete) || D.daily.filter(d=>!d.partial).length;
+  const daysReal = D.daily.length;
+
+  // Julio budget total
+  const BUDGET_JUL = 500000;
+  const spendPct = totSpend / BUDGET_JUL * 100;
+  const remaining = BUDGET_JUL - totSpend;
+
+  // === KPIs cards ===
+  setText('mktPeriodo', (D.meta && D.meta.dateRange) || 'Julio 2026');
+  setText('mktLiveBadge', 'Live · Windsor · ' + ((D.meta && D.meta.updatedAt) || ''));
+
+  setText('mktKpiLeads', fmtN(totLeads));
+  setText('mktKpiLeadsSub', `${daysReal} días acumulados · ${daysComplete} completos · ~${fmtN(totLeads/daysReal)}/día promedio`);
+
+  setText('mktKpiCpl', fmtMXNd(globalCpl));
+  const junioCpl = 27.94;
+  const deltaCpl = globalCpl - junioCpl;
+  const deltaCplPct = (deltaCpl / junioCpl * 100);
+  const deltaText = (deltaCpl>=0?'▲ +':'▼ ') + fmtMXNd(Math.abs(deltaCpl)) + ` (${deltaCplPct>=0?'+':''}${deltaCplPct.toFixed(1)}% vs Jun)`;
+  const deltaEl = document.getElementById('mktKpiCplDelta');
+  if(deltaEl){
+    deltaEl.textContent = deltaText;
+    deltaEl.className = 'value-delta ' + (deltaCpl <= 0 ? 'up' : 'down');
+    // ojo: CPL menor = mejor, por eso .up (verde) cuando delta<=0
+  }
+
+  setText('mktKpiSpend', fmtMXN(totSpend));
+  setText('mktKpiSpendSub', 'de $500,000 presupuestados');
+  setText('mktSpendPct', spendPct.toFixed(1)+'% ejecutado');
+  const bar = document.getElementById('mktSpendBar');
+  if(bar) bar.style.width = Math.min(100, spendPct) + '%';
+  setText('mktSpendRest', fmtMXN(remaining) + ' restante');
+
+  setText('mktKpiImp', fmtN(totImp));
+  setText('mktKpiImpSub', fmtN(totClicks) + ' clicks');
+  setText('mktKpiCtr', fmtPct(globalCtr));
+  setText('mktKpiCpm', fmtMXNd(globalCpm));
+
+  // === TENDENCIA DIARIA ===
+  const dailyLabels = D.daily.map(d=>d.label);
+  const dailyLeads = D.daily.map(d=>d.leads);
+  const dailyCpls = D.daily.map(d=>d.partial ? null : d.cpl);
+  const dailyColors = D.daily.map(d=>d.partial ? 'rgba(139,92,246,0.5)' : 'rgba(245,158,11,0.65)');
+  new Chart(document.getElementById('mktDailyChart').getContext('2d'), {
+    data:{
+      labels: dailyLabels,
+      datasets:[
+        {type:'bar', label:'Leads/día', data:dailyLeads, backgroundColor:dailyColors, borderColor:dailyColors, borderWidth:1, borderRadius:4, yAxisID:'y'},
+        {type:'line', label:'CPL ($)', data:dailyCpls, borderColor:'#d97706', backgroundColor:'transparent', tension:0.3, pointRadius:4, pointBackgroundColor:'#d97706', yAxisID:'y1', spanGaps:true}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index', intersect:false},
+      plugins:{legend:{position:'top', labels:{color:'#111827',font:{size:11}}}, tooltip:{callbacks:{afterLabel:ctx=>D.daily[ctx.dataIndex].partial ? '(día parcial)' : ''}}},
+      scales:{
+        y:{grid:{color:'#f3f4f6'}, ticks:{color:'#6b7280'}, beginAtZero:true, title:{display:true,text:'Leads',color:'#6b7280'}},
+        y1:{position:'right', grid:{display:false}, ticks:{color:'#6b7280', callback:v=>'$'+v}, title:{display:true,text:'CPL',color:'#6b7280'}},
+        x:{grid:{display:false}, ticks:{color:'#9ca3af',font:{size:10},maxRotation:45,minRotation:45}}
+      }
+    }
+  });
+
+  // === PLACEMENTS ===
+  const places = (D.placements || []).filter(p=>p.leads>0).slice().sort((a,b)=>a.cpl-b.cpl).slice(0,8);
+  const placeLabels = places.map(p=>{
+    const pos = String(p.position||'').replace('facebook_','').replace('instagram_','');
+    return `${p.platform} · ${pos}`;
+  });
+  const placeCplColors = places.map(p=>p.cpl<24?'#10b981':p.cpl<28?'#f59e0b':'#ef4444');
+  new Chart(document.getElementById('mktPlacementChart').getContext('2d'), {
+    type:'bar',
+    data:{
+      labels: placeLabels,
+      datasets:[{label:'CPL ($)', data:places.map(p=>p.cpl), backgroundColor:placeCplColors, borderRadius:4}]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>'CPL: '+fmtMXNd(ctx.raw), afterLabel:ctx=>{const p=places[ctx.dataIndex]; return `Leads: ${fmtN(p.leads)}  ·  Gasto: ${fmtMXN(p.spend)}`;}}}},
+      scales:{
+        x:{grid:{color:'#f3f4f6'}, ticks:{color:'#6b7280', callback:v=>'$'+v}, beginAtZero:false, min:15},
+        y:{grid:{display:false}, ticks:{color:'#111827', font:{size:11}}}
+      }
+    }
+  });
+
+  const placesBySpend = (D.placements || []).filter(p=>p.spend>0).slice().sort((a,b)=>b.spend-a.spend).slice(0,8);
+  new Chart(document.getElementById('mktPlacementSpendChart').getContext('2d'), {
+    type:'doughnut',
+    data:{
+      labels: placesBySpend.map(p=>String(p.position||'').replace('facebook_','FB ').replace('instagram_','IG ')),
+      datasets:[{data:placesBySpend.map(p=>p.spend), backgroundColor:['#f59e0b','#3b82f6','#10b981','#8b5cf6','#ec4899','#eab308','#06b6d4','#ef4444'], borderColor:'#fff', borderWidth:2}]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'right', labels:{color:'#111827',font:{size:11},boxWidth:12}}, tooltip:{callbacks:{label:ctx=>ctx.label+': '+fmtMXN(ctx.raw)+' ('+(ctx.raw/totSpend*100).toFixed(1)+'%)'}}}
+    }
+  });
+
+  // === DEMOGRAFÍA ===
+  const dems = (D.demographics || []).filter(d=>d.leads>5 && d.gender!=='unknown').slice().sort((a,b)=>a.cpl-b.cpl).slice(0,8);
+  new Chart(document.getElementById('mktDemChart').getContext('2d'), {
+    type:'bar',
+    data:{
+      labels: dems.map(d=>`${d.age} ${d.gender==='male'?'♂':'♀'}`),
+      datasets:[{
+        label:'CPL', data:dems.map(d=>d.cpl),
+        backgroundColor: dems.map(d=>d.gender==='male'?'#3b82f6':'#ec4899'),
+        borderRadius:4
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>'CPL: '+fmtMXNd(ctx.raw), afterLabel:ctx=>`${dems[ctx.dataIndex].leads} leads · Frec ${dems[ctx.dataIndex].frequency.toFixed(2)}`}}},
+      scales:{
+        x:{grid:{color:'#f3f4f6'}, ticks:{color:'#6b7280', callback:v=>'$'+v}, min:15},
+        y:{grid:{display:false}, ticks:{color:'#111827', font:{size:11,weight:600}}}
+      }
+    }
+  });
+
+  // Distribución por edad (agregado M+F)
+  const byAge = {};
+  (D.demographics || []).filter(d=>d.gender!=='unknown').forEach(d=>{
+    byAge[d.age] = (byAge[d.age]||0) + (d.leads||0);
+  });
+  const ageEntries = Object.entries(byAge).sort((a,b)=>b[1]-a[1]);
+  new Chart(document.getElementById('mktAgeChart').getContext('2d'), {
+    type:'doughnut',
+    data:{
+      labels: ageEntries.map(e=>e[0]+' años'),
+      datasets:[{data:ageEntries.map(e=>e[1]), backgroundColor:['#f59e0b','#d97706','#b45309','#92400e','#78350f','#451a03'], borderColor:'#fff', borderWidth:2}]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'right', labels:{color:'#111827',font:{size:11},boxWidth:12}}, tooltip:{callbacks:{label:ctx=>ctx.label+': '+fmtN(ctx.raw)+' leads ('+(ctx.raw/totLeads*100).toFixed(1)+'%)'}}}
+    }
+  });
+
+  // === REGIONES ===
+  const regs = (D.regions || []).slice().sort((a,b)=>b.spend-a.spend).slice(0,10);
+  new Chart(document.getElementById('mktRegionChart').getContext('2d'), {
+    type:'bar',
+    data:{
+      labels: regs.map(r=>r.region),
+      datasets:[{label:'Gasto', data:regs.map(r=>r.spend), backgroundColor:'#f59e0b', borderRadius:4}]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>'Gasto: '+fmtMXN(ctx.raw), afterLabel:ctx=>`CTR: ${(regs[ctx.dataIndex].ctr*100).toFixed(2)}%`}}},
+      scales:{
+        x:{grid:{display:false}, ticks:{color:'#111827', font:{size:10}, maxRotation:45, minRotation:45}},
+        y:{grid:{color:'#f3f4f6'}, ticks:{color:'#6b7280', callback:v=>'$'+(v/1000).toFixed(0)+'K'}, beginAtZero:true}
+      }
+    }
+  });
+
+  // === CREATIVOS ===
+  const ads = (D.ads || []).filter(a=>a.leads>0).slice().sort((a,b)=>a.cpl-b.cpl).slice(0,10);
+  const adsTb = document.querySelector('#mktAdsTable tbody');
+  if(adsTb){
+    ads.forEach((a,i)=>{
+      const cplColor = a.cpl<24?'#10b981':a.cpl<28?'#f59e0b':'#ef4444';
+      adsTb.innerHTML += `<tr>
+        <td style="color:${cplColor};font-weight:700">${i+1}</td>
+        <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${a.ad||''}">${a.ad||'—'}</td>
+        <td style="font-size:11px;color:#6b7280;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${a.campaign||''}">${a.campaign||'—'}</td>
+        <td class="num">${fmtMXN(a.spend||0)}</td>
+        <td class="num">${fmtN(a.leads||0)}</td>
+        <td class="num" style="color:${cplColor};font-weight:700">${fmtMXNd(a.cpl)}</td>
+        <td class="num">${(a.frequency||0).toFixed(2)}</td>
+      </tr>`;
+    });
+  }
+
+  // === COMPARATIVA JULIO vs JUNIO ===
+  // Junio referencia: promedio diario (base cerrada)
+  const junioAvgLeadsDay = 366;       // promedio junio 18 días completos
+  const junioAvgSpendDay = 10211;     // avg junio
+  const junioAvgCpl = 27.94;
+  const julioAvgLeadsDay = daysComplete > 0 ? totLeads / daysComplete : totLeads / daysReal;
+  const julioAvgSpendDay = daysComplete > 0 ? totSpend / daysComplete : totSpend / daysReal;
+  const julioAvgCpl = globalCpl;
+
+  new Chart(document.getElementById('mktCompareChart').getContext('2d'), {
+    type:'bar',
+    data:{
+      labels:['Leads/día promedio', 'Gasto/día promedio', 'CPL promedio'],
+      datasets:[
+        {label:'Junio 2026 (base)', data:[junioAvgLeadsDay, junioAvgSpendDay/500, junioAvgCpl], backgroundColor:'rgba(59,130,246,0.55)', borderColor:'#3b82f6', borderWidth:1, borderRadius:4},
+        {label:'Julio 2026 (actual)', data:[julioAvgLeadsDay, julioAvgSpendDay/500, julioAvgCpl], backgroundColor:'rgba(245,158,11,0.75)', borderColor:'#d97706', borderWidth:1, borderRadius:4}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'top', labels:{color:'#111827',font:{size:11}}},
+        tooltip:{callbacks:{label:ctx=>{
+          const raw = ctx.raw;
+          const idx = ctx.dataIndex;
+          if(idx===0) return `${ctx.dataset.label}: ${fmtN(raw)} leads/día`;
+          if(idx===1) return `${ctx.dataset.label}: ${fmtMXN(raw*500)} MXN/día`;
+          if(idx===2) return `${ctx.dataset.label}: ${fmtMXNd(raw)}`;
+          return raw;
+        }}}
+      },
+      scales:{
+        x:{grid:{display:false}, ticks:{color:'#111827',font:{size:11,weight:600}}},
+        y:{grid:{color:'#f3f4f6'}, ticks:{color:'#6b7280'}, beginAtZero:true}
+      }
+    }
+  });
 })();
 </script>
 </body>
