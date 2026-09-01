@@ -479,7 +479,7 @@
         </div>
         <div class="subtitle">Meta Ads BAIT · Mensajes iniciados (Click-to-Message) · datos en vivo Windsor.ai</div>
 
-        <div class="section-title">🎯 Meta vs Cumplimiento · Agosto 2026</div>
+        <div class="section-title">🎯 Meta vs Cumplimiento · Cierre Agosto 2026</div>
         <div class="meta-hero" id="metaHero">
           <div class="meta-hero-left">
             <div class="meta-hero-lbl">Cumplimiento global de la meta</div>
@@ -964,19 +964,24 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   const remaining = BUDGET_AGO - totSpend;
 
   // === META vs CUMPLIMIENTO Agosto ===
+  // Cierre FIJO de Agosto 2026 (Windsor 2026-09-01) - no cambia con auto-refresh
+  const AGO_CIERRE = { leads: 34486, spend: 789379.76, cpl: 22.89 };
   const META = { leads: 25000, gest: 21250, cpl: 23.00, spend: 575000 };
-  const gestReal = totLeads * 0.85; // 85% gestionables
+  const agoLeadsReal = AGO_CIERRE.leads;
+  const agoSpendReal = AGO_CIERRE.spend;
+  const agoCplReal   = AGO_CIERRE.cpl;
+  const gestReal = agoLeadsReal * 0.85; // 85% gestionables
 
-  const pctLeads = (totLeads / META.leads) * 100;
+  const pctLeads = (agoLeadsReal / META.leads) * 100;
   const pctGest  = (gestReal / META.gest) * 100;
-  const pctCpl   = (META.cpl / (globalCpl || META.cpl)) * 100; // inverso: menor CPL = mejor
-  const pctSpend = (totSpend / META.spend) * 100;
+  const pctCpl   = (META.cpl / agoCplReal) * 100; // inverso: menor CPL = mejor
+  const pctSpend = (agoSpendReal / META.spend) * 100;
 
   // Global: promedio ponderado leads+cpl (los KPIs clave)
   const pctGlobal = (pctLeads + pctCpl) / 2;
 
   setText('metaHeroBig', pctGlobal.toFixed(1) + '%');
-  setText('metaHeroSub', `Promedio ponderado Leads (${pctLeads.toFixed(0)}%) + CPL (${pctCpl.toFixed(0)}%) · datos reales de Agosto 2026`);
+  setText('metaHeroSub', `Promedio ponderado Leads (${pctLeads.toFixed(0)}%) + CPL (${pctCpl.toFixed(0)}%) · cierre de Agosto 2026 · fuente Windsor`);
   const heroBadge = document.getElementById('metaHeroBadge');
   if(heroBadge){
     if(pctGlobal >= 100){ heroBadge.textContent = '✓ META SUPERADA'; heroBadge.className = 'meta-hero-badge'; }
@@ -1005,9 +1010,9 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
 
   // Leads
   setText('metaLeadsPct', pctLeads.toFixed(1) + '%');
-  setText('metaLeadsReal', fmtN(totLeads));
+  setText('metaLeadsReal', fmtN(agoLeadsReal));
   document.getElementById('metaLeadsBar').style.width = Math.min(pctLeads, 150) + '%';
-  const deltaLeads = totLeads - META.leads;
+  const deltaLeads = agoLeadsReal - META.leads;
   setText('metaLeadsNote', deltaLeads >= 0 ? `+${fmtN(deltaLeads)} leads sobre meta` : `${fmtN(deltaLeads)} leads bajo meta`);
   paintMeta('metaLeadsCard', pctLeads, true);
 
@@ -1021,17 +1026,17 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
 
   // CPL (menor es mejor)
   setText('metaCplPct', pctCpl.toFixed(1) + '%');
-  setText('metaCplReal', '$' + globalCpl.toFixed(2));
+  setText('metaCplReal', '$' + agoCplReal.toFixed(2));
   document.getElementById('metaCplBar').style.width = Math.min(pctCpl, 150) + '%';
-  const deltaCplMeta = globalCpl - META.cpl;
+  const deltaCplMeta = agoCplReal - META.cpl;
   setText('metaCplNote', deltaCplMeta <= 0 ? `${'$'+Math.abs(deltaCplMeta).toFixed(2)} bajo meta (mejor)` : `+$${deltaCplMeta.toFixed(2)} sobre meta (peor)`);
   paintMeta('metaCplCard', pctCpl, false);
 
   // Gasto
   setText('metaSpendPct2', pctSpend.toFixed(1) + '%');
-  setText('metaSpendReal', fmtMXN(totSpend));
+  setText('metaSpendReal', fmtMXN(agoSpendReal));
   document.getElementById('metaSpendBar2').style.width = Math.min(pctSpend, 150) + '%';
-  const deltaSpend = totSpend - META.spend;
+  const deltaSpend = agoSpendReal - META.spend;
   setText('metaSpendNote', deltaSpend <= 0 ? `${fmtMXN(Math.abs(deltaSpend))} bajo presupuesto` : `+${fmtMXN(deltaSpend)} sobre presupuesto`);
   // Gasto: dentro de rango 95-115% ok, más es warn, mucho más es bad (siempre que leads justifiquen)
   const spendCard = document.getElementById('metaSpendCard');
