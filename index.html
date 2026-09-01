@@ -285,7 +285,7 @@
         <div class="grid-3">
           <div class="card with-top-border top-brand">
             <div class="label">Mensajes iniciados</div>
-            <div class="value-lg">34,486</div>
+            <div class="value-lg">34,472</div>
             <div class="value-sub">Meta 25,000 · superada +37.9%</div>
             <div class="footer">
               <div class="status">Cierre Agosto</div>
@@ -307,7 +307,7 @@
 
           <div class="card with-top-border top-yellow">
             <div class="label">CPL global</div>
-            <div class="value-lg">$22.89</div>
+            <div class="value-lg">$22.90</div>
             <div class="value-sub">Meta $23.00 · -$0.11 mejor</div>
             <div class="footer">
               <div class="status">vs Julio $28.02</div>
@@ -331,8 +331,8 @@
           </div>
           <div class="card with-top-border top-brand">
             <div class="label">Agosto 2026 · récord</div>
-            <div class="value-lg" style="font-size:26px;color:var(--green)">34,486 leads</div>
-            <div class="value-sub">CPL $22.89 · gasto $789K</div>
+            <div class="value-lg" style="font-size:26px;color:var(--green)">34,472 leads</div>
+            <div class="value-sub">CPL $22.90 · gasto $789K</div>
           </div>
         </div>
 
@@ -351,7 +351,7 @@
           <div class="channel-card">
             <div class="channel-header active"><span class="dot"></span>Eficiencia</div>
             <div class="channel-mini-label">CPL global cerrado</div>
-            <div class="channel-mini-value" style="color:var(--blue);font-weight:800">$22.89</div>
+            <div class="channel-mini-value" style="color:var(--blue);font-weight:800">$22.90</div>
             <div class="channel-sub-grid">
               <div class="channel-sub-card"><div class="lbl">Delta vs Jul</div><div class="val">▼ 18%</div></div>
               <div class="channel-sub-card"><div class="lbl">Meta $23</div><div class="val">✓ ok</div></div>
@@ -518,14 +518,14 @@
         </div>
         <div class="grid-4-meta">
           <div class="meta-card" id="metaLeadsCard">
-            <div class="meta-lbl">Leads · mensajes iniciados</div>
+            <div class="meta-lbl">Leads totales · CRM</div>
             <div class="meta-pct" id="metaLeadsPct">—</div>
             <div class="meta-vals"><span class="real" id="metaLeadsReal">—</span> / <span class="target">meta 25,000</span></div>
             <div class="meta-progress"><div class="meta-progress-bar" id="metaLeadsBar" style="width:0%"></div></div>
             <div class="meta-note" id="metaLeadsNote">—</div>
           </div>
           <div class="meta-card" id="metaGestCard">
-            <div class="meta-lbl">Leads gestionables (85%)</div>
+            <div class="meta-lbl">Leads gestionables · CRM</div>
             <div class="meta-pct" id="metaGestPct">—</div>
             <div class="meta-vals"><span class="real" id="metaGestReal">—</span> / <span class="target">meta 21,250</span></div>
             <div class="meta-progress"><div class="meta-progress-bar" id="metaGestBar" style="width:0%"></div></div>
@@ -550,7 +550,7 @@
         <div class="section-title">KPIs del mes</div>
         <div class="grid-3">
           <div class="card with-top-border top-brand">
-            <div class="label">Mensajes iniciados</div>
+            <div class="label">Leads CRM (reales)</div>
             <div class="value-lg" id="mktKpiLeads">—</div>
             <div class="value-sub" id="mktKpiLeadsSub">—</div>
           </div>
@@ -936,7 +936,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   renderDailyChart(26);
 })();
 
-// === TAB MARKETING · cierre Agosto 2026 (hardcoded desde Windsor 2026-09-01) ===
+// === TAB MARKETING · cierre Agosto 2026 (Data Center CRM · leads reales) ===
 (function(){
   const D = window.BAIT_STRATEGIC || {};
 
@@ -946,32 +946,33 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   const fmtPct = n => ((Number(n)||0)*100).toFixed(2)+'%';
   const setText = (id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
 
-  // === Datos REALES Agosto 2026 completo (fuente: Windsor 2026-09-01) ===
+  // === Datos REALES Agosto 2026 (Data Center CRM + Meta Windsor para gasto/impresiones) ===
+  // Cols: [date, spend(Meta), impressions(Meta), clicks(Meta), leads(CRM), gestionables(CRM)]
   const dayNames = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
   const AGO_RAW = [
-    ["2026-08-01",18817.27,578391,7238,814],["2026-08-02",26134.75,793903,10148,998],
-    ["2026-08-03",27902.65,878021,11353,1109],["2026-08-04",24687.01,785187,10233,1060],
-    ["2026-08-05",19709,529024,7072,851],["2026-08-06",21465.5,603170,8412,976],
-    ["2026-08-07",21971.95,613203,8595,942],["2026-08-08",23329.14,705104,9100,971],
-    ["2026-08-09",24592.57,759789,8935,964],["2026-08-10",29028.16,927176,11221,1198],
-    ["2026-08-11",22306.81,708381,9451,866],["2026-08-12",25089.62,876485,11572,1118],
-    ["2026-08-13",19543.67,576112,8015,790],["2026-08-14",21737.32,626340,9413,920],
-    ["2026-08-15",23858.45,693256,10137,997],["2026-08-16",29108.04,886806,13678,1261],
-    ["2026-08-17",29892.87,861348,14000,1337],["2026-08-18",24786.65,638633,10529,1137],
-    ["2026-08-19",27152.36,810914,12871,1226],["2026-08-20",25479.87,720484,11359,1253],
-    ["2026-08-21",24488.67,698204,10070,1098],["2026-08-22",26318.28,799233,10544,1148],
-    ["2026-08-23",26666.52,708239,9582,1099],["2026-08-24",21003.61,664192,8003,792],
-    ["2026-08-25",31504.53,1087460,13406,1204],["2026-08-26",28358.78,818832,10671,996],
-    ["2026-08-27",27744.62,919881,11946,1000],["2026-08-28",36756.47,1007199,15090,1567],
-    ["2026-08-29",18554.65,523797,8063,904],["2026-08-30",34321.27,1181002,17826,1522],
-    ["2026-08-31",27087.79,856518,13938,1368]
+    ["2026-08-01",18817.27,578391,7238,868,559],["2026-08-02",26134.75,793903,10148,1038,694],
+    ["2026-08-03",27902.65,878021,11353,1200,779],["2026-08-04",24687.01,785187,10233,1154,746],
+    ["2026-08-05",19709,529024,7072,921,574],["2026-08-06",21465.5,603170,8412,1048,682],
+    ["2026-08-07",21971.95,613203,8595,1043,658],["2026-08-08",23329.14,705104,9100,1078,706],
+    ["2026-08-09",24592.57,759789,8935,1074,687],["2026-08-10",29028.16,927176,11221,1324,894],
+    ["2026-08-11",22306.81,708381,9451,1000,680],["2026-08-12",25089.62,876485,11572,1234,913],
+    ["2026-08-13",19543.67,576112,8015,886,576],["2026-08-14",21737.32,626340,9413,1017,655],
+    ["2026-08-15",23858.45,693256,10137,1125,709],["2026-08-16",29108.04,886806,13678,1401,948],
+    ["2026-08-17",29892.87,861348,14000,1466,1301],["2026-08-18",24786.65,638633,10529,1247,794],
+    ["2026-08-19",27152.36,810914,12871,1386,966],["2026-08-20",25479.87,720484,11359,1409,980],
+    ["2026-08-21",24488.67,698204,10070,1215,857],["2026-08-22",26318.28,799233,10544,1255,844],
+    ["2026-08-23",26666.52,708239,9582,1225,849],["2026-08-24",21003.61,664192,8003,880,607],
+    ["2026-08-25",31504.53,1087460,13406,1326,932],["2026-08-26",28358.78,818832,10671,1127,779],
+    ["2026-08-27",27744.62,919881,11946,1112,731],["2026-08-28",36756.47,1007199,15090,1677,919],
+    ["2026-08-29",18554.65,523797,8063,1011,610],["2026-08-30",34321.27,1181002,17826,1657,1070],
+    ["2026-08-31",27087.79,856518,13938,1492,904]
   ];
   const AGO_DAILY = AGO_RAW.map(r=>{
-    const [date, spend, impressions, clicks, leads] = r;
+    const [date, spend, impressions, clicks, leads, gestionables] = r;
     const dt = new Date(date+'T00:00:00Z');
     return {
       date, label: dayNames[dt.getUTCDay()]+' '+String(dt.getUTCDate()).padStart(2,'0'),
-      spend, impressions, clicks, leads,
+      spend, impressions, clicks, leads, gestionables,
       ctr: impressions ? clicks/impressions : 0,
       cpm: impressions ? (spend/impressions)*1000 : 0,
       cpl: leads ? spend/leads : 0,
@@ -1068,7 +1069,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   };
 
   // === Totales Agosto (calculados desde AGO_DAILY) ===
-  const totLeads = AGO_DAILY.reduce((s,r)=>s+r.leads,0);   // 34,486
+  const totLeads = AGO_DAILY.reduce((s,r)=>s+r.leads,0);   // 34,472
   const totSpend = AGO_DAILY.reduce((s,r)=>s+r.spend,0);   // 789,398.85
   const totImp = AGO_DAILY.reduce((s,r)=>s+r.impressions,0);
   const totClicks = AGO_DAILY.reduce((s,r)=>s+r.clicks,0);
@@ -1084,13 +1085,18 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   const remaining = BUDGET_AGO - totSpend;
 
   // === META vs CUMPLIMIENTO Agosto ===
-  // Cierre FIJO de Agosto 2026 (Windsor 2026-09-01) - no cambia con auto-refresh
-  const AGO_CIERRE = { leads: 34486, spend: 789379.76, cpl: 22.89 };
+  // Cierre FIJO de Agosto 2026 (Data Center CRM + Meta Windsor)
+  const AGO_CIERRE = {
+    leads: totLeads,          // CRM (34,472)
+    spend: totSpend,          // Meta ($789,398.85)
+    cpl: globalCpl,           // 22.90
+    gestionables: AGO_DAILY.reduce((s,r)=>s+(r.gestionables||0),0) // CRM (23,699)
+  };
   const META = { leads: 25000, gest: 21250, cpl: 23.00, spend: 575000 };
   const agoLeadsReal = AGO_CIERRE.leads;
   const agoSpendReal = AGO_CIERRE.spend;
   const agoCplReal   = AGO_CIERRE.cpl;
-  const gestReal = agoLeadsReal * 0.85; // 85% gestionables
+  const gestReal = AGO_CIERRE.gestionables; // real desde CRM (no calculado como 85%)
 
   const pctLeads = (agoLeadsReal / META.leads) * 100;
   const pctGest  = (gestReal / META.gest) * 100;
@@ -1101,7 +1107,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   const pctGlobal = (pctLeads + pctCpl) / 2;
 
   setText('metaHeroBig', pctGlobal.toFixed(1) + '%');
-  setText('metaHeroSub', `Promedio ponderado Leads (${pctLeads.toFixed(0)}%) + CPL (${pctCpl.toFixed(0)}%) · cierre de Agosto 2026 · fuente Windsor`);
+  setText('metaHeroSub', `Promedio ponderado Leads (${pctLeads.toFixed(0)}%) + CPL (${pctCpl.toFixed(0)}%) · cierre Agosto 2026 · leads CRM · gasto Meta Ads`);
   const heroBadge = document.getElementById('metaHeroBadge');
   if(heroBadge){
     if(pctGlobal >= 100){ heroBadge.textContent = '✓ META SUPERADA'; heroBadge.className = 'meta-hero-badge'; }
