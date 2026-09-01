@@ -1119,8 +1119,9 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   // Global: promedio ponderado leads+cpl (los KPIs clave)
   const pctGlobal = (pctLeads + pctCpl) / 2;
 
-  setText('metaHeroBig', pctGlobal.toFixed(1) + '%');
-  setText('metaHeroSub', `Promedio ponderado Leads (${pctLeads.toFixed(0)}%) + CPL (${pctCpl.toFixed(0)}%) · cierre Agosto 2026 · leads CRM · gasto Meta Ads`);
+  const pctGlobalDisplay = Math.min(pctGlobal, 100);
+  document.getElementById('metaHeroBig').innerHTML = pctGlobalDisplay.toFixed(1) + '%' + (pctGlobal > 100 ? ' <span style="font-size:22px;color:var(--green)">✓</span>' : '');
+  setText('metaHeroSub', `Promedio ponderado Leads (${Math.min(pctLeads,100).toFixed(0)}%) + CPL (${Math.min(pctCpl,100).toFixed(0)}%) · cierre Agosto 2026 · leads CRM · gasto Meta Ads`);
   const heroBadge = document.getElementById('metaHeroBadge');
   if(heroBadge){
     if(pctGlobal >= 100){ heroBadge.textContent = '✓ META SUPERADA'; heroBadge.className = 'meta-hero-badge'; }
@@ -1147,45 +1148,49 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     card.className = cls;
   }
 
+  // Helper: % topado a 100 (con marca de +X% cuando se supera)
+  const capPct = p => Math.min(p, 100).toFixed(1) + '%';
+  const overTag = p => p > 100 ? ` <span style="font-size:14px;color:var(--green);font-weight:700"> ✓</span>` : '';
+
   // Leads
-  setText('metaLeadsPct', pctLeads.toFixed(1) + '%');
+  document.getElementById('metaLeadsPct').innerHTML = capPct(pctLeads) + overTag(pctLeads);
   setText('metaLeadsReal', fmtN(agoLeadsReal));
-  document.getElementById('metaLeadsBar').style.width = Math.min(pctLeads, 150) + '%';
+  document.getElementById('metaLeadsBar').style.width = Math.min(pctLeads, 100) + '%';
   const deltaLeads = agoLeadsReal - META.leads;
-  setText('metaLeadsNote', deltaLeads >= 0 ? `+${fmtN(deltaLeads)} leads sobre meta` : `${fmtN(deltaLeads)} leads bajo meta`);
+  setText('metaLeadsNote', deltaLeads >= 0 ? `Meta cumplida · +${fmtN(deltaLeads)} extra sobre 25,000` : `${fmtN(deltaLeads)} leads bajo meta`);
   paintMeta('metaLeadsCard', pctLeads, true);
 
   // Gestionables (meta dinámica: 85% de leads captados)
-  setText('metaGestPct', pctGest.toFixed(1) + '%');
+  document.getElementById('metaGestPct').innerHTML = capPct(pctGest) + overTag(pctGest);
   setText('metaGestReal', fmtN(gestReal));
   setText('metaGestTarget', `meta ${fmtN(gestTargetDyn)} (85% de ${fmtN(agoLeadsReal)})`);
-  document.getElementById('metaGestBar').style.width = Math.min(pctGest, 150) + '%';
+  document.getElementById('metaGestBar').style.width = Math.min(pctGest, 100) + '%';
   const deltaGest = gestReal - gestTargetDyn;
-  setText('metaGestNote', deltaGest >= 0 ? `+${fmtN(deltaGest)} sobre meta dinámica` : `${fmtN(deltaGest)} bajo meta dinámica`);
+  setText('metaGestNote', deltaGest >= 0 ? `Meta cumplida · +${fmtN(deltaGest)} sobre meta dinámica` : `Faltan ${fmtN(Math.abs(deltaGest))} para llegar a la meta`);
   paintMeta('metaGestCard', pctGest, true);
 
   // Tasa de conversión gestionables (real % vs 85% meta)
-  setText('metaTasaPct', (tasaReal*100).toFixed(1) + '%');
+  document.getElementById('metaTasaPct').innerHTML = capPct(pctTasa) + overTag(pctTasa);
   setText('metaTasaReal', (tasaReal*100).toFixed(1) + '%');
-  document.getElementById('metaTasaBar').style.width = Math.min(pctTasa, 150) + '%';
+  document.getElementById('metaTasaBar').style.width = Math.min(pctTasa, 100) + '%';
   const deltaTasaPct = (tasaReal - tasaMeta) * 100;
   setText('metaTasaNote', deltaTasaPct >= 0
-    ? `+${deltaTasaPct.toFixed(1)} pp sobre meta 85%`
+    ? `Meta cumplida · +${deltaTasaPct.toFixed(1)} pp sobre 85%`
     : `${deltaTasaPct.toFixed(1)} pp bajo meta 85%`);
   paintMeta('metaTasaCard', pctTasa, true);
 
   // CPL (menor es mejor)
-  setText('metaCplPct', pctCpl.toFixed(1) + '%');
+  document.getElementById('metaCplPct').innerHTML = capPct(pctCpl) + overTag(pctCpl);
   setText('metaCplReal', '$' + agoCplReal.toFixed(2));
-  document.getElementById('metaCplBar').style.width = Math.min(pctCpl, 150) + '%';
+  document.getElementById('metaCplBar').style.width = Math.min(pctCpl, 100) + '%';
   const deltaCplMeta = agoCplReal - META.cpl;
-  setText('metaCplNote', deltaCplMeta <= 0 ? `${'$'+Math.abs(deltaCplMeta).toFixed(2)} bajo meta (mejor)` : `+$${deltaCplMeta.toFixed(2)} sobre meta (peor)`);
+  setText('metaCplNote', deltaCplMeta <= 0 ? `Meta cumplida · $${Math.abs(deltaCplMeta).toFixed(2)} bajo meta (mejor)` : `+$${deltaCplMeta.toFixed(2)} sobre meta`);
   paintMeta('metaCplCard', pctCpl, false);
 
   // Gasto
-  setText('metaSpendPct2', pctSpend.toFixed(1) + '%');
+  document.getElementById('metaSpendPct2').innerHTML = capPct(pctSpend) + overTag(pctSpend);
   setText('metaSpendReal', fmtMXN(agoSpendReal));
-  document.getElementById('metaSpendBar2').style.width = Math.min(pctSpend, 150) + '%';
+  document.getElementById('metaSpendBar2').style.width = Math.min(pctSpend, 100) + '%';
   const deltaSpend = agoSpendReal - META.spend;
   setText('metaSpendNote', deltaSpend <= 0 ? `${fmtMXN(Math.abs(deltaSpend))} bajo presupuesto` : `+${fmtMXN(deltaSpend)} sobre presupuesto`);
   // Gasto: dentro de rango 95-115% ok, más es warn, mucho más es bad (siempre que leads justifiquen)
