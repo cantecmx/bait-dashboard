@@ -531,7 +531,7 @@
           <div class="card with-top-border top-blue">
             <div class="label">CPL global</div>
             <div class="value-lg" id="mktKpiCpl">—</div>
-            <div class="value-sub" id="mktKpiCplSub">vs Junio $27.94</div>
+            <div class="value-sub" id="mktKpiCplSub">vs Julio $28.02</div>
             <div class="value-delta" id="mktKpiCplDelta">—</div>
           </div>
           <div class="card with-top-border top-yellow">
@@ -566,7 +566,7 @@
 
         <div class="section-title">Tendencia diaria</div>
         <div class="chart-card">
-          <h3>Leads y CPL por día · Julio 2026</h3>
+          <h3>Leads y CPL por día · Agosto 2026 (mes cerrado · 31 días)</h3>
           <canvas id="mktDailyChart" style="max-height:300px"></canvas>
         </div>
 
@@ -611,7 +611,7 @@
           </div>
         </div>
 
-        <div class="section-title">Comparativa vs Junio 2026</div>
+        <div class="section-title">Comparativa Agosto vs Julio 2026</div>
         <div class="chart-card">
           <h3>Deltas de las métricas clave</h3>
           <canvas id="mktCompareChart" style="max-height:260px"></canvas>
@@ -936,10 +936,9 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   renderDailyChart(26);
 })();
 
-// === TAB MARKETING · datos en vivo Windsor.ai ===
+// === TAB MARKETING · cierre Agosto 2026 (hardcoded desde Windsor 2026-09-01) ===
 (function(){
   const D = window.BAIT_STRATEGIC || {};
-  if(!D.daily || !D.daily.length) return;
 
   const fmtN = n => Math.round(n).toLocaleString('es-MX');
   const fmtMXN = n => '$' + fmtN(n);
@@ -947,16 +946,137 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   const fmtPct = n => ((Number(n)||0)*100).toFixed(2)+'%';
   const setText = (id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
 
-  // === Totales ===
-  const totLeads = D.demographics.reduce((s,r)=>s+(r.leads||0),0);
-  const totSpend = D.demographics.reduce((s,r)=>s+(r.spend||0),0);
-  const totImp = D.demographics.reduce((s,r)=>s+(r.impressions||0),0);
-  const totClicks = D.demographics.reduce((s,r)=>s+(r.clicks||0),0);
-  const globalCpl = totLeads ? totSpend/totLeads : 0;
+  // === Datos REALES Agosto 2026 completo (fuente: Windsor 2026-09-01) ===
+  const dayNames = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
+  const AGO_RAW = [
+    ["2026-08-01",18817.27,578391,7238,814],["2026-08-02",26134.75,793903,10148,998],
+    ["2026-08-03",27902.65,878021,11353,1109],["2026-08-04",24687.01,785187,10233,1060],
+    ["2026-08-05",19709,529024,7072,851],["2026-08-06",21465.5,603170,8412,976],
+    ["2026-08-07",21971.95,613203,8595,942],["2026-08-08",23329.14,705104,9100,971],
+    ["2026-08-09",24592.57,759789,8935,964],["2026-08-10",29028.16,927176,11221,1198],
+    ["2026-08-11",22306.81,708381,9451,866],["2026-08-12",25089.62,876485,11572,1118],
+    ["2026-08-13",19543.67,576112,8015,790],["2026-08-14",21737.32,626340,9413,920],
+    ["2026-08-15",23858.45,693256,10137,997],["2026-08-16",29108.04,886806,13678,1261],
+    ["2026-08-17",29892.87,861348,14000,1337],["2026-08-18",24786.65,638633,10529,1137],
+    ["2026-08-19",27152.36,810914,12871,1226],["2026-08-20",25479.87,720484,11359,1253],
+    ["2026-08-21",24488.67,698204,10070,1098],["2026-08-22",26318.28,799233,10544,1148],
+    ["2026-08-23",26666.52,708239,9582,1099],["2026-08-24",21003.61,664192,8003,792],
+    ["2026-08-25",31504.53,1087460,13406,1204],["2026-08-26",28358.78,818832,10671,996],
+    ["2026-08-27",27744.62,919881,11946,1000],["2026-08-28",36756.47,1007199,15090,1567],
+    ["2026-08-29",18554.65,523797,8063,904],["2026-08-30",34321.27,1181002,17826,1522],
+    ["2026-08-31",27087.79,856518,13938,1368]
+  ];
+  const AGO_DAILY = AGO_RAW.map(r=>{
+    const [date, spend, impressions, clicks, leads] = r;
+    const dt = new Date(date+'T00:00:00Z');
+    return {
+      date, label: dayNames[dt.getUTCDay()]+' '+String(dt.getUTCDate()).padStart(2,'0'),
+      spend, impressions, clicks, leads,
+      ctr: impressions ? clicks/impressions : 0,
+      cpm: impressions ? (spend/impressions)*1000 : 0,
+      cpl: leads ? spend/leads : 0,
+      partial: false
+    };
+  });
+
+  // === Demografía Agosto (age × gender) ===
+  const AGO_DEMOS_RAW = [
+    ["18-24","female",17131.79,678099,8056,2.14,700],["25-34","female",60089.32,1761064,25519,2.37,2659],
+    ["35-44","female",52476.49,1157392,22216,2.43,2206],["45-54","female",27820.54,500153,13371,2.19,1217],
+    ["55-64","female",8936.27,139404,4451,2.04,360],["65+","female",2751.09,44292,1604,1.91,125],
+    ["18-24","male",86545.01,4119608,43020,3.13,4110],["25-34","male",238629.00,8476422,101717,3.28,10227],
+    ["35-44","male",161798.50,4020980,59695,2.93,6539],["45-54","male",81839.21,1655781,31291,2.60,3149],
+    ["55-64","male",29469.11,500112,11687,2.43,1097],["65+","male",10570.69,176218,4473,2.41,425]
+  ];
+  const AGO_DEMOS = AGO_DEMOS_RAW.map(r=>{
+    const [age, gender, spend, impressions, clicks, frequency, leads] = r;
+    return { age, gender, spend, impressions, clicks, frequency, leads,
+      ctr: impressions ? clicks/impressions : 0,
+      cpm: impressions ? (spend/impressions)*1000 : 0,
+      cpl: leads ? spend/leads : 0 };
+  });
+
+  // === Placements Agosto ===
+  const AGO_PLACEMENTS_RAW = [
+    ["facebook","facebook_reels",205144.19,6389656,53911,7637],
+    ["facebook","facebook_stories",48048.36,1894403,14384,2029],
+    ["facebook","feed",445482.72,12996468,245217,19628],
+    ["facebook","marketplace",4799.47,249421,1254,223],
+    ["facebook","search",24962.30,228513,3943,1051],
+    ["facebook","instream_video",1507.20,20000,440,42],
+    ["facebook","facebook_profile_feed",984.65,45073,481,48],
+    ["instagram","feed",3168.87,47293,422,159],
+    ["instagram","instagram_reels",14212.39,341522,3093,507],
+    ["instagram","instagram_stories",4900.56,109078,951,262],
+    ["whatsapp","status",34920.45,1451938,7918,1850]
+  ];
+  const AGO_PLACEMENTS = AGO_PLACEMENTS_RAW.map(r=>{
+    const [platform, position, spend, impressions, clicks, leads] = r;
+    return { platform, position, spend, impressions, clicks, leads,
+      ctr: impressions ? clicks/impressions : 0,
+      cpm: impressions ? (spend/impressions)*1000 : 0,
+      cpl: leads ? spend/leads : 0 };
+  });
+
+  // === Regiones Agosto (top por gasto) ===
+  const AGO_REGIONS_RAW = [
+    ["Distrito Federal",261340.25,7598698,109947],
+    ["Jalisco",196424.24,5530466,78565],
+    ["Puebla",97339.82,3347460,44698],
+    ["Yucatán",35075.27,985483,14647],
+    ["San Luis Potosi",34183.67,1049119,14332],
+    ["Hidalgo",33229.85,1168855,15145],
+    ["Sinaloa",32460.00,951167,12671],
+    ["Chiapas",24866.27,895096,11381],
+    ["Guerrero",17637.67,656052,8701],
+    ["Nayarit",11053.57,348948,4568],
+    ["Tlaxcala",10938.05,379829,4658],
+    ["State of Mexico",10625.27,172390,3209],
+    ["Campeche",8946.59,269283,3804],
+    ["Zacatecas",8903.01,308821,3831],
+    ["Baja California Sur",6028.67,170846,2263]
+  ];
+  const AGO_REGIONS = AGO_REGIONS_RAW.map(r=>{
+    const [region, spend, impressions, clicks] = r;
+    return { region, spend, impressions, clicks,
+      ctr: impressions ? clicks/impressions : 0,
+      cpm: impressions ? (spend/impressions)*1000 : 0 };
+  });
+
+  // === Ads Top Agosto ===
+  const AGO_ADS_RAW = [
+    ["Anuncio 06 - Sim-Esim","Campaña 1 Genesys – Edad + Sexo + Regiones",233960.49,6549462,112554,1.14,11631],
+    ["Anuncio 01 - Sim-Esim","Campaña 1 Genesys – Edad + Sexo + Regiones",184359.94,4783011,58444,1.18,7417],
+    ["Anuncio 01 - Marzo","Campaña SuperChat PISO - 8278",136037.95,4459373,59160,1.19,5310],
+    ["Arte Pokemons","BOT-COMPETIDOR | 04 | Gamers",82995.01,4983749,57744,1.20,4191]
+  ];
+  const AGO_ADS = AGO_ADS_RAW.map(r=>{
+    const [ad, campaign, spend, impressions, clicks, frequency, leads] = r;
+    return { ad, campaign, spend, impressions, clicks, frequency, leads,
+      ctr: impressions ? clicks/impressions : 0,
+      cpl: leads ? spend/leads : 0 };
+  });
+
+  // Reasigno D para que todo el resto del bloque Marketing use Agosto
+  const D_AGO = {
+    meta: { dateRange: '2026-08-01 a 2026-08-31', daysComplete: 31, updatedAt: '2026-09-01 · cierre Agosto' },
+    daily: AGO_DAILY,
+    demographics: AGO_DEMOS,
+    placements: AGO_PLACEMENTS,
+    regions: AGO_REGIONS,
+    ads: AGO_ADS
+  };
+
+  // === Totales Agosto (calculados desde AGO_DAILY) ===
+  const totLeads = AGO_DAILY.reduce((s,r)=>s+r.leads,0);   // 34,486
+  const totSpend = AGO_DAILY.reduce((s,r)=>s+r.spend,0);   // 789,398.85
+  const totImp = AGO_DAILY.reduce((s,r)=>s+r.impressions,0);
+  const totClicks = AGO_DAILY.reduce((s,r)=>s+r.clicks,0);
+  const globalCpl = totLeads ? totSpend/totLeads : 0;      // 22.89
   const globalCtr = totImp ? totClicks/totImp : 0;
   const globalCpm = totImp ? (totSpend/totImp)*1000 : 0;
-  const daysComplete = (D.meta && D.meta.daysComplete) || D.daily.filter(d=>!d.partial).length;
-  const daysReal = D.daily.length;
+  const daysComplete = 31;
+  const daysReal = 31;
 
   // Agosto budget total (meta oficial)
   const BUDGET_AGO = 575000;
@@ -1054,13 +1174,13 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   setText('mktLiveBadge', 'Live · Windsor · ' + ((D.meta && D.meta.updatedAt) || ''));
 
   setText('mktKpiLeads', fmtN(totLeads));
-  setText('mktKpiLeadsSub', `${daysReal} días acumulados · ${daysComplete} completos · ~${fmtN(totLeads/daysReal)}/día promedio`);
+  setText('mktKpiLeadsSub', `Agosto cerrado · 31 días · ${fmtN(totLeads/31)}/día promedio`);
 
   setText('mktKpiCpl', fmtMXNd(globalCpl));
-  const junioCpl = 27.94;
-  const deltaCpl = globalCpl - junioCpl;
-  const deltaCplPct = (deltaCpl / junioCpl * 100);
-  const deltaText = (deltaCpl>=0?'▲ +':'▼ ') + fmtMXNd(Math.abs(deltaCpl)) + ` (${deltaCplPct>=0?'+':''}${deltaCplPct.toFixed(1)}% vs Jun)`;
+  const julioCpl = 28.02;
+  const deltaCpl = globalCpl - julioCpl;
+  const deltaCplPct = (deltaCpl / julioCpl * 100);
+  const deltaText = (deltaCpl>=0?'▲ +':'▼ ') + fmtMXNd(Math.abs(deltaCpl)) + ` (${deltaCplPct>=0?'+':''}${deltaCplPct.toFixed(1)}% vs Jul)`;
   const deltaEl = document.getElementById('mktKpiCplDelta');
   if(deltaEl){
     deltaEl.textContent = deltaText;
@@ -1080,33 +1200,33 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   setText('mktKpiCtr', fmtPct(globalCtr));
   setText('mktKpiCpm', fmtMXNd(globalCpm));
 
-  // === TENDENCIA DIARIA ===
-  const dailyLabels = D.daily.map(d=>d.label);
-  const dailyLeads = D.daily.map(d=>d.leads);
-  const dailyCpls = D.daily.map(d=>d.partial ? null : d.cpl);
-  const dailyColors = D.daily.map(d=>d.partial ? 'rgba(139,92,246,0.5)' : 'rgba(245,158,11,0.65)');
+  // === TENDENCIA DIARIA · Agosto 2026 (31 días completos) ===
+  const dailyLabels = AGO_DAILY.map(d=>d.label);
+  const dailyLeads = AGO_DAILY.map(d=>d.leads);
+  const dailyCpls = AGO_DAILY.map(d=>d.cpl);
+  const dailyColors = AGO_DAILY.map(()=>'rgba(245,158,11,0.65)');
   new Chart(document.getElementById('mktDailyChart').getContext('2d'), {
     data:{
       labels: dailyLabels,
       datasets:[
         {type:'bar', label:'Leads/día', data:dailyLeads, backgroundColor:dailyColors, borderColor:dailyColors, borderWidth:1, borderRadius:4, yAxisID:'y'},
-        {type:'line', label:'CPL ($)', data:dailyCpls, borderColor:'#d97706', backgroundColor:'transparent', tension:0.3, pointRadius:4, pointBackgroundColor:'#d97706', yAxisID:'y1', spanGaps:true}
+        {type:'line', label:'CPL ($)', data:dailyCpls, borderColor:'#d97706', backgroundColor:'transparent', tension:0.3, pointRadius:3, pointBackgroundColor:'#d97706', yAxisID:'y1', spanGaps:true}
       ]
     },
     options:{
       responsive:true, maintainAspectRatio:false,
       interaction:{mode:'index', intersect:false},
-      plugins:{legend:{position:'top', labels:{color:'#111827',font:{size:11}}}, tooltip:{callbacks:{afterLabel:ctx=>D.daily[ctx.dataIndex].partial ? '(día parcial)' : ''}}},
+      plugins:{legend:{position:'top', labels:{color:'#111827',font:{size:11}}}, tooltip:{callbacks:{afterLabel:ctx=>{const d=AGO_DAILY[ctx.dataIndex]; return `Gasto: ${fmtMXN(d.spend)} · CPL ${fmtMXNd(d.cpl)}`;}}}},
       scales:{
         y:{grid:{color:'#f3f4f6'}, ticks:{color:'#6b7280'}, beginAtZero:true, title:{display:true,text:'Leads',color:'#6b7280'}},
         y1:{position:'right', grid:{display:false}, ticks:{color:'#6b7280', callback:v=>'$'+v}, title:{display:true,text:'CPL',color:'#6b7280'}},
-        x:{grid:{display:false}, ticks:{color:'#9ca3af',font:{size:10},maxRotation:45,minRotation:45}}
+        x:{grid:{display:false}, ticks:{color:'#9ca3af',font:{size:9},maxRotation:60,minRotation:60,autoSkip:false}}
       }
     }
   });
 
   // === PLACEMENTS ===
-  const places = (D.placements || []).filter(p=>p.leads>0).slice().sort((a,b)=>a.cpl-b.cpl).slice(0,8);
+  const places = (D_AGO.placements || []).filter(p=>p.leads>0).slice().sort((a,b)=>a.cpl-b.cpl).slice(0,8);
   const placeLabels = places.map(p=>{
     const pos = String(p.position||'').replace('facebook_','').replace('instagram_','');
     return `${p.platform} · ${pos}`;
@@ -1128,7 +1248,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     }
   });
 
-  const placesBySpend = (D.placements || []).filter(p=>p.spend>0).slice().sort((a,b)=>b.spend-a.spend).slice(0,8);
+  const placesBySpend = (D_AGO.placements || []).filter(p=>p.spend>0).slice().sort((a,b)=>b.spend-a.spend).slice(0,8);
   new Chart(document.getElementById('mktPlacementSpendChart').getContext('2d'), {
     type:'doughnut',
     data:{
@@ -1142,7 +1262,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   });
 
   // === DEMOGRAFÍA ===
-  const dems = (D.demographics || []).filter(d=>d.leads>5 && d.gender!=='unknown').slice().sort((a,b)=>a.cpl-b.cpl).slice(0,8);
+  const dems = (D_AGO.demographics || []).filter(d=>d.leads>5 && d.gender!=='unknown').slice().sort((a,b)=>a.cpl-b.cpl).slice(0,8);
   new Chart(document.getElementById('mktDemChart').getContext('2d'), {
     type:'bar',
     data:{
@@ -1165,7 +1285,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
 
   // Distribución por edad (agregado M+F)
   const byAge = {};
-  (D.demographics || []).filter(d=>d.gender!=='unknown').forEach(d=>{
+  (D_AGO.demographics || []).filter(d=>d.gender!=='unknown').forEach(d=>{
     byAge[d.age] = (byAge[d.age]||0) + (d.leads||0);
   });
   const ageEntries = Object.entries(byAge).sort((a,b)=>b[1]-a[1]);
@@ -1182,7 +1302,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   });
 
   // === REGIONES ===
-  const regs = (D.regions || []).slice().sort((a,b)=>b.spend-a.spend).slice(0,10);
+  const regs = (D_AGO.regions || []).slice().sort((a,b)=>b.spend-a.spend).slice(0,10);
   new Chart(document.getElementById('mktRegionChart').getContext('2d'), {
     type:'bar',
     data:{
@@ -1200,7 +1320,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   });
 
   // === CREATIVOS ===
-  const ads = (D.ads || []).filter(a=>a.leads>0).slice().sort((a,b)=>a.cpl-b.cpl).slice(0,10);
+  const ads = (D_AGO.ads || []).filter(a=>a.leads>0).slice().sort((a,b)=>a.cpl-b.cpl).slice(0,10);
   const adsTb = document.querySelector('#mktAdsTable tbody');
   if(adsTb){
     ads.forEach((a,i)=>{
@@ -1217,22 +1337,21 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     });
   }
 
-  // === COMPARATIVA JULIO vs JUNIO ===
-  // Junio referencia: promedio diario (base cerrada)
-  const junioAvgLeadsDay = 366;       // promedio junio 18 días completos
-  const junioAvgSpendDay = 10211;     // avg junio
-  const junioAvgCpl = 27.94;
-  const julioAvgLeadsDay = daysComplete > 0 ? totLeads / daysComplete : totLeads / daysReal;
-  const julioAvgSpendDay = daysComplete > 0 ? totSpend / daysComplete : totSpend / daysReal;
-  const julioAvgCpl = globalCpl;
+  // === COMPARATIVA AGOSTO vs JULIO (mes anterior cerrado) ===
+  const julioAvgLeadsDay = 648;    // 20,094 / 31
+  const julioAvgSpendDay = 18165;  // 563,126 / 31
+  const julioAvgCpl = 28.02;
+  const agoAvgLeadsDay = totLeads / 31;   // 1,112
+  const agoAvgSpendDay = totSpend / 31;   // 25,464
+  const agoAvgCpl = globalCpl;             // 22.89
 
   new Chart(document.getElementById('mktCompareChart').getContext('2d'), {
     type:'bar',
     data:{
       labels:['Leads/día promedio', 'Gasto/día promedio', 'CPL promedio'],
       datasets:[
-        {label:'Junio 2026 (base)', data:[junioAvgLeadsDay, junioAvgSpendDay/500, junioAvgCpl], backgroundColor:'rgba(59,130,246,0.55)', borderColor:'#3b82f6', borderWidth:1, borderRadius:4},
-        {label:'Julio 2026 (actual)', data:[julioAvgLeadsDay, julioAvgSpendDay/500, julioAvgCpl], backgroundColor:'rgba(245,158,11,0.75)', borderColor:'#d97706', borderWidth:1, borderRadius:4}
+        {label:'Julio 2026 (base)',    data:[julioAvgLeadsDay, julioAvgSpendDay/500, julioAvgCpl], backgroundColor:'rgba(59,130,246,0.55)', borderColor:'#3b82f6', borderWidth:1, borderRadius:4},
+        {label:'Agosto 2026 (cierre)', data:[agoAvgLeadsDay,   agoAvgSpendDay/500,   agoAvgCpl],   backgroundColor:'rgba(245,158,11,0.75)', borderColor:'#d97706', borderWidth:1, borderRadius:4}
       ]
     },
     options:{
