@@ -1116,12 +1116,21 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   const pctCpl   = (META.cpl / agoCplReal) * 100;
   const pctSpend = (agoSpendReal / META.spend) * 100;
 
-  // Global: promedio ponderado leads+cpl (los KPIs clave)
-  const pctGlobal = (pctLeads + pctCpl) / 2;
+  // Global: promedio de los 5 KPIs mostrados (cada uno topado a 100%)
+  const cap100 = p => Math.min(p, 100);
+  const pctGlobal = (
+    cap100(pctLeads) +
+    cap100(pctGest) +
+    cap100(pctTasa) +
+    cap100(pctCpl) +
+    cap100(pctSpend)
+  ) / 5;
 
   const pctGlobalDisplay = Math.min(pctGlobal, 100);
-  document.getElementById('metaHeroBig').innerHTML = pctGlobalDisplay.toFixed(1) + '%' + (pctGlobal > 100 ? ' <span style="font-size:22px;color:var(--green)">✓</span>' : '');
-  setText('metaHeroSub', `Promedio ponderado Leads (${Math.min(pctLeads,100).toFixed(0)}%) + CPL (${Math.min(pctCpl,100).toFixed(0)}%) · cierre Agosto 2026 · leads CRM · gasto Meta Ads`);
+  document.getElementById('metaHeroBig').innerHTML = pctGlobalDisplay.toFixed(1) + '%' + (pctGlobal >= 100 ? ' <span style="font-size:22px;color:var(--green)">✓</span>' : '');
+  setText('metaHeroSub',
+    `Promedio de 5 KPIs: Leads ${cap100(pctLeads).toFixed(0)}% · Gest ${cap100(pctGest).toFixed(0)}% · Tasa ${cap100(pctTasa).toFixed(0)}% · CPL ${cap100(pctCpl).toFixed(0)}% · Gasto ${cap100(pctSpend).toFixed(0)}% · cierre Agosto 2026`
+  );
   const heroBadge = document.getElementById('metaHeroBadge');
   if(heroBadge){
     if(pctGlobal >= 100){ heroBadge.textContent = '✓ META SUPERADA'; heroBadge.className = 'meta-hero-badge'; }
