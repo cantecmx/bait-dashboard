@@ -505,8 +505,6 @@
             <div style="font-size:22px;font-weight:700;color:var(--text);margin-top:4px" id="mktPeriodo">Agosto 2026</div>
           </div>
         </div>
-        <div class="subtitle">Meta Ads BAIT · Mensajes iniciados (Click-to-Message) · datos en vivo Windsor.ai</div>
-
         <div class="section-title">🎯 Meta vs Cumplimiento · Cierre Agosto 2026</div>
         <div class="meta-hero" id="metaHero">
           <div class="meta-hero-left">
@@ -639,10 +637,22 @@
         </details>
 
         <div class="section-title">Comparativa Junio · Julio · Agosto 2026</div>
-        <div class="chart-card">
-          <h3>Deltas de las métricas clave · 3 meses</h3>
-          <canvas id="mktCompareChart" style="max-height:280px"></canvas>
-          <div style="margin-top:14px;font-size:11.5px;color:var(--muted);text-align:center">Promedios diarios de cada mes cerrado para comparación justa</div>
+        <div class="grid-3">
+          <div class="chart-card">
+            <h3>Leads/día promedio</h3>
+            <canvas id="mktCompareLeadsChart" style="max-height:240px"></canvas>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--muted);text-align:center">Escalado 3x en 3 meses</div>
+          </div>
+          <div class="chart-card">
+            <h3>Gasto/día promedio</h3>
+            <canvas id="mktCompareSpendChart" style="max-height:240px"></canvas>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--muted);text-align:center">MXN por día · presupuesto Meta</div>
+          </div>
+          <div class="chart-card">
+            <h3>CPL promedio</h3>
+            <canvas id="mktCompareCplChart" style="max-height:240px"></canvas>
+            <div style="margin-top:8px;font-size:11.5px;color:var(--muted);text-align:center">Costo por lead · menor es mejor</div>
+          </div>
         </div>
       </div>
 
@@ -1153,7 +1163,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   }
 
   // === KPIs cards ===
-  setText('mktPeriodo', (D.meta && D.meta.dateRange) || 'Agosto 2026');
+  setText('mktPeriodo', '2026-08-01 a 2026-08-31 · cerrado');
   setText('mktLiveBadge', 'Live · Windsor · ' + ((D.meta && D.meta.updatedAt) || ''));
 
   setText('mktKpiLeads', fmtN(totLeads));
@@ -1328,35 +1338,55 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   const agoAvgSpendDay = totSpend / 31;   // 25,464
   const agoAvgCpl = globalCpl;             // 22.89
 
-  new Chart(document.getElementById('mktCompareChart').getContext('2d'), {
-    type:'bar',
-    data:{
-      labels:['Leads/día promedio', 'Gasto/día (÷500)', 'CPL promedio'],
-      datasets:[
-        {label:'Junio 2026',  data:[junioAvgLeadsDay, junioAvgSpendDay/500, junioAvgCpl], backgroundColor:'rgba(148,163,184,0.65)', borderColor:'#64748b', borderWidth:1, borderRadius:4},
-        {label:'Julio 2026',  data:[julioAvgLeadsDay, julioAvgSpendDay/500, julioAvgCpl], backgroundColor:'rgba(59,130,246,0.65)',  borderColor:'#3b82f6', borderWidth:1, borderRadius:4},
-        {label:'Agosto 2026', data:[agoAvgLeadsDay,   agoAvgSpendDay/500,   agoAvgCpl],   backgroundColor:'rgba(245,158,11,0.85)',  borderColor:'#d97706', borderWidth:1, borderRadius:4}
-      ]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{position:'top', labels:{color:'#111827',font:{size:11}}},
-        tooltip:{callbacks:{label:ctx=>{
-          const raw = ctx.raw;
-          const idx = ctx.dataIndex;
-          if(idx===0) return `${ctx.dataset.label}: ${fmtN(raw)} leads/día`;
-          if(idx===1) return `${ctx.dataset.label}: ${fmtMXN(raw*500)} MXN/día`;
-          if(idx===2) return `${ctx.dataset.label}: ${fmtMXNd(raw)}`;
-          return raw;
-        }}}
+  // 3 charts separados: cada métrica su propia escala visible
+  const compLabels = ['Junio', 'Julio', 'Agosto'];
+  const compColors = ['rgba(148,163,184,0.75)', 'rgba(59,130,246,0.75)', 'rgba(245,158,11,0.9)'];
+  const compBorders = ['#64748b', '#3b82f6', '#d97706'];
+
+  function buildCompChart(canvasId, data, labelTag, fmt){
+    new Chart(document.getElementById(canvasId).getContext('2d'), {
+      type:'bar',
+      data:{
+        labels: compLabels,
+        datasets:[{
+          label: labelTag,
+          data,
+          backgroundColor: compColors,
+          borderColor: compBorders,
+          borderWidth: 1,
+          borderRadius: 6,
+          borderSkipped: false
+        }]
       },
-      scales:{
-        x:{grid:{display:false}, ticks:{color:'#111827',font:{size:11,weight:600}}},
-        y:{grid:{color:'#f3f4f6'}, ticks:{color:'#6b7280'}, beginAtZero:true}
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          datalabels:{display:false},
+          tooltip:{callbacks:{label: ctx => `${ctx.label}: ${fmt(ctx.raw)}`}}
+        },
+        scales:{
+          x:{grid:{display:false}, ticks:{color:'#111827',font:{size:12,weight:700}}},
+          y:{grid:{color:'#f3f4f6'}, ticks:{color:'#6b7280', callback: v => fmt(v)}, beginAtZero:true}
+        }
       }
-    }
-  });
+    });
+  }
+
+  buildCompChart('mktCompareLeadsChart',
+    [junioAvgLeadsDay, julioAvgLeadsDay, agoAvgLeadsDay],
+    'Leads/día',
+    v => fmtN(v));
+
+  buildCompChart('mktCompareSpendChart',
+    [junioAvgSpendDay, julioAvgSpendDay, agoAvgSpendDay],
+    'Gasto/día',
+    v => '$' + fmtN(v));
+
+  buildCompChart('mktCompareCplChart',
+    [junioAvgCpl, julioAvgCpl, agoAvgCpl],
+    'CPL',
+    v => '$' + Number(v).toFixed(2));
 })();
 </script>
 </body>
