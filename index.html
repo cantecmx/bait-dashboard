@@ -1256,13 +1256,12 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     }
   });
 
-  // === CPL SEMANAL Agosto (agregado por bloques de 7 días) ===
+  // === CPL SEMANAL Agosto (agrupación según ciclo de facturación) ===
   const weeklyGroups = [
-    { name:'Sem 1 · Ago 1-7',   days: AGO_DAILY.slice(0,7)  },
-    { name:'Sem 2 · Ago 8-14',  days: AGO_DAILY.slice(7,14) },
-    { name:'Sem 3 · Ago 15-21', days: AGO_DAILY.slice(14,21)},
-    { name:'Sem 4 · Ago 22-28', days: AGO_DAILY.slice(21,28)},
-    { name:'Cierre · Ago 29-31',days: AGO_DAILY.slice(28,31)}
+    { name:'Sem 1 · Ago 1-9',   days: AGO_DAILY.slice(0,9)  },  // 9 días
+    { name:'Sem 2 · Ago 10-16', days: AGO_DAILY.slice(9,16) },  // 7 días
+    { name:'Sem 3 · Ago 17-23', days: AGO_DAILY.slice(16,23)},  // 7 días
+    { name:'Sem 4 · Ago 24-31', days: AGO_DAILY.slice(23,31)}   // 8 días
   ];
   const weeklyData = weeklyGroups.map(w=>{
     const spend = w.days.reduce((s,d)=>s+d.spend,0);
