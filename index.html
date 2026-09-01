@@ -96,6 +96,16 @@
   .card .footer .progress{flex:1;height:3px;background:#e5e7eb;border-radius:2px;overflow:hidden;margin-left:14px}
   .card .footer .progress-bar{height:100%;background:var(--brand);border-radius:2px}
 
+  /* DESPLEGABLES DE ANÁLISIS */
+  details.drill{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
+  details.drill > summary{padding:16px 22px;font-weight:700;font-size:14px;color:var(--text);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;transition:background .15s;user-select:none}
+  details.drill > summary::-webkit-details-marker{display:none}
+  details.drill > summary::after{content:'▸';margin-left:auto;color:var(--brand-dark);font-size:16px;transition:transform .2s}
+  details.drill[open] > summary::after{transform:rotate(90deg)}
+  details.drill > summary:hover{background:#fef3c7}
+  details.drill[open] > summary{border-bottom:1px solid var(--border);background:#fffbeb}
+  .drill-body{padding:18px 22px 22px 22px}
+
   /* META HERO + CARDS */
   .meta-hero{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:1px solid #fbbf24;border-radius:14px;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;box-shadow:0 2px 8px rgba(251,191,36,.15)}
   .meta-hero-lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#78350f;font-weight:700;margin-bottom:6px}
@@ -244,10 +254,6 @@
         <button class="tab-btn active" data-tab="general"><span class="ico">📊</span> General</button>
         <button class="tab-btn" data-tab="proyeccion"><span class="ico">📈</span> Proyección</button>
         <button class="tab-btn" data-tab="marketing"><span class="ico">🧠</span> Marketing</button>
-        <button class="tab-btn" data-tab="funnel"><span class="ico">▼</span> Funnel</button>
-        <button class="tab-btn" data-tab="performance"><span class="ico">⚡</span> Performance IA</button>
-        <button class="tab-btn" data-tab="ventas"><span class="ico">💰</span> Ventas</button>
-        <button class="tab-btn" data-tab="costo"><span class="ico">🎯</span> Costo por Venta</button>
       </nav>
       <div class="brand-right">
         <div class="month-label"><strong>Agosto 2026 · CANTEC</strong></div>
@@ -268,75 +274,97 @@
             <div style="font-size:22px;font-weight:700;color:var(--text);margin-top:4px">Agosto 2026</div>
           </div>
         </div>
-        <div class="subtitle">Ventas totales · Portabilidad · Canales · Metas</div>
+        <div class="subtitle">Cierre Agosto 2026 · Meta Ads · Comparativa trimestre Q3</div>
 
         <div class="banner-june">
           <div class="text">🗂 <strong>Junio 2026 cerrado.</strong> Consulta el análisis detallado con todas las campañas Meta y desglose por creativo.</div>
           <a href="junio-2026.html">Ver análisis Junio →</a>
         </div>
 
-        <div class="section-title">KPIs GLOBALES DEL MES</div>
+        <div class="section-title">KPIs GLOBALES DEL MES · Agosto 2026</div>
         <div class="grid-3">
           <div class="card with-top-border top-brand">
-            <div class="label">Ventas procesadas</div>
-            <div class="value-lg"><span class="skel" style="width:100px;height:26px"></span></div>
+            <div class="label">Mensajes iniciados</div>
+            <div class="value-lg">34,486</div>
+            <div class="value-sub">Meta 25,000 · superada +37.9%</div>
             <div class="footer">
-              <div class="status">Agosto 2026</div>
-              <div class="progress"><div class="progress-bar" style="width:8%"></div></div>
-              <div class="status" style="margin-left:14px">Pendiente</div>
+              <div class="status">Cierre Agosto</div>
+              <div class="progress"><div class="progress-bar" style="width:100%;background:var(--green)"></div></div>
+              <div class="status done" style="margin-left:14px">137.9%</div>
             </div>
           </div>
 
           <div class="card with-top-border top-blue">
-            <div class="label">Ventas Port In</div>
-            <div class="value-lg"><span class="skel" style="width:100px;height:26px"></span></div>
+            <div class="label">Gasto Meta</div>
+            <div class="value-lg">$789,399</div>
+            <div class="value-sub">Presupuesto $575,000</div>
             <div class="footer">
-              <div class="status">Portabilidades</div>
-              <div class="progress"><div class="progress-bar" style="width:8%;background:var(--blue)"></div></div>
-              <div class="status" style="margin-left:14px">Pendiente</div>
+              <div class="status">Ejecutado</div>
+              <div class="progress"><div class="progress-bar" style="width:100%;background:var(--blue)"></div></div>
+              <div class="status" style="margin-left:14px">137.3%</div>
             </div>
           </div>
 
           <div class="card with-top-border top-yellow">
-            <div class="label">Alcance de meta</div>
-            <div class="value-lg"><span class="skel" style="width:70px;height:26px"></span> %</div>
+            <div class="label">CPL global</div>
+            <div class="value-lg">$22.89</div>
+            <div class="value-sub">Meta $23.00 · -$0.11 mejor</div>
             <div class="footer">
-              <div class="status">Meta <strong style="color:var(--text)">4,500</strong></div>
-              <div class="progress"><div class="progress-bar" style="width:5%;background:var(--yellow)"></div></div>
-              <div class="status" style="margin-left:14px">Pendiente</div>
+              <div class="status">vs Julio $28.02</div>
+              <div class="progress"><div class="progress-bar" style="width:100%;background:var(--yellow)"></div></div>
+              <div class="status done" style="margin-left:14px">▼ -18.3%</div>
             </div>
           </div>
         </div>
 
-        <div class="section-title">DESGLOSE POR CANAL</div>
+        <div class="section-title">COMPARATIVA TRIMESTRE · Junio · Julio · Agosto</div>
+        <div class="grid-3">
+          <div class="card">
+            <div class="label">Junio 2026</div>
+            <div class="value-lg" style="font-size:26px">~11,000 leads</div>
+            <div class="value-sub">CPL $27.94 · gasto ~$306K</div>
+          </div>
+          <div class="card">
+            <div class="label">Julio 2026</div>
+            <div class="value-lg" style="font-size:26px">20,094 leads</div>
+            <div class="value-sub">CPL $28.02 · gasto $563K</div>
+          </div>
+          <div class="card with-top-border top-brand">
+            <div class="label">Agosto 2026 · récord</div>
+            <div class="value-lg" style="font-size:26px;color:var(--green)">34,486 leads</div>
+            <div class="value-sub">CPL $22.89 · gasto $789K</div>
+          </div>
+        </div>
+
+        <div class="section-title">HIGHLIGHTS DE AGOSTO</div>
         <div class="grid-3">
           <div class="channel-card">
-            <div class="channel-header active"><span class="dot"></span>CANTEC</div>
-            <div class="channel-mini-label">Ventas totales</div>
-            <div class="channel-mini-value pending"><span class="skel" style="width:80px;height:20px"></span></div>
+            <div class="channel-header active"><span class="dot"></span>Escalado récord</div>
+            <div class="channel-mini-label">Leads/día promedio</div>
+            <div class="channel-mini-value" style="color:var(--green);font-weight:800">1,112 / día</div>
             <div class="channel-sub-grid">
-              <div class="channel-sub-card"><div class="lbl">Aporte a meta</div><div class="val">—</div></div>
-              <div class="channel-sub-card"><div class="lbl">CPA</div><div class="val">—</div></div>
+              <div class="channel-sub-card"><div class="lbl">vs Julio</div><div class="val">+72%</div></div>
+              <div class="channel-sub-card"><div class="lbl">vs Junio</div><div class="val">+204%</div></div>
             </div>
           </div>
 
           <div class="channel-card">
-            <div class="channel-header inactive"><span class="dot"></span>One Project</div>
-            <div class="channel-mini-label">Ventas totales</div>
-            <div class="channel-mini-value pending"><span class="skel" style="width:80px;height:20px"></span></div>
+            <div class="channel-header active"><span class="dot"></span>Eficiencia</div>
+            <div class="channel-mini-label">CPL global cerrado</div>
+            <div class="channel-mini-value" style="color:var(--blue);font-weight:800">$22.89</div>
             <div class="channel-sub-grid">
-              <div class="channel-sub-card"><div class="lbl">Aporte a meta</div><div class="val">—</div></div>
-              <div class="channel-sub-card"><div class="lbl">CPA</div><div class="val">—</div></div>
+              <div class="channel-sub-card"><div class="lbl">Delta vs Jul</div><div class="val">▼ 18%</div></div>
+              <div class="channel-sub-card"><div class="lbl">Meta $23</div><div class="val">✓ ok</div></div>
             </div>
           </div>
 
           <div class="channel-card">
-            <div class="channel-header inactive"><span class="dot"></span>Onetec</div>
-            <div class="channel-mini-label">Ventas totales</div>
-            <div class="channel-mini-value pending"><span class="skel" style="width:80px;height:20px"></span></div>
+            <div class="channel-header active"><span class="dot"></span>Volumen</div>
+            <div class="channel-mini-label">Impresiones totales</div>
+            <div class="channel-mini-value" style="color:var(--brand-dark);font-weight:800">23.8M</div>
             <div class="channel-sub-grid">
-              <div class="channel-sub-card"><div class="lbl">Aporte a meta</div><div class="val">—</div></div>
-              <div class="channel-sub-card"><div class="lbl">CPA</div><div class="val">—</div></div>
+              <div class="channel-sub-card"><div class="lbl">Clicks</div><div class="val">332K</div></div>
+              <div class="channel-sub-card"><div class="lbl">CTR</div><div class="val">1.39%</div></div>
             </div>
           </div>
         </div>
@@ -546,120 +574,75 @@
           </div>
         </div>
 
-        <div class="grid-3" style="margin-top:16px">
-          <div class="card">
-            <div class="label">Impresiones</div>
-            <div class="value-lg" id="mktKpiImp">—</div>
-            <div class="value-sub" id="mktKpiImpSub">alcance total</div>
-          </div>
-          <div class="card">
-            <div class="label">CTR promedio</div>
-            <div class="value-lg" id="mktKpiCtr">—</div>
-            <div class="value-sub">click-through rate</div>
-          </div>
-          <div class="card">
-            <div class="label">CPM promedio</div>
-            <div class="value-lg" id="mktKpiCpm">—</div>
-            <div class="value-sub">costo por mil impresiones</div>
-          </div>
-        </div>
-
         <div class="section-title">Tendencia diaria</div>
         <div class="chart-card">
           <h3>Leads y CPL por día · Agosto 2026 (mes cerrado · 31 días)</h3>
           <canvas id="mktDailyChart" style="max-height:300px"></canvas>
         </div>
 
-        <div class="section-title">Placements ganadores y CPL</div>
-        <div class="grid-2">
-          <div class="chart-card">
-            <h3>Top 8 placements por CPL</h3>
-            <canvas id="mktPlacementChart" style="max-height:320px"></canvas>
+        <div class="section-title">Análisis profundo · desplegables</div>
+        <details class="drill">
+          <summary>🎯 Placements ganadores y CPL</summary>
+          <div class="drill-body">
+            <div class="grid-2">
+              <div class="chart-card">
+                <h3>Top 8 placements por CPL</h3>
+                <canvas id="mktPlacementChart" style="max-height:320px"></canvas>
+              </div>
+              <div class="chart-card">
+                <h3>Distribución de gasto por placement</h3>
+                <canvas id="mktPlacementSpendChart" style="max-height:320px"></canvas>
+              </div>
+            </div>
           </div>
-          <div class="chart-card">
-            <h3>Distribución de gasto por placement</h3>
-            <canvas id="mktPlacementSpendChart" style="max-height:320px"></canvas>
-          </div>
-        </div>
+        </details>
 
-        <div class="section-title">Demografía · edad × sexo</div>
-        <div class="grid-2">
-          <div class="chart-card">
-            <h3>CPL por segmento (top 8 con volumen)</h3>
-            <canvas id="mktDemChart" style="max-height:320px"></canvas>
+        <details class="drill">
+          <summary>👥 Demografía · edad × sexo</summary>
+          <div class="drill-body">
+            <div class="grid-2">
+              <div class="chart-card">
+                <h3>CPL por segmento (top 8 con volumen)</h3>
+                <canvas id="mktDemChart" style="max-height:320px"></canvas>
+              </div>
+              <div class="chart-card">
+                <h3>Distribución de leads por edad</h3>
+                <canvas id="mktAgeChart" style="max-height:320px"></canvas>
+              </div>
+            </div>
           </div>
-          <div class="chart-card">
-            <h3>Distribución de leads por edad</h3>
-            <canvas id="mktAgeChart" style="max-height:320px"></canvas>
-          </div>
-        </div>
+        </details>
 
-        <div class="section-title">Top 10 estados por gasto</div>
+        <details class="drill">
+          <summary>📍 Top 10 estados por gasto</summary>
+          <div class="drill-body">
+            <div class="chart-card">
+              <h3>Distribución regional</h3>
+              <canvas id="mktRegionChart" style="max-height:280px"></canvas>
+            </div>
+          </div>
+        </details>
+
+        <details class="drill">
+          <summary>🎨 Top creativos por rendimiento</summary>
+          <div class="drill-body">
+            <div class="chart-card">
+              <h3>Ranking de anuncios · CPL ascendente (top 10)</h3>
+              <div style="overflow-x:auto">
+                <table class="table" id="mktAdsTable">
+                  <thead><tr><th>#</th><th>Creativo</th><th>Campaña</th><th class="num">Gasto</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">Frec.</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <div class="section-title">Comparativa Junio · Julio · Agosto 2026</div>
         <div class="chart-card">
-          <h3>Distribución regional</h3>
-          <canvas id="mktRegionChart" style="max-height:280px"></canvas>
-        </div>
-
-        <div class="section-title">Top creativos por rendimiento</div>
-        <div class="chart-card">
-          <h3>Ranking de anuncios · CPL ascendente (top 10)</h3>
-          <div style="overflow-x:auto">
-            <table class="table" id="mktAdsTable">
-              <thead><tr><th>#</th><th>Creativo</th><th>Campaña</th><th class="num">Gasto</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">Frec.</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="section-title">Comparativa Agosto vs Julio 2026</div>
-        <div class="chart-card">
-          <h3>Deltas de las métricas clave</h3>
-          <canvas id="mktCompareChart" style="max-height:260px"></canvas>
-          <div style="margin-top:14px;font-size:11.5px;color:var(--muted);text-align:center">Ambos períodos comparados como promedio diario para ser justos</div>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-funnel">
-        <div class="breadcrumb">CANTEC · ÁREA DE MARKETING · <span>FUNNEL</span></div>
-        <h1>Funnel <span class="accent">Julio</span></h1>
-        <div class="subtitle">Impresiones → Clicks → Mensajes → Ventas Port In</div>
-        <div class="placeholder-tab">
-          <div class="icon">▼</div>
-          <h3>Funnel de conversión</h3>
-          <p>Etapas: Impresiones · Clicks · Mensajes iniciados · Conversiones Port In · Ventas confirmadas.<br>Requiere integración con el CRM de portabilidad.</p>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-performance">
-        <div class="breadcrumb">CANTEC · ÁREA DE MARKETING · <span>PERFORMANCE IA</span></div>
-        <h1>Performance <span class="accent">IA</span></h1>
-        <div class="subtitle">Alertas automáticas · Recomendaciones · Anomalías detectadas por agentes de IA</div>
-        <div class="placeholder-tab">
-          <div class="icon">⚡</div>
-          <h3>Agente de IA sobre BAIT</h3>
-          <p>Los agentes estratega-meta-ads y analista-datos publicarán aquí las alertas del día:<br>fatiga de creativos, oportunidades de escalar, palancas críticas, umbrales cruzados.</p>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-ventas">
-        <div class="breadcrumb">CANTEC · ÁREA DE MARKETING · <span>VENTAS</span></div>
-        <h1>Ventas <span class="accent">Julio</span></h1>
-        <div class="subtitle">Portabilidades procesadas · valor por canal · aporte por segmento</div>
-        <div class="placeholder-tab">
-          <div class="icon">💰</div>
-          <h3>Datos de ventas Julio</h3>
-          <p>Se llenará conforme se procesen las portabilidades del mes.<br>Fuente: CRM BAIT + Google Sheets Cantec.</p>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-costo">
-        <div class="breadcrumb">CANTEC · ÁREA DE MARKETING · <span>COSTO POR VENTA</span></div>
-        <h1>Costo por <span class="accent">Venta</span></h1>
-        <div class="subtitle">Costo por portabilidad (CPA) · rentabilidad por canal · payback</div>
-        <div class="placeholder-tab">
-          <div class="icon">🎯</div>
-          <h3>Costo por Venta</h3>
-          <p>Meta ads + otros canales / portabilidades procesadas = costo por venta.<br>Se calcula automáticamente cuando entren datos de ventas y gasto Julio.</p>
+          <h3>Deltas de las métricas clave · 3 meses</h3>
+          <canvas id="mktCompareChart" style="max-height:280px"></canvas>
+          <div style="margin-top:14px;font-size:11.5px;color:var(--muted);text-align:center">Promedios diarios de cada mes cerrado para comparación justa</div>
         </div>
       </div>
 
@@ -1195,10 +1178,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   if(bar) bar.style.width = Math.min(100, spendPct) + '%';
   setText('mktSpendRest', fmtMXN(remaining) + ' restante');
 
-  setText('mktKpiImp', fmtN(totImp));
-  setText('mktKpiImpSub', fmtN(totClicks) + ' clicks');
-  setText('mktKpiCtr', fmtPct(globalCtr));
-  setText('mktKpiCpm', fmtMXNd(globalCpm));
+  // (Impresiones / CTR / CPM removidos por solicitud)
 
   // === TENDENCIA DIARIA · Agosto 2026 (31 días completos) ===
   const dailyLabels = AGO_DAILY.map(d=>d.label);
@@ -1337,7 +1317,10 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     });
   }
 
-  // === COMPARATIVA AGOSTO vs JULIO (mes anterior cerrado) ===
+  // === COMPARATIVA JUNIO · JULIO · AGOSTO 2026 ===
+  const junioAvgLeadsDay = 366;    // ~11K / 30 (junio base 18 días completos)
+  const junioAvgSpendDay = 10211;
+  const junioAvgCpl = 27.94;
   const julioAvgLeadsDay = 648;    // 20,094 / 31
   const julioAvgSpendDay = 18165;  // 563,126 / 31
   const julioAvgCpl = 28.02;
@@ -1348,10 +1331,11 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   new Chart(document.getElementById('mktCompareChart').getContext('2d'), {
     type:'bar',
     data:{
-      labels:['Leads/día promedio', 'Gasto/día promedio', 'CPL promedio'],
+      labels:['Leads/día promedio', 'Gasto/día (÷500)', 'CPL promedio'],
       datasets:[
-        {label:'Julio 2026 (base)',    data:[julioAvgLeadsDay, julioAvgSpendDay/500, julioAvgCpl], backgroundColor:'rgba(59,130,246,0.55)', borderColor:'#3b82f6', borderWidth:1, borderRadius:4},
-        {label:'Agosto 2026 (cierre)', data:[agoAvgLeadsDay,   agoAvgSpendDay/500,   agoAvgCpl],   backgroundColor:'rgba(245,158,11,0.75)', borderColor:'#d97706', borderWidth:1, borderRadius:4}
+        {label:'Junio 2026',  data:[junioAvgLeadsDay, junioAvgSpendDay/500, junioAvgCpl], backgroundColor:'rgba(148,163,184,0.65)', borderColor:'#64748b', borderWidth:1, borderRadius:4},
+        {label:'Julio 2026',  data:[julioAvgLeadsDay, julioAvgSpendDay/500, julioAvgCpl], backgroundColor:'rgba(59,130,246,0.65)',  borderColor:'#3b82f6', borderWidth:1, borderRadius:4},
+        {label:'Agosto 2026', data:[agoAvgLeadsDay,   agoAvgSpendDay/500,   agoAvgCpl],   backgroundColor:'rgba(245,158,11,0.85)',  borderColor:'#d97706', borderWidth:1, borderRadius:4}
       ]
     },
     options:{
