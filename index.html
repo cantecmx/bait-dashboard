@@ -96,6 +96,35 @@
   .card .footer .progress{flex:1;height:3px;background:#e5e7eb;border-radius:2px;overflow:hidden;margin-left:14px}
   .card .footer .progress-bar{height:100%;background:var(--brand);border-radius:2px}
 
+  /* META HERO + CARDS */
+  .meta-hero{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:1px solid #fbbf24;border-radius:14px;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;box-shadow:0 2px 8px rgba(251,191,36,.15)}
+  .meta-hero-lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#78350f;font-weight:700;margin-bottom:6px}
+  .meta-hero-big{font-size:48px;font-weight:800;color:#78350f;line-height:1;letter-spacing:-1px}
+  .meta-hero-sub{font-size:13px;color:#92400e;margin-top:6px;font-weight:500}
+  .meta-hero-badge{padding:10px 20px;border-radius:24px;font-weight:800;font-size:14px;letter-spacing:.5px;color:#fff;background:var(--green);text-transform:uppercase;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+  .meta-hero-badge.warn{background:#f59e0b}
+  .meta-hero-badge.bad{background:var(--red)}
+  .grid-4-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px}
+  @media(max-width:1100px){.grid-4-meta{grid-template-columns:repeat(2,1fr)}}
+  .meta-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .meta-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--muted)}
+  .meta-card.ok::before{background:var(--green)}
+  .meta-card.over::before{background:#10b981}
+  .meta-card.warn::before{background:#f59e0b}
+  .meta-card.bad::before{background:var(--red)}
+  .meta-lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700;margin-bottom:10px}
+  .meta-pct{font-size:32px;font-weight:800;line-height:1;letter-spacing:-.5px;color:var(--text);margin-bottom:4px}
+  .meta-vals{font-size:12px;color:var(--text);margin-bottom:12px;font-weight:500}
+  .meta-vals .real{font-weight:800;color:var(--text)}
+  .meta-vals .target{color:var(--muted)}
+  .meta-progress{height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;margin-bottom:8px}
+  .meta-progress-bar{height:100%;background:var(--green);border-radius:3px;transition:width .6s}
+  .meta-card.warn .meta-progress-bar{background:#f59e0b}
+  .meta-card.bad .meta-progress-bar{background:var(--red)}
+  .meta-card.over .meta-progress-bar{background:linear-gradient(90deg,#10b981,#059669)}
+  .meta-note{font-size:11px;color:var(--muted);font-weight:500}
+  .meta-card.ok .meta-note,.meta-card.over .meta-note{color:var(--green);font-weight:600}
+
   /* SKELETON */
   .skel{height:14px;background:linear-gradient(90deg,#eef1f4 0%,#f7f9fb 50%,#eef1f4 100%);background-size:200% 100%;animation:sk 1.4s ease-in-out infinite;border-radius:4px;display:inline-block}
   @keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
@@ -442,13 +471,55 @@
       <div class="tab-panel" id="tab-marketing">
         <div class="breadcrumb">CANTEC · ÁREA DE MARKETING · <span>MARKETING</span></div>
         <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px">
-          <h1>Marketing <span class="accent">Julio</span></h1>
+          <h1>Marketing <span class="accent">Agosto</span></h1>
           <div style="text-align:right">
             <div class="live-badge" id="mktLiveBadge">Live · Windsor</div>
-            <div style="font-size:22px;font-weight:700;color:var(--text);margin-top:4px" id="mktPeriodo">Julio 2026</div>
+            <div style="font-size:22px;font-weight:700;color:var(--text);margin-top:4px" id="mktPeriodo">Agosto 2026</div>
           </div>
         </div>
         <div class="subtitle">Meta Ads BAIT · Mensajes iniciados (Click-to-Message) · datos en vivo Windsor.ai</div>
+
+        <div class="section-title">🎯 Meta vs Cumplimiento · Agosto 2026</div>
+        <div class="meta-hero" id="metaHero">
+          <div class="meta-hero-left">
+            <div class="meta-hero-lbl">Cumplimiento global de la meta</div>
+            <div class="meta-hero-big" id="metaHeroBig">—</div>
+            <div class="meta-hero-sub" id="metaHeroSub">—</div>
+          </div>
+          <div class="meta-hero-right">
+            <div class="meta-hero-badge" id="metaHeroBadge">—</div>
+          </div>
+        </div>
+        <div class="grid-4-meta">
+          <div class="meta-card" id="metaLeadsCard">
+            <div class="meta-lbl">Leads · mensajes iniciados</div>
+            <div class="meta-pct" id="metaLeadsPct">—</div>
+            <div class="meta-vals"><span class="real" id="metaLeadsReal">—</span> / <span class="target">meta 25,000</span></div>
+            <div class="meta-progress"><div class="meta-progress-bar" id="metaLeadsBar" style="width:0%"></div></div>
+            <div class="meta-note" id="metaLeadsNote">—</div>
+          </div>
+          <div class="meta-card" id="metaGestCard">
+            <div class="meta-lbl">Leads gestionables (85%)</div>
+            <div class="meta-pct" id="metaGestPct">—</div>
+            <div class="meta-vals"><span class="real" id="metaGestReal">—</span> / <span class="target">meta 21,250</span></div>
+            <div class="meta-progress"><div class="meta-progress-bar" id="metaGestBar" style="width:0%"></div></div>
+            <div class="meta-note" id="metaGestNote">—</div>
+          </div>
+          <div class="meta-card" id="metaCplCard">
+            <div class="meta-lbl">CPL global</div>
+            <div class="meta-pct" id="metaCplPct">—</div>
+            <div class="meta-vals"><span class="real" id="metaCplReal">—</span> / <span class="target">meta $23.00</span></div>
+            <div class="meta-progress"><div class="meta-progress-bar" id="metaCplBar" style="width:0%"></div></div>
+            <div class="meta-note" id="metaCplNote">—</div>
+          </div>
+          <div class="meta-card" id="metaSpendCard">
+            <div class="meta-lbl">Gasto Meta Ads</div>
+            <div class="meta-pct" id="metaSpendPct2">—</div>
+            <div class="meta-vals"><span class="real" id="metaSpendReal">—</span> / <span class="target">meta $575,000</span></div>
+            <div class="meta-progress"><div class="meta-progress-bar" id="metaSpendBar2" style="width:0%"></div></div>
+            <div class="meta-note" id="metaSpendNote">—</div>
+          </div>
+        </div>
 
         <div class="section-title">KPIs del mes</div>
         <div class="grid-3">
@@ -466,7 +537,7 @@
           <div class="card with-top-border top-yellow">
             <div class="label">Gasto Meta</div>
             <div class="value-lg" id="mktKpiSpend">—</div>
-            <div class="value-sub" id="mktKpiSpendSub">de $500,000 presupuestados</div>
+            <div class="value-sub" id="mktKpiSpendSub">de $575,000 presupuestados</div>
             <div class="footer">
               <div class="status" id="mktSpendPct">—</div>
               <div class="progress"><div class="progress-bar" id="mktSpendBar" style="width:0%"></div></div>
@@ -887,13 +958,94 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   const daysComplete = (D.meta && D.meta.daysComplete) || D.daily.filter(d=>!d.partial).length;
   const daysReal = D.daily.length;
 
-  // Julio budget total
-  const BUDGET_JUL = 500000;
-  const spendPct = totSpend / BUDGET_JUL * 100;
-  const remaining = BUDGET_JUL - totSpend;
+  // Agosto budget total (meta oficial)
+  const BUDGET_AGO = 575000;
+  const spendPct = totSpend / BUDGET_AGO * 100;
+  const remaining = BUDGET_AGO - totSpend;
+
+  // === META vs CUMPLIMIENTO Agosto ===
+  const META = { leads: 25000, gest: 21250, cpl: 23.00, spend: 575000 };
+  const gestReal = totLeads * 0.85; // 85% gestionables
+
+  const pctLeads = (totLeads / META.leads) * 100;
+  const pctGest  = (gestReal / META.gest) * 100;
+  const pctCpl   = (META.cpl / (globalCpl || META.cpl)) * 100; // inverso: menor CPL = mejor
+  const pctSpend = (totSpend / META.spend) * 100;
+
+  // Global: promedio ponderado leads+cpl (los KPIs clave)
+  const pctGlobal = (pctLeads + pctCpl) / 2;
+
+  setText('metaHeroBig', pctGlobal.toFixed(1) + '%');
+  setText('metaHeroSub', `Promedio ponderado Leads (${pctLeads.toFixed(0)}%) + CPL (${pctCpl.toFixed(0)}%) · datos reales de Agosto 2026`);
+  const heroBadge = document.getElementById('metaHeroBadge');
+  if(heroBadge){
+    if(pctGlobal >= 100){ heroBadge.textContent = '✓ META SUPERADA'; heroBadge.className = 'meta-hero-badge'; }
+    else if(pctGlobal >= 90){ heroBadge.textContent = '⚡ CERCA DE META'; heroBadge.className = 'meta-hero-badge warn'; }
+    else { heroBadge.textContent = '⚠ BAJO META'; heroBadge.className = 'meta-hero-badge bad'; }
+  }
+
+  function paintMeta(cardId, pct, higherIsBetter=true){
+    const card = document.getElementById(cardId);
+    if(!card) return;
+    let cls = 'meta-card ';
+    if(higherIsBetter){
+      if(pct >= 130) cls += 'over';
+      else if(pct >= 100) cls += 'ok';
+      else if(pct >= 85) cls += 'warn';
+      else cls += 'bad';
+    } else {
+      // Para CPL: pct = meta/real*100. Si real < meta → pct > 100 = bueno
+      if(pct >= 105) cls += 'over';
+      else if(pct >= 100) cls += 'ok';
+      else if(pct >= 90) cls += 'warn';
+      else cls += 'bad';
+    }
+    card.className = cls;
+  }
+
+  // Leads
+  setText('metaLeadsPct', pctLeads.toFixed(1) + '%');
+  setText('metaLeadsReal', fmtN(totLeads));
+  document.getElementById('metaLeadsBar').style.width = Math.min(pctLeads, 150) + '%';
+  const deltaLeads = totLeads - META.leads;
+  setText('metaLeadsNote', deltaLeads >= 0 ? `+${fmtN(deltaLeads)} leads sobre meta` : `${fmtN(deltaLeads)} leads bajo meta`);
+  paintMeta('metaLeadsCard', pctLeads, true);
+
+  // Gestionables
+  setText('metaGestPct', pctGest.toFixed(1) + '%');
+  setText('metaGestReal', fmtN(gestReal));
+  document.getElementById('metaGestBar').style.width = Math.min(pctGest, 150) + '%';
+  const deltaGest = gestReal - META.gest;
+  setText('metaGestNote', deltaGest >= 0 ? `+${fmtN(deltaGest)} gestionables sobre meta` : `${fmtN(deltaGest)} gestionables bajo meta`);
+  paintMeta('metaGestCard', pctGest, true);
+
+  // CPL (menor es mejor)
+  setText('metaCplPct', pctCpl.toFixed(1) + '%');
+  setText('metaCplReal', '$' + globalCpl.toFixed(2));
+  document.getElementById('metaCplBar').style.width = Math.min(pctCpl, 150) + '%';
+  const deltaCplMeta = globalCpl - META.cpl;
+  setText('metaCplNote', deltaCplMeta <= 0 ? `${'$'+Math.abs(deltaCplMeta).toFixed(2)} bajo meta (mejor)` : `+$${deltaCplMeta.toFixed(2)} sobre meta (peor)`);
+  paintMeta('metaCplCard', pctCpl, false);
+
+  // Gasto
+  setText('metaSpendPct2', pctSpend.toFixed(1) + '%');
+  setText('metaSpendReal', fmtMXN(totSpend));
+  document.getElementById('metaSpendBar2').style.width = Math.min(pctSpend, 150) + '%';
+  const deltaSpend = totSpend - META.spend;
+  setText('metaSpendNote', deltaSpend <= 0 ? `${fmtMXN(Math.abs(deltaSpend))} bajo presupuesto` : `+${fmtMXN(deltaSpend)} sobre presupuesto`);
+  // Gasto: dentro de rango 95-115% ok, más es warn, mucho más es bad (siempre que leads justifiquen)
+  const spendCard = document.getElementById('metaSpendCard');
+  if(spendCard){
+    let cls = 'meta-card ';
+    if(pctSpend >= 95 && pctSpend <= 115) cls += 'ok';
+    else if(pctSpend > 115 && pctLeads >= 130) cls += 'over'; // sobregasto justificado por sobreleads
+    else if(pctSpend > 115) cls += 'warn';
+    else cls += 'warn';
+    spendCard.className = cls;
+  }
 
   // === KPIs cards ===
-  setText('mktPeriodo', (D.meta && D.meta.dateRange) || 'Julio 2026');
+  setText('mktPeriodo', (D.meta && D.meta.dateRange) || 'Agosto 2026');
   setText('mktLiveBadge', 'Live · Windsor · ' + ((D.meta && D.meta.updatedAt) || ''));
 
   setText('mktKpiLeads', fmtN(totLeads));
@@ -912,7 +1064,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   }
 
   setText('mktKpiSpend', fmtMXN(totSpend));
-  setText('mktKpiSpendSub', 'de $500,000 presupuestados');
+  setText('mktKpiSpendSub', 'de $575,000 presupuestados');
   setText('mktSpendPct', spendPct.toFixed(1)+'% ejecutado');
   const bar = document.getElementById('mktSpendBar');
   if(bar) bar.style.width = Math.min(100, spendPct) + '%';
