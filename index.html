@@ -114,8 +114,9 @@
   .meta-hero-badge{padding:10px 20px;border-radius:24px;font-weight:800;font-size:14px;letter-spacing:.5px;color:#fff;background:var(--green);text-transform:uppercase;box-shadow:0 2px 6px rgba(0,0,0,.1)}
   .meta-hero-badge.warn{background:#f59e0b}
   .meta-hero-badge.bad{background:var(--red)}
-  .grid-4-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px}
-  @media(max-width:1100px){.grid-4-meta{grid-template-columns:repeat(2,1fr)}}
+  .grid-4-meta{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px}
+  @media(max-width:1400px){.grid-4-meta{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:900px){.grid-4-meta{grid-template-columns:repeat(2,1fr)}}
   .meta-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
   .meta-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--muted)}
   .meta-card.ok::before{background:var(--green)}
@@ -527,9 +528,16 @@
           <div class="meta-card" id="metaGestCard">
             <div class="meta-lbl">Leads gestionables · CRM</div>
             <div class="meta-pct" id="metaGestPct">—</div>
-            <div class="meta-vals"><span class="real" id="metaGestReal">—</span> / <span class="target">meta 21,250</span></div>
+            <div class="meta-vals"><span class="real" id="metaGestReal">—</span> / <span class="target" id="metaGestTarget">meta —</span></div>
             <div class="meta-progress"><div class="meta-progress-bar" id="metaGestBar" style="width:0%"></div></div>
             <div class="meta-note" id="metaGestNote">—</div>
+          </div>
+          <div class="meta-card" id="metaTasaCard">
+            <div class="meta-lbl">Tasa de conversión</div>
+            <div class="meta-pct" id="metaTasaPct">—</div>
+            <div class="meta-vals"><span class="real" id="metaTasaReal">—</span> / <span class="target">meta 85%</span></div>
+            <div class="meta-progress"><div class="meta-progress-bar" id="metaTasaBar" style="width:0%"></div></div>
+            <div class="meta-note" id="metaTasaNote">—</div>
           </div>
           <div class="meta-card" id="metaCplCard">
             <div class="meta-lbl">CPL global</div>
@@ -1092,15 +1100,20 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     cpl: globalCpl,           // 22.90
     gestionables: AGO_DAILY.reduce((s,r)=>s+(r.gestionables||0),0) // CRM (23,699)
   };
-  const META = { leads: 25000, gest: 21250, cpl: 23.00, spend: 575000 };
+  const META = { leads: 25000, gestRatio: 0.85, cpl: 23.00, spend: 575000 };
   const agoLeadsReal = AGO_CIERRE.leads;
   const agoSpendReal = AGO_CIERRE.spend;
   const agoCplReal   = AGO_CIERRE.cpl;
-  const gestReal = AGO_CIERRE.gestionables; // real desde CRM (no calculado como 85%)
+  const gestReal = AGO_CIERRE.gestionables; // real desde CRM
+  // Meta gestionables DINÁMICA: 85% de los leads que realmente entraron
+  const gestTargetDyn = agoLeadsReal * META.gestRatio;   // 34,472 × 0.85 = 29,301
+  const tasaReal = agoLeadsReal ? (gestReal / agoLeadsReal) : 0; // 68.7%
+  const tasaMeta = META.gestRatio;                                // 85%
 
   const pctLeads = (agoLeadsReal / META.leads) * 100;
-  const pctGest  = (gestReal / META.gest) * 100;
-  const pctCpl   = (META.cpl / agoCplReal) * 100; // inverso: menor CPL = mejor
+  const pctGest  = (gestReal / gestTargetDyn) * 100;      // vs meta dinámica
+  const pctTasa  = (tasaReal / tasaMeta) * 100;           // 68.7 / 85 = 80.8%
+  const pctCpl   = (META.cpl / agoCplReal) * 100;
   const pctSpend = (agoSpendReal / META.spend) * 100;
 
   // Global: promedio ponderado leads+cpl (los KPIs clave)
@@ -1142,13 +1155,24 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   setText('metaLeadsNote', deltaLeads >= 0 ? `+${fmtN(deltaLeads)} leads sobre meta` : `${fmtN(deltaLeads)} leads bajo meta`);
   paintMeta('metaLeadsCard', pctLeads, true);
 
-  // Gestionables
+  // Gestionables (meta dinámica: 85% de leads captados)
   setText('metaGestPct', pctGest.toFixed(1) + '%');
   setText('metaGestReal', fmtN(gestReal));
+  setText('metaGestTarget', `meta ${fmtN(gestTargetDyn)} (85% de ${fmtN(agoLeadsReal)})`);
   document.getElementById('metaGestBar').style.width = Math.min(pctGest, 150) + '%';
-  const deltaGest = gestReal - META.gest;
-  setText('metaGestNote', deltaGest >= 0 ? `+${fmtN(deltaGest)} gestionables sobre meta` : `${fmtN(deltaGest)} gestionables bajo meta`);
+  const deltaGest = gestReal - gestTargetDyn;
+  setText('metaGestNote', deltaGest >= 0 ? `+${fmtN(deltaGest)} sobre meta dinámica` : `${fmtN(deltaGest)} bajo meta dinámica`);
   paintMeta('metaGestCard', pctGest, true);
+
+  // Tasa de conversión gestionables (real % vs 85% meta)
+  setText('metaTasaPct', (tasaReal*100).toFixed(1) + '%');
+  setText('metaTasaReal', (tasaReal*100).toFixed(1) + '%');
+  document.getElementById('metaTasaBar').style.width = Math.min(pctTasa, 150) + '%';
+  const deltaTasaPct = (tasaReal - tasaMeta) * 100;
+  setText('metaTasaNote', deltaTasaPct >= 0
+    ? `+${deltaTasaPct.toFixed(1)} pp sobre meta 85%`
+    : `${deltaTasaPct.toFixed(1)} pp bajo meta 85%`);
+  paintMeta('metaTasaCard', pctTasa, true);
 
   // CPL (menor es mejor)
   setText('metaCplPct', pctCpl.toFixed(1) + '%');
