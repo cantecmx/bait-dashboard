@@ -1,160 +1,160 @@
-// BAIT Strategic Data — 2026-09-01 a 2026-09-05 (auto-refresh GitHub Actions)
-// Actualizado: 2026-09-05 08:24 · Cuenta: 3782742661970783
-// Base promedios: 4 dias completos via Windsor.ai REST
+// BAIT Strategic Data — 2026-09-01 a 2026-09-06 (auto-refresh GitHub Actions)
+// Actualizado: 2026-09-06 08:46 · Cuenta: 3782742661970783
+// Base promedios: 5 dias completos via Windsor.ai REST
 window.BAIT_STRATEGIC = {
   "meta": {
-    "dateRange": "2026-09-01 a 2026-09-05",
-    "daysReal": 5,
-    "daysComplete": 4,
-    "daysRemaining": 25,
-    "updatedAt": "2026-09-05 08:24",
+    "dateRange": "2026-09-01 a 2026-09-06",
+    "daysReal": 6,
+    "daysComplete": 5,
+    "daysRemaining": 24,
+    "updatedAt": "2026-09-06 08:46",
     "account": "3782742661970783",
-    "note": "Auto-refresh diario via GitHub Actions · 2026-09-05 parcial"
+    "note": "Auto-refresh diario via GitHub Actions · 2026-09-06 parcial"
   },
   "demographics": [
     {
       "age": "18-24",
       "gender": "female",
-      "spend": 1761.7018,
-      "impressions": 83569,
-      "clicks": 951,
-      "ctr": 0.01137981787504936,
-      "cpm": 21.08080508322464,
-      "frequency": 1.3258,
-      "leads": 79,
-      "cpl": 22.30002278481013
+      "spend": 2281.0287,
+      "impressions": 108680,
+      "clicks": 1207,
+      "ctr": 0.011105999263894,
+      "cpm": 20.988486382039014,
+      "frequency": 1.3694,
+      "leads": 106,
+      "cpl": 21.51913867924528
     },
     {
       "age": "25-34",
       "gender": "female",
-      "spend": 6973.796,
-      "impressions": 234880,
-      "clicks": 3609,
-      "ctr": 0.015365292915531336,
-      "cpm": 29.69088896457766,
-      "frequency": 1.4508,
-      "leads": 376,
-      "cpl": 18.547329787234045
+      "spend": 9085.2671,
+      "impressions": 306187,
+      "clicks": 4606,
+      "ctr": 0.015043094579456346,
+      "cpm": 29.672282298072744,
+      "frequency": 1.4769,
+      "leads": 487,
+      "cpl": 18.655579260780286
     },
     {
       "age": "35-44",
       "gender": "female",
-      "spend": 6496.6797,
-      "impressions": 161235,
-      "clicks": 3476,
-      "ctr": 0.021558594597947095,
-      "cpm": 40.29323471950879,
-      "frequency": 1.3276,
-      "leads": 353,
-      "cpl": 18.404191784702547
+      "spend": 8589.7787,
+      "impressions": 214951,
+      "clicks": 4492,
+      "ctr": 0.020897786007043465,
+      "cpm": 39.961566589594845,
+      "frequency": 1.4038,
+      "leads": 472,
+      "cpl": 18.19868368644068
     },
     {
       "age": "45-54",
       "gender": "female",
-      "spend": 3882.152,
-      "impressions": 79386,
-      "clicks": 2360,
-      "ctr": 0.029728163656060264,
-      "cpm": 48.902224573602396,
-      "frequency": 1.3089,
-      "leads": 204,
-      "cpl": 19.0301568627451
+      "spend": 5190.9569,
+      "impressions": 106571,
+      "clicks": 3080,
+      "ctr": 0.02890092051308517,
+      "cpm": 48.70890673823085,
+      "frequency": 1.4098,
+      "leads": 274,
+      "cpl": 18.945098175182483
     },
     {
       "age": "55-64",
       "gender": "female",
-      "spend": 1343.8195,
-      "impressions": 24377,
-      "clicks": 917,
-      "ctr": 0.037617426262460514,
-      "cpm": 55.12653320753169,
-      "frequency": 1.3048,
-      "leads": 65,
-      "cpl": 20.674146153846156
+      "spend": 1819.5771,
+      "impressions": 33167,
+      "clicks": 1212,
+      "ctr": 0.0365423463080773,
+      "cpm": 54.86106973799258,
+      "frequency": 1.3956,
+      "leads": 86,
+      "cpl": 21.157873255813954
     },
     {
       "age": "65+",
       "gender": "female",
-      "spend": 368.4505,
-      "impressions": 7012,
-      "clicks": 264,
-      "ctr": 0.037649743297204795,
-      "cpm": 52.54570735881346,
-      "frequency": 1.2935,
-      "leads": 18,
-      "cpl": 20.469472222222223
+      "spend": 507.4654,
+      "impressions": 9679,
+      "clicks": 355,
+      "ctr": 0.03667734270069222,
+      "cpm": 52.429527843785515,
+      "frequency": 1.3484,
+      "leads": 26,
+      "cpl": 19.5179
     },
     {
       "age": "18-24",
       "gender": "male",
-      "spend": 10342.1558,
-      "impressions": 590685,
-      "clicks": 5921,
-      "ctr": 0.010023955238409644,
-      "cpm": 17.508749671990994,
-      "frequency": 1.5181,
-      "leads": 451,
-      "cpl": 22.93160931263858
+      "spend": 13197.0581,
+      "impressions": 743112,
+      "clicks": 7317,
+      "ctr": 0.00984642960953396,
+      "cpm": 17.75917775517015,
+      "frequency": 1.6034,
+      "leads": 575,
+      "cpl": 22.95140539130435
     },
     {
       "age": "25-34",
       "gender": "male",
-      "spend": 28464.125,
-      "impressions": 1195998,
-      "clicks": 14765,
-      "ctr": 0.012345338370131053,
-      "cpm": 23.799475417182972,
-      "frequency": 1.5213,
-      "leads": 1286,
-      "cpl": 22.133845256609643
+      "spend": 36027.3802,
+      "impressions": 1500457,
+      "clicks": 17917,
+      "ctr": 0.011941028633276396,
+      "cpm": 24.010938134181785,
+      "frequency": 1.6043,
+      "leads": 1616,
+      "cpl": 22.294170915841583
     },
     {
       "age": "35-44",
       "gender": "male",
-      "spend": 17015.8767,
-      "impressions": 485434,
-      "clicks": 8080,
-      "ctr": 0.016644899203599253,
-      "cpm": 35.05291491737291,
-      "frequency": 1.4863,
-      "leads": 797,
-      "cpl": 21.349908030112925
+      "spend": 21993.7739,
+      "impressions": 627888,
+      "clicks": 10141,
+      "ctr": 0.016150969599673826,
+      "cpm": 35.02818002573707,
+      "frequency": 1.5537,
+      "leads": 1035,
+      "cpl": 21.25002309178744
     },
     {
       "age": "45-54",
       "gender": "male",
-      "spend": 9106.3813,
-      "impressions": 216968,
-      "clicks": 4742,
-      "ctr": 0.021855757531064487,
-      "cpm": 41.97108006710667,
-      "frequency": 1.3749,
-      "leads": 473,
-      "cpl": 19.252391754756868
+      "spend": 12003.1332,
+      "impressions": 286487,
+      "clicks": 6001,
+      "ctr": 0.020946849246213615,
+      "cpm": 41.89765399477114,
+      "frequency": 1.4619,
+      "leads": 597,
+      "cpl": 20.105750753768845
     },
     {
       "age": "55-64",
       "gender": "male",
-      "spend": 3573.8867,
-      "impressions": 74994,
-      "clicks": 2010,
-      "ctr": 0.02680214417153372,
-      "cpm": 47.655635117476066,
-      "frequency": 1.3616,
-      "leads": 170,
-      "cpl": 21.02286294117647
+      "spend": 4781.2121,
+      "impressions": 100211,
+      "clicks": 2595,
+      "ctr": 0.025895360788735767,
+      "cpm": 47.71144984083583,
+      "frequency": 1.4486,
+      "leads": 226,
+      "cpl": 21.155805752212387
     },
     {
       "age": "65+",
       "gender": "male",
-      "spend": 1309.2964,
-      "impressions": 26651,
-      "clicks": 799,
-      "ctr": 0.029980113316573485,
-      "cpm": 49.127477392968366,
-      "frequency": 1.3938,
-      "leads": 63,
-      "cpl": 20.78248253968254
+      "spend": 1795.5729,
+      "impressions": 35599,
+      "clicks": 1043,
+      "ctr": 0.029298575802691088,
+      "cpm": 50.438857833085194,
+      "frequency": 1.4685,
+      "leads": 86,
+      "cpl": 20.87875465116279
     },
     {
       "age": "Unknown",
@@ -171,627 +171,627 @@ window.BAIT_STRATEGIC = {
     {
       "age": "18-24",
       "gender": "unknown",
-      "spend": 91.6646,
-      "impressions": 4399,
-      "clicks": 51,
-      "ctr": 0.011593543987269835,
-      "cpm": 20.837599454421458,
-      "frequency": 1.4108,
+      "spend": 118.6278,
+      "impressions": 5573,
+      "clicks": 62,
+      "ctr": 0.01112506728871344,
+      "cpm": 21.286165440516776,
+      "frequency": 1.4873,
       "leads": 6,
-      "cpl": 15.277433333333333
+      "cpl": 19.7713
     },
     {
       "age": "25-34",
       "gender": "unknown",
-      "spend": 229.8973,
-      "impressions": 8387,
-      "clicks": 125,
-      "ctr": 0.014904018123286037,
-      "cpm": 27.411148205556216,
-      "frequency": 1.4194,
-      "leads": 8,
-      "cpl": 28.7371625
+      "spend": 301.8213,
+      "impressions": 10742,
+      "clicks": 156,
+      "ctr": 0.014522435300688885,
+      "cpm": 28.097309625768016,
+      "frequency": 1.4899,
+      "leads": 12,
+      "cpl": 25.151775
     },
     {
       "age": "35-44",
       "gender": "unknown",
-      "spend": 183.6195,
-      "impressions": 4346,
-      "clicks": 88,
-      "ctr": 0.02024850437183617,
-      "cpm": 42.250230096640585,
-      "frequency": 1.5164,
-      "leads": 14,
-      "cpl": 13.115678571428571
+      "spend": 241.004,
+      "impressions": 5685,
+      "clicks": 104,
+      "ctr": 0.018293755496921724,
+      "cpm": 42.39296394019349,
+      "frequency": 1.5713,
+      "leads": 16,
+      "cpl": 15.06275
     },
     {
       "age": "45-54",
       "gender": "unknown",
-      "spend": 85.4168,
-      "impressions": 1748,
-      "clicks": 37,
-      "ctr": 0.02116704805491991,
-      "cpm": 48.86544622425629,
-      "frequency": 1.3571,
-      "leads": 2,
-      "cpl": 42.7084
+      "spend": 113.6064,
+      "impressions": 2363,
+      "clicks": 56,
+      "ctr": 0.02369868810833686,
+      "cpm": 48.07719001269572,
+      "frequency": 1.4613,
+      "leads": 3,
+      "cpl": 37.8688
     },
     {
       "age": "55-64",
       "gender": "unknown",
-      "spend": 26.2027,
-      "impressions": 456,
-      "clicks": 16,
-      "ctr": 0.03508771929824561,
-      "cpm": 57.46206140350877,
-      "frequency": 1.3531,
+      "spend": 33.5758,
+      "impressions": 635,
+      "clicks": 19,
+      "ctr": 0.029921259842519685,
+      "cpm": 52.87527559055118,
+      "frequency": 1.4238,
       "leads": 0,
       "cpl": 0
     },
     {
       "age": "65+",
       "gender": "unknown",
-      "spend": 14.0576,
-      "impressions": 238,
-      "clicks": 10,
-      "ctr": 0.04201680672268908,
-      "cpm": 59.0655462184874,
-      "frequency": 1.3446,
+      "spend": 18.3113,
+      "impressions": 306,
+      "clicks": 13,
+      "ctr": 0.042483660130718956,
+      "cpm": 59.84084967320261,
+      "frequency": 1.4233,
       "leads": 1,
-      "cpl": 14.0576
+      "cpl": 18.3113
     },
     {
       "age": "Unknown",
       "gender": "unknown",
-      "spend": 3152.5201,
-      "impressions": 451518,
-      "clicks": 2862,
-      "ctr": 0.006338617729525734,
-      "cpm": 6.982047448828176,
+      "spend": 3669.1118,
+      "impressions": 518453,
+      "clicks": 3278,
+      "ctr": 0.006322656055611598,
+      "cpm": 7.077038420068936,
       "frequency": 0,
-      "leads": 397,
-      "cpl": 7.940856675062973
+      "leads": 450,
+      "cpl": 8.153581777777777
     }
   ],
   "regions": [
     {
       "region": "Distrito Federal",
-      "spend": 32683.2954,
-      "impressions": 1138289,
-      "clicks": 17538,
-      "ctr": 0.0154073350440881,
-      "cpm": 28.712651532255865
+      "spend": 41851.3017,
+      "impressions": 1446151,
+      "clicks": 21773,
+      "ctr": 0.015055827503490299,
+      "cpm": 28.939786854899662
     },
     {
       "region": "Jalisco",
-      "spend": 22665.0765,
-      "impressions": 816457,
-      "clicks": 11729,
-      "ctr": 0.014365728997362997,
-      "cpm": 27.760281925441266
+      "spend": 29285.0439,
+      "impressions": 1037419,
+      "clicks": 14640,
+      "ctr": 0.014111945125354365,
+      "cpm": 28.2287522206553
     },
     {
       "region": "Puebla",
-      "spend": 11692.036,
-      "impressions": 504974,
-      "clicks": 6764,
-      "ctr": 0.013394749036584061,
-      "cpm": 23.15373860832439
+      "spend": 15040.0579,
+      "impressions": 638277,
+      "clicks": 8451,
+      "ctr": 0.013240332958887756,
+      "cpm": 23.563527904029126
     },
     {
       "region": "Yucatán",
-      "spend": 4640.3062,
-      "impressions": 164035,
-      "clicks": 2477,
-      "ctr": 0.015100435882586033,
-      "cpm": 28.288512817386533
+      "spend": 5981.0896,
+      "impressions": 207026,
+      "clicks": 3104,
+      "ctr": 0.014993285867475583,
+      "cpm": 28.89052389554935
     },
     {
       "region": "Hidalgo",
-      "spend": 4437.4582,
-      "impressions": 191592,
-      "clicks": 2575,
-      "ctr": 0.01344001837237463,
-      "cpm": 23.160978537726002
+      "spend": 5744.8499,
+      "impressions": 241975,
+      "clicks": 3191,
+      "ctr": 0.013187312738919309,
+      "cpm": 23.74150180803802
     },
     {
       "region": "San Luis Potosi",
-      "spend": 4060.038,
-      "impressions": 159520,
-      "clicks": 2165,
-      "ctr": 0.01357196589769308,
-      "cpm": 25.451592276830493
+      "spend": 5327.3161,
+      "impressions": 203423,
+      "clicks": 2723,
+      "ctr": 0.013385900316090117,
+      "cpm": 26.18836660554608
     },
     {
       "region": "Sinaloa",
-      "spend": 3486.6743,
-      "impressions": 155170,
-      "clicks": 1725,
-      "ctr": 0.011116839595282594,
-      "cpm": 22.47002835599665
+      "spend": 4502.1354,
+      "impressions": 191996,
+      "clicks": 2135,
+      "ctr": 0.011120023333819454,
+      "cpm": 23.449110398133296
     },
     {
       "region": "Chiapas",
-      "spend": 3066.0815,
-      "impressions": 160332,
-      "clicks": 1889,
-      "ctr": 0.011781802759274505,
-      "cpm": 19.12332846842801
+      "spend": 3932.208,
+      "impressions": 197697,
+      "clicks": 2329,
+      "ctr": 0.011780654233498737,
+      "cpm": 19.89007420446441
     },
     {
       "region": "Guerrero",
-      "spend": 2042.5822,
-      "impressions": 105271,
-      "clicks": 1256,
-      "ctr": 0.011931111132220649,
-      "cpm": 19.403085370139927
+      "spend": 2635.6386,
+      "impressions": 130989,
+      "clicks": 1578,
+      "ctr": 0.012046813091175595,
+      "cpm": 20.121068181297666
     },
     {
       "region": "Tlaxcala",
-      "spend": 1391.5186,
-      "impressions": 63757,
-      "clicks": 726,
-      "ctr": 0.01138698495851436,
-      "cpm": 21.82534623649168
+      "spend": 1773.4598,
+      "impressions": 79483,
+      "clicks": 908,
+      "ctr": 0.011423826478618069,
+      "cpm": 22.312441654190206
     },
     {
       "region": "Nayarit",
-      "spend": 1131.1947,
-      "impressions": 49503,
-      "clicks": 595,
-      "ctr": 0.01201947356725855,
-      "cpm": 22.851033270710868
+      "spend": 1478.7388,
+      "impressions": 62357,
+      "clicks": 754,
+      "ctr": 0.012091665731192969,
+      "cpm": 23.714078611863943
     },
     {
       "region": "Zacatecas",
-      "spend": 1057.4171,
-      "impressions": 53244,
-      "clicks": 563,
-      "ctr": 0.010573961385320413,
-      "cpm": 19.859835850048828
+      "spend": 1360.7628,
+      "impressions": 66786,
+      "clicks": 691,
+      "ctr": 0.01034647980115593,
+      "cpm": 20.374970802263945
     },
     {
       "region": "Campeche",
-      "spend": 1020.6216,
-      "impressions": 40157,
-      "clicks": 524,
-      "ctr": 0.013048783524665687,
-      "cpm": 25.415783051522773
+      "spend": 1308.5937,
+      "impressions": 50227,
+      "clicks": 660,
+      "ctr": 0.013140342843490553,
+      "cpm": 26.053590698230035
     },
     {
       "region": "Baja California Sur",
-      "spend": 602.3008,
-      "impressions": 26769,
-      "clicks": 273,
-      "ctr": 0.010198363778998095,
-      "cpm": 22.499936493705405
+      "spend": 785.2232,
+      "impressions": 33270,
+      "clicks": 356,
+      "ctr": 0.010700330628193568,
+      "cpm": 23.601538923955516
     },
     {
       "region": "State of Mexico",
-      "spend": 505.3978,
-      "impressions": 23155,
-      "clicks": 284,
-      "ctr": 0.012265169509825091,
-      "cpm": 21.826724249622114
+      "spend": 664.4669,
+      "impressions": 29603,
+      "clicks": 361,
+      "ctr": 0.012194709995608554,
+      "cpm": 22.44593115562612
     },
     {
       "region": "Unknown",
-      "spend": 1.9911,
-      "impressions": 59,
+      "spend": 3.1338,
+      "impressions": 70,
       "clicks": 0,
       "ctr": 0,
-      "cpm": 33.74745762711864
+      "cpm": 44.76857142857143
     }
   ],
   "devices": [
     {
       "device": "mobile_app (FA)",
       "platform": "facebook",
-      "spend": 85620.1936,
-      "impressions": 2997303,
-      "clicks": 46984,
-      "ctr": 0.015675425540894596,
-      "cpm": 28.565745138212588,
-      "leads": 4059,
-      "cpl": 21.093913180586352
+      "spend": 110554.6896,
+      "impressions": 3824331,
+      "clicks": 58707,
+      "ctr": 0.015350920200160498,
+      "cpm": 28.90824293190103,
+      "leads": 5224,
+      "cpl": 21.162842572741194
     },
     {
       "device": "mobile_web (FA)",
       "platform": "facebook",
-      "spend": 106.4788,
-      "impressions": 4818,
-      "clicks": 50,
-      "ctr": 0.0103777501037775,
-      "cpm": 22.100207555002076,
-      "leads": 3,
-      "cpl": 35.49293333333333
+      "spend": 145.7157,
+      "impressions": 6506,
+      "clicks": 65,
+      "ctr": 0.009990777743621273,
+      "cpm": 22.397125730095297,
+      "leads": 7,
+      "cpl": 20.81652857142857
     },
     {
       "device": "mobile_app (IN)",
       "platform": "instagram",
-      "spend": 2465.1558,
-      "impressions": 66927,
-      "clicks": 549,
-      "ctr": 0.008202967412255143,
-      "cpm": 36.83350217401049,
-      "leads": 91,
-      "cpl": 27.089624175824177
+      "spend": 3438.6261,
+      "impressions": 92153,
+      "clicks": 763,
+      "ctr": 0.008279708745238897,
+      "cpm": 37.31431532342951,
+      "leads": 121,
+      "cpl": 28.418397520661156
     },
     {
       "device": "mobile_app (WH)",
       "platform": "whatsapp",
-      "spend": 6229.9317,
-      "impressions": 583236,
-      "clicks": 3500,
-      "ctr": 0.006001001309932858,
-      "cpm": 10.681665226426354,
-      "leads": 610,
-      "cpl": 10.213002786885246
+      "spend": 7633.5412,
+      "impressions": 693759,
+      "clicks": 4119,
+      "ctr": 0.005937220273899149,
+      "cpm": 11.0031598869348,
+      "leads": 717,
+      "cpl": 10.646500976290097
     }
   ],
   "placements": [
     {
       "platform": "facebook",
       "position": "facebook_profile_feed",
-      "spend": 121.457,
-      "impressions": 5780,
-      "clicks": 52,
-      "ctr": 0.008996539792387544,
-      "cpm": 21.01332179930796,
-      "leads": 3,
-      "cpl": 40.48566666666667
+      "spend": 153.8795,
+      "impressions": 6952,
+      "clicks": 67,
+      "ctr": 0.009637514384349828,
+      "cpm": 22.134565592635212,
+      "leads": 5,
+      "cpl": 30.7759
     },
     {
       "platform": "facebook",
       "position": "facebook_reels",
-      "spend": 17695.6305,
-      "impressions": 593787,
-      "clicks": 5400,
-      "ctr": 0.009094170131713897,
-      "cpm": 29.80131006573064,
-      "leads": 834,
-      "cpl": 21.217782374100718
+      "spend": 24526.6246,
+      "impressions": 824220,
+      "clicks": 7256,
+      "ctr": 0.008803474800417365,
+      "cpm": 29.757376185969765,
+      "leads": 1114,
+      "cpl": 22.016718671454218
     },
     {
       "platform": "facebook",
       "position": "facebook_reels_overlay",
-      "spend": 20.991,
-      "impressions": 883,
+      "spend": 21.8034,
+      "impressions": 906,
       "clicks": 5,
-      "ctr": 0.0056625141562853904,
-      "cpm": 23.772366930917325,
+      "ctr": 0.005518763796909493,
+      "cpm": 24.065562913907286,
       "leads": 1,
-      "cpl": 20.991
+      "cpl": 21.8034
     },
     {
       "platform": "facebook",
       "position": "facebook_stories",
-      "spend": 4240.2032,
-      "impressions": 200731,
-      "clicks": 1491,
-      "ctr": 0.007427851203849928,
-      "cpm": 21.12380848000558,
-      "leads": 214,
-      "cpl": 19.814033644859812
+      "spend": 5728.8008,
+      "impressions": 269153,
+      "clicks": 1966,
+      "ctr": 0.007304395641140912,
+      "cpm": 21.284551166065395,
+      "leads": 274,
+      "cpl": 20.90803211678832
     },
     {
       "platform": "facebook",
       "position": "feed",
-      "spend": 60485.5606,
-      "impressions": 2140535,
-      "clicks": 39413,
-      "ctr": 0.018412686547989172,
-      "cpm": 28.257216350118075,
-      "leads": 2833,
-      "cpl": 21.35035672432051
+      "spend": 76227.3615,
+      "impressions": 2634462,
+      "clicks": 48598,
+      "ctr": 0.018447030171625176,
+      "cpm": 28.934697672617787,
+      "leads": 3617,
+      "cpl": 21.074747442632017
     },
     {
       "platform": "facebook",
       "position": "instream_video",
-      "spend": 54.6653,
-      "impressions": 1085,
-      "clicks": 23,
-      "ctr": 0.02119815668202765,
-      "cpm": 50.382764976958526,
+      "spend": 70.5486,
+      "impressions": 1420,
+      "clicks": 33,
+      "ctr": 0.02323943661971831,
+      "cpm": 49.682112676056335,
       "leads": 2,
-      "cpl": 27.33265
+      "cpl": 35.2743
     },
     {
       "platform": "facebook",
       "position": "marketplace",
-      "spend": 474.8238,
-      "impressions": 31673,
-      "clicks": 142,
-      "ctr": 0.004483313863543081,
-      "cpm": 14.991437501973289,
-      "leads": 33,
-      "cpl": 14.3886
+      "spend": 687.9437,
+      "impressions": 56932,
+      "clicks": 225,
+      "ctr": 0.003952083186959882,
+      "cpm": 12.083603245977658,
+      "leads": 42,
+      "cpl": 16.379611904761905
     },
     {
       "platform": "facebook",
       "position": "search",
-      "spend": 2631.62,
-      "impressions": 27614,
-      "clicks": 507,
-      "ctr": 0.01836025204606359,
-      "cpm": 95.30021003838633,
-      "leads": 142,
-      "cpl": 18.532535211267604
+      "spend": 3280.4461,
+      "impressions": 36744,
+      "clicks": 621,
+      "ctr": 0.016900718484650554,
+      "cpm": 89.27841552362291,
+      "leads": 176,
+      "cpl": 18.638898295454545
     },
     {
       "platform": "instagram",
       "position": "feed",
-      "spend": 262.6858,
-      "impressions": 5020,
-      "clicks": 43,
-      "ctr": 0.008565737051792829,
-      "cpm": 52.32784860557768,
-      "leads": 11,
-      "cpl": 23.88052727272727
+      "spend": 418.376,
+      "impressions": 7971,
+      "clicks": 62,
+      "ctr": 0.007778195960356292,
+      "cpm": 52.48726634048425,
+      "leads": 19,
+      "cpl": 22.01978947368421
     },
     {
       "platform": "instagram",
       "position": "instagram_reels",
-      "spend": 1729.2727,
-      "impressions": 50192,
-      "clicks": 423,
-      "ctr": 0.008427637870576984,
-      "cpm": 34.45315388906599,
-      "leads": 61,
-      "cpl": 28.348732786885247
+      "spend": 2276.7197,
+      "impressions": 65397,
+      "clicks": 562,
+      "ctr": 0.008593666376133461,
+      "cpm": 34.813824793186235,
+      "leads": 76,
+      "cpl": 29.956838157894737
     },
     {
       "platform": "instagram",
       "position": "instagram_stories",
-      "spend": 473.1973,
-      "impressions": 11716,
-      "clicks": 83,
-      "ctr": 0.007084329122567429,
-      "cpm": 40.38898088084671,
-      "leads": 19,
-      "cpl": 24.90512105263158
+      "spend": 743.5304,
+      "impressions": 18785,
+      "clicks": 138,
+      "ctr": 0.007346286931062018,
+      "cpm": 39.5810700026617,
+      "leads": 26,
+      "cpl": 28.597323076923075
     },
     {
       "platform": "whatsapp",
       "position": "status",
-      "spend": 6229.9317,
-      "impressions": 583236,
-      "clicks": 3500,
-      "ctr": 0.006001001309932858,
-      "cpm": 10.681665226426354,
-      "leads": 610,
-      "cpl": 10.213002786885246
+      "spend": 7633.5412,
+      "impressions": 693759,
+      "clicks": 4119,
+      "ctr": 0.005937220273899149,
+      "cpm": 11.0031598869348,
+      "leads": 717,
+      "cpl": 10.646500976290097
     }
   ],
   "hours": [
     {
       "hour": 0,
       "label": "00h",
-      "spend": 1869.8279,
-      "impressions": 56068,
-      "clicks": 772,
-      "leads": 100,
-      "cpl": 18.698279
+      "spend": 2654.7278,
+      "impressions": 86062,
+      "clicks": 1122,
+      "leads": 134,
+      "cpl": 19.811401492537314
     },
     {
       "hour": 1,
       "label": "01h",
-      "spend": 1172.9004,
-      "impressions": 34876,
-      "clicks": 505,
-      "leads": 61,
-      "cpl": 19.227875409836066
+      "spend": 1744.5962,
+      "impressions": 53335,
+      "clicks": 775,
+      "leads": 78,
+      "cpl": 22.36661794871795
     },
     {
       "hour": 2,
       "label": "02h",
-      "spend": 887.4487,
-      "impressions": 25459,
-      "clicks": 372,
-      "leads": 45,
-      "cpl": 19.721082222222222
+      "spend": 1299.5594,
+      "impressions": 39023,
+      "clicks": 536,
+      "leads": 64,
+      "cpl": 20.305615625
     },
     {
       "hour": 3,
       "label": "03h",
-      "spend": 775.9023,
-      "impressions": 24992,
-      "clicks": 309,
-      "leads": 29,
-      "cpl": 26.75525172413793
+      "spend": 1138.3422,
+      "impressions": 37670,
+      "clicks": 469,
+      "leads": 42,
+      "cpl": 27.103385714285714
     },
     {
       "hour": 4,
       "label": "04h",
-      "spend": 877.851,
-      "impressions": 31549,
-      "clicks": 428,
-      "leads": 31,
-      "cpl": 28.317774193548388
+      "spend": 1354.2473,
+      "impressions": 49271,
+      "clicks": 669,
+      "leads": 49,
+      "cpl": 27.6377
     },
     {
       "hour": 5,
       "label": "05h",
-      "spend": 1380.6128,
-      "impressions": 52117,
-      "clicks": 762,
-      "leads": 60,
-      "cpl": 23.010213333333336
+      "spend": 1949.5589,
+      "impressions": 74997,
+      "clicks": 1095,
+      "leads": 77,
+      "cpl": 25.318946753246752
     },
     {
       "hour": 6,
       "label": "06h",
-      "spend": 2483.8465,
-      "impressions": 97476,
-      "clicks": 1408,
-      "leads": 138,
-      "cpl": 17.99888768115942
+      "spend": 3471.1979,
+      "impressions": 137383,
+      "clicks": 1988,
+      "leads": 178,
+      "cpl": 19.50111179775281
     },
     {
       "hour": 7,
       "label": "07h",
-      "spend": 3633.7989,
-      "impressions": 144144,
-      "clicks": 2076,
-      "leads": 187,
-      "cpl": 19.432079679144383
+      "spend": 5061.5947,
+      "impressions": 203065,
+      "clicks": 2898,
+      "leads": 257,
+      "cpl": 19.694921011673152
     },
     {
       "hour": 8,
       "label": "08h",
-      "spend": 3821.0764,
-      "impressions": 166729,
-      "clicks": 2166,
-      "leads": 224,
-      "cpl": 17.058376785714284
+      "spend": 5480.9558,
+      "impressions": 229168,
+      "clicks": 3007,
+      "leads": 340,
+      "cpl": 16.120458235294116
     },
     {
       "hour": 9,
       "label": "09h",
-      "spend": 4649.2782,
-      "impressions": 179132,
-      "clicks": 2645,
-      "leads": 234,
-      "cpl": 19.868710256410257
+      "spend": 5722.2498,
+      "impressions": 216032,
+      "clicks": 3120,
+      "leads": 293,
+      "cpl": 19.52986279863481
     },
     {
       "hour": 10,
       "label": "10h",
-      "spend": 5440.9617,
-      "impressions": 206991,
-      "clicks": 2960,
-      "leads": 259,
-      "cpl": 21.00757413127413
+      "spend": 6748.2974,
+      "impressions": 251568,
+      "clicks": 3503,
+      "leads": 324,
+      "cpl": 20.82807839506173
     },
     {
       "hour": 11,
       "label": "11h",
-      "spend": 6666.7295,
-      "impressions": 259778,
-      "clicks": 3840,
-      "leads": 307,
-      "cpl": 21.715731270358308
+      "spend": 8106.3485,
+      "impressions": 309426,
+      "clicks": 4459,
+      "leads": 374,
+      "cpl": 21.674728609625667
     },
     {
       "hour": 12,
       "label": "12h",
-      "spend": 7954.9762,
-      "impressions": 321251,
-      "clicks": 4806,
-      "leads": 358,
-      "cpl": 22.220603910614525
+      "spend": 9518.3871,
+      "impressions": 375429,
+      "clicks": 5457,
+      "leads": 429,
+      "cpl": 22.18738251748252
     },
     {
       "hour": 13,
       "label": "13h",
-      "spend": 15088.5643,
-      "impressions": 538900,
-      "clicks": 7572,
-      "leads": 412,
-      "cpl": 36.62272888349514
+      "spend": 16570.1367,
+      "impressions": 591648,
+      "clicks": 8221,
+      "leads": 478,
+      "cpl": 34.665557949790795
     },
     {
       "hour": 14,
       "label": "14h",
-      "spend": 5685.0475,
-      "impressions": 277454,
-      "clicks": 3580,
-      "leads": 305,
-      "cpl": 18.639499999999998
+      "spend": 6989.1809,
+      "impressions": 323278,
+      "clicks": 4187,
+      "leads": 363,
+      "cpl": 19.253941873278237
     },
     {
       "hour": 15,
       "label": "15h",
-      "spend": 6399.3184,
-      "impressions": 360263,
-      "clicks": 4191,
-      "leads": 345,
-      "cpl": 18.548748985507245
+      "spend": 7884.1699,
+      "impressions": 408798,
+      "clicks": 4884,
+      "leads": 418,
+      "cpl": 18.8616504784689
     },
     {
       "hour": 16,
       "label": "16h",
-      "spend": 4522.8796,
-      "impressions": 212509,
-      "clicks": 2747,
-      "leads": 272,
-      "cpl": 16.628233823529413
+      "spend": 6090.7343,
+      "impressions": 260826,
+      "clicks": 3333,
+      "leads": 346,
+      "cpl": 17.60327832369942
     },
     {
       "hour": 17,
       "label": "17h",
-      "spend": 3668.8571,
-      "impressions": 118074,
-      "clicks": 1801,
-      "leads": 245,
-      "cpl": 14.97492693877551
+      "spend": 5343.3545,
+      "impressions": 172340,
+      "clicks": 2531,
+      "leads": 321,
+      "cpl": 16.64596417445483
     },
     {
       "hour": 18,
       "label": "18h",
-      "spend": 3398.8888,
-      "impressions": 107233,
-      "clicks": 1695,
-      "leads": 229,
-      "cpl": 14.842309170305677
+      "spend": 5280.8435,
+      "impressions": 167336,
+      "clicks": 2498,
+      "leads": 297,
+      "cpl": 17.780617845117845
     },
     {
       "hour": 19,
       "label": "19h",
-      "spend": 3274.853,
-      "impressions": 105151,
-      "clicks": 1554,
-      "leads": 230,
-      "cpl": 14.238491304347827
+      "spend": 5003.9479,
+      "impressions": 162723,
+      "clicks": 2289,
+      "leads": 314,
+      "cpl": 15.936139808917197
     },
     {
       "hour": 20,
       "label": "20h",
-      "spend": 2990.1615,
-      "impressions": 97697,
-      "clicks": 1383,
-      "leads": 220,
-      "cpl": 13.591643181818183
+      "spend": 4598.5436,
+      "impressions": 154268,
+      "clicks": 2114,
+      "leads": 297,
+      "cpl": 15.483311784511784
     },
     {
       "hour": 21,
       "label": "21h",
-      "spend": 3001.8551,
-      "impressions": 94285,
-      "clicks": 1394,
-      "leads": 184,
-      "cpl": 16.31442989130435
+      "spend": 4201.5413,
+      "impressions": 141088,
+      "clicks": 1953,
+      "leads": 244,
+      "cpl": 17.21943155737705
     },
     {
       "hour": 22,
       "label": "22h",
-      "spend": 2616.2009,
-      "impressions": 78148,
-      "clicks": 1177,
-      "leads": 165,
-      "cpl": 15.855763030303029
+      "spend": 3337.1717,
+      "impressions": 107192,
+      "clicks": 1588,
+      "leads": 222,
+      "cpl": 15.032304954954954
     },
     {
       "hour": 23,
       "label": "23h",
-      "spend": 2159.9234,
-      "impressions": 62008,
-      "clicks": 940,
-      "leads": 123,
-      "cpl": 17.560352845528456
+      "spend": 2222.8852,
+      "impressions": 64823,
+      "clicks": 958,
+      "leads": 135,
+      "cpl": 16.465816296296296
     }
   ],
   "weekdays": [
     {
       "day": "Dom",
       "dayNum": 0,
-      "spend": 0,
-      "impressions": 0,
-      "clicks": 0,
-      "leads": 0,
-      "ctr": 0,
-      "cpm": 0,
-      "cpl": 0
+      "spend": 6072.03,
+      "impressions": 237438,
+      "clicks": 3191,
+      "leads": 289,
+      "ctr": 0.01343929783775133,
+      "cpm": 25.573118035023878,
+      "cpl": 21.010484429065745
     },
     {
       "day": "Lun",
@@ -829,87 +829,87 @@ window.BAIT_STRATEGIC = {
     {
       "day": "Jue",
       "dayNum": 4,
-      "spend": 22821.63,
-      "impressions": 872629,
-      "clicks": 13333,
+      "spend": 22826.83,
+      "impressions": 872698,
+      "clicks": 13334,
       "leads": 1172,
-      "ctr": 0.01527911632549457,
-      "cpm": 26.152729281286778,
-      "cpl": 19.472380546075087
+      "ctr": 0.015279054151608002,
+      "cpm": 26.15662004496401,
+      "cpl": 19.476817406143347
     },
     {
       "day": "Vie",
       "dayNum": 5,
-      "spend": 17996.42,
-      "impressions": 630146,
-      "clicks": 8673,
+      "spend": 18134.52,
+      "impressions": 634474,
+      "clicks": 8763,
       "leads": 984,
-      "ctr": 0.013763477035480667,
-      "cpm": 28.559127567262188,
-      "cpl": 18.28904471544715
+      "ctr": 0.013811440657930822,
+      "cpm": 28.581974990306932,
+      "cpl": 18.42939024390244
     },
     {
       "day": "Sab",
       "dayNum": 6,
-      "spend": 3586.62,
-      "impressions": 127737,
-      "clicks": 1743,
-      "leads": 206,
-      "ctr": 0.01364522417153996,
-      "cpm": 28.07816059559877,
-      "cpl": 17.410776699029125
+      "spend": 24623.55,
+      "impressions": 850367,
+      "clicks": 11032,
+      "leads": 1214,
+      "ctr": 0.012973222149965838,
+      "cpm": 28.95638001004272,
+      "cpl": 20.28299011532125
     }
   ],
   "ads": [
     {
       "ad": "Anuncio 06 - Sim-Esim",
       "campaign": "Campaña 1 Genesys – Edad + Sexo + Regiones - Copia",
-      "spend": 31590.7,
-      "impressions": 1182149,
-      "ctr": 0.018523891658327334,
-      "frequency": 1.3804,
-      "leads": 2060,
-      "cpl": 15.335291262135923
+      "spend": 41065.59,
+      "impressions": 1502282,
+      "ctr": 0.018524484750532855,
+      "frequency": 1.3468,
+      "leads": 2632,
+      "cpl": 15.60242781155015
     },
     {
       "ad": "Anuncio 01 - Sim-Esim",
       "campaign": "Campaña 1 Genesys – Edad + Sexo + Regiones - Copia",
-      "spend": 24440.51,
-      "impressions": 854840,
-      "ctr": 0.011796359552664826,
-      "frequency": 1.3422,
-      "leads": 1128,
-      "cpl": 21.66711879432624
-    },
-    {
-      "ad": "Anuncio 04 - Sim-Esim",
-      "campaign": "Campaña 1 Genesys – Edad + Sexo + Regiones - Copia",
-      "spend": 6686.19,
-      "impressions": 168670,
-      "ctr": 0.011768542123673445,
-      "frequency": 1.4114,
-      "leads": 283,
-      "cpl": 23.626113074204945
+      "spend": 31230.57,
+      "impressions": 1068733,
+      "ctr": 0.011474334562514678,
+      "frequency": 1.3259,
+      "leads": 1443,
+      "cpl": 21.64280665280665
     },
     {
       "ad": "Anuncio 01 - Marzo",
       "campaign": "Campaña SuperChat PISO - 8278",
-      "spend": 16727.12,
-      "impressions": 483164,
-      "ctr": 0.015297083391974567,
-      "frequency": 1.1346,
-      "leads": 698,
-      "cpl": 23.964355300859598
+      "spend": 21528.4,
+      "impressions": 626474,
+      "ctr": 0.014738041802213659,
+      "frequency": 1.1387,
+      "leads": 892,
+      "cpl": 24.134977578475336
+    },
+    {
+      "ad": "Anuncio 04 - Sim-Esim",
+      "campaign": "Campaña 1 Genesys – Edad + Sexo + Regiones - Copia",
+      "spend": 8485.65,
+      "impressions": 210933,
+      "ctr": 0.011354316299488463,
+      "frequency": 1.4053,
+      "leads": 347,
+      "cpl": 24.454322766570606
     },
     {
       "ad": "Arte Pokemons",
       "campaign": "BOT-COMPETIDOR | 04 | Gamers",
-      "spend": 14977.24,
-      "impressions": 963461,
-      "ctr": 0.01009381801650508,
-      "frequency": 1.1334,
-      "leads": 594,
-      "cpl": 25.214208754208755
+      "spend": 19363.81,
+      "impressions": 1208327,
+      "ctr": 0.009876465559405691,
+      "frequency": 1.1462,
+      "leads": 760,
+      "cpl": 25.478697368421056
     }
   ],
   "daily": [
@@ -940,37 +940,49 @@ window.BAIT_STRATEGIC = {
     {
       "date": "2026-09-03",
       "label": "Jue 03",
-      "spend": 22821.63,
-      "impressions": 872629,
-      "clicks": 13333,
-      "ctr": 0.01527911632549457,
-      "cpm": 26.152729281286778,
+      "spend": 22826.83,
+      "impressions": 872698,
+      "clicks": 13334,
+      "ctr": 0.015279054151608002,
+      "cpm": 26.15662004496401,
       "leads": 1172,
-      "cpl": 19.472380546075087,
+      "cpl": 19.476817406143347,
       "partial": false
     },
     {
       "date": "2026-09-04",
       "label": "Vie 04",
-      "spend": 17996.42,
-      "impressions": 630146,
-      "clicks": 8673,
-      "ctr": 0.013763477035480667,
-      "cpm": 28.559127567262188,
+      "spend": 18134.52,
+      "impressions": 634474,
+      "clicks": 8763,
+      "ctr": 0.013811440657930822,
+      "cpm": 28.581974990306932,
       "leads": 984,
-      "cpl": 18.28904471544715,
+      "cpl": 18.42939024390244,
       "partial": false
     },
     {
       "date": "2026-09-05",
       "label": "Sab 05",
-      "spend": 3586.62,
-      "impressions": 127737,
-      "clicks": 1743,
-      "ctr": 0.01364522417153996,
-      "cpm": 28.07816059559877,
-      "leads": 206,
-      "cpl": 17.410776699029125,
+      "spend": 24623.55,
+      "impressions": 850367,
+      "clicks": 11032,
+      "ctr": 0.012973222149965838,
+      "cpm": 28.95638001004272,
+      "leads": 1214,
+      "cpl": 20.28299011532125,
+      "partial": false
+    },
+    {
+      "date": "2026-09-06",
+      "label": "Dom 06",
+      "spend": 6072.03,
+      "impressions": 237438,
+      "clicks": 3191,
+      "ctr": 0.01343929783775133,
+      "cpm": 25.573118035023878,
+      "leads": 289,
+      "cpl": 21.010484429065745,
       "partial": true
     }
   ]
