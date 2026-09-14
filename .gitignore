@@ -29,3 +29,6 @@ yarn-error.log
 .env.*
 *.key
 secrets.json
+
+# Local Netlify folder
+.netlify
